@@ -1,0 +1,10 @@
+syntax:glob
+
+*.elc
+*.pyc
+*~
+*.orig
+media/photos/*
+*.log
+*.swp
+local_settings.py
