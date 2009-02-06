@@ -54,7 +54,7 @@ urlpatterns = patterns('',
     (r'^flag/', include('flag.urls')),
     (r'^schedule/', include('schedule.urls')),
     (r'^locations/', include('locations.urls')),
-    
+    (r'^api/', include('pinax_api.urls')), 
     (r'^feeds/tweets/(.*)/$', 'django.contrib.syndication.views.feed', tweets_feed_dict),
     (r'^feeds/posts/(.*)/$', 'django.contrib.syndication.views.feed', blogs_feed_dict),
     (r'^feeds/bookmarks/(.*)/?$', 'django.contrib.syndication.views.feed', bookmarks_feed_dict),
@@ -62,11 +62,11 @@ urlpatterns = patterns('',
 
 ## @@@ for now, we'll use friends_app to glue this stuff together
 
-from photos.models import Image
+from photos.models import Photo
 
 friends_photos_kwargs = {
     "template_name": "photos/friends_photos.html",
-    "friends_objects_function": lambda users: Image.objects.filter(member__in=users),
+    "friends_objects_function": lambda users: Photo.objects.filter(member__in=users),
 }
 
 from blog.models import Post

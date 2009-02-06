@@ -155,7 +155,9 @@ INSTALLED_APPS = (
     'schedule',
     'microblogging',
     'locations',
-    
+    'oauth_provider',
+    'wapi',
+    'pinax_api',
     # internal (for now)
     'analytics',
     'profiles',

@@ -41,3 +41,5 @@ http://django-mptt.googlecode.com/svn/trunk/
 -e git://github.com/brosner/django-openid.git#egg=django-openid
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar
 -e git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
+
+-e hg+http://bitbucket.org/ingenieroariel/pinax-api#egg=pinax-api
