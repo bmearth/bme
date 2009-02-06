@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     'bookmarks',
     'blog',
     'ajax_validation',
-    'photologue',
+    'imagekit',
     'avatar',
     'flag',
     'schedule',
