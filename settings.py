@@ -58,7 +58,7 @@ MEDIA_URL = '/site_media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'bk-e2zv3humar79nm=j*bwc=-ymeit(8a20whp3goq4dh71t)s'
@@ -84,12 +84,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'bme.urls'
-
-TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), "templates"),
-    os.path.join(PINAX_ROOT, "templates", PINAX_THEME),
-)
-
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
@@ -239,4 +233,10 @@ try:
     from local_settings import *
 except ImportError:
     pass
+# Template dirs down here because they have to reflect changes in PINAX_ROOT done in local_settings
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), "templates"),
+    os.path.join(PINAX_ROOT, "templates", PINAX_THEME),
+)
+
 
