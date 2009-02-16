@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     'voting',
     'tagging',
     'bookmarks',
-    #'blog',
+    'blog',
     'ajax_validation',
     'imagekit',
     'avatar',

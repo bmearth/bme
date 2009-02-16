@@ -63,7 +63,7 @@ h1 {
 }
 #tabhead {
     position: relative;
-    background: #035 url('/site_media/pinax/images/heading.png') left top repeat-x;
+    background: #000; 
     border-bottom: 1px solid #000; /* tab border */
 }
 #tabhead .logo {
@@ -72,8 +72,8 @@ h1 {
     padding-top: 0;
 }
 #tabhead .logo img {
-    width: 190px;
-    height: 79px;
+    width: 145px;
+    height: 64px;
 }
 #tabhead .login {
     position: absolute;
