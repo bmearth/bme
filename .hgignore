@@ -9,3 +9,6 @@ media/photos/*
 *.swp
 local_settings.py
 .project
+.pydevproject
+.settings/org.eclipse.core.resources.prefs
+
