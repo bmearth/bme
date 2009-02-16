@@ -8,3 +8,4 @@ media/photos/*
 *.log
 *.swp
 local_settings.py
+.project
