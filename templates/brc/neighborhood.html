@@ -1,0 +1,7 @@
+{% extends "brc/base.html" %}
+{% block title %} - {{ year.year }} - {{ time }} & {{ street.name }} {% endblock %}
+{% block onload %}init({{ point.x }},{{ point.y }});{% endblock %}
+{% block body %}
+<font size=+3><b>{{ year.year }} {{ time }} & {{ street.name }}</b></font><br /> Radial: {{ radial }} Distance: {{ street.distance_from_center }} Location: {{ point.x }} {{ point.y }}<br>
+<div id="map"></div>
+{% endblock %}

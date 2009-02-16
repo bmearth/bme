@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     'voting',
     'tagging',
     'bookmarks',
-    'blog',
+    #'blog',
     'ajax_validation',
     'imagekit',
     'avatar',
@@ -161,8 +161,9 @@ INSTALLED_APPS = (
     'misc',
     'photos',
     'tag_app',
-    
+	'brc',   
     'django.contrib.admin',
+    'django.contrib.gis',
 
 )
 

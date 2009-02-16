@@ -1,0 +1,18 @@
+{% extends "brc/base.html" %}
+{% block title %} - {{ year.year }} - Theme Camps{% endblock %}
+{% block body %}
+{% ifnotequal previous 2005 %}
+<a href='/brc/{{ previous }}/themecamps/'><< {{ previous }}</a>
+{% endifnotequal %}
+<font size=+3><b>{{ year.year }}</b></font>
+{% ifnotequal next 2010 %}
+<a href='/brc/{{ next }}/themecamps/'> {{ next }}>></a>
+{% endifnotequal %}
+<h2>Theme Camps</h2>
+<ul>
+{% for theme_camp in theme_camps %}
+<li><a href='/brc/{{ year.year }}/themecamp/{{theme_camp.id }}/'>{{ theme_camp.name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+

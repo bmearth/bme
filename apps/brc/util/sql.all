@@ -1,0 +1,99 @@
+BEGIN;
+CREATE TABLE "web_circular_street" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "year_id" integer NOT NULL,
+    "name" varchar(50) NOT NULL,
+    "order" integer NULL,
+    "width" integer NULL,
+    "distance_from_center" integer NULL
+)
+;
+CREATE TABLE "web_playa_event" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "year_id" integer NOT NULL,
+    "name" varchar(100) NOT NULL,
+    "description" text NULL,
+    "type" varchar(6) NOT NULL,
+    "start_date_time" timestamp with time zone NULL,
+    "end_date_time" timestamp with time zone NULL,
+    "duration" integer NULL,
+    "repeats" boolean NULL,
+    "hosted_by_camp_id" integer NULL,
+    "located_at_art_id" integer NULL,
+    "url" varchar(200) NULL,
+    "contact_email" varchar(75) NULL
+)
+;
+CREATE TABLE "web_art_installation" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "year_id" integer NOT NULL,
+    "name" varchar(255) NOT NULL,
+    "slug" varchar(255) NOT NULL,
+    "artist" varchar(255) NULL,
+    "description" text NULL,
+    "url" varchar(200) NULL,
+    "contact_email" varchar(75) NULL,
+    "circular_street_id" integer NULL REFERENCES "web_circular_street" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "time_address" time NULL
+)
+;
+ALTER TABLE "web_playa_event" ADD CONSTRAINT located_at_art_id_refs_id_588908c4 FOREIGN KEY ("located_at_art_id") REFERENCES "web_art_installation" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE TABLE "web_theme_camp" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(100) NOT NULL,
+    "year_id" integer NOT NULL,
+    "description" text NULL,
+    "url" varchar(200) NULL,
+    "contact_email" varchar(75) NULL,
+    "hometown" varchar(50) NULL,
+    "circular_street_id" integer NULL REFERENCES "web_circular_street" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "time_address" time NULL
+)
+;
+ALTER TABLE "web_playa_event" ADD CONSTRAINT hosted_by_camp_id_refs_id_668ea9d3 FOREIGN KEY ("hosted_by_camp_id") REFERENCES "web_theme_camp" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE TABLE "web_year" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "year" varchar(4) NOT NULL,
+    "location" varchar(50) NOT NULL,
+    "participants" integer NULL,
+    "theme" varchar(20) NULL,
+    "notes" text NULL
+)
+;
+ALTER TABLE "web_circular_street" ADD CONSTRAINT year_id_refs_id_4f38e2fa FOREIGN KEY ("year_id") REFERENCES "web_year" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "web_playa_event" ADD CONSTRAINT year_id_refs_id_54b104b7 FOREIGN KEY ("year_id") REFERENCES "web_year" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "web_art_installation" ADD CONSTRAINT year_id_refs_id_2e987f6e FOREIGN KEY ("year_id") REFERENCES "web_year" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "web_theme_camp" ADD CONSTRAINT year_id_refs_id_33640643 FOREIGN KEY ("year_id") REFERENCES "web_year" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE TABLE "web_theme_camp_participants" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "theme_camp_id" integer NOT NULL REFERENCES "web_theme_camp" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED,
+    UNIQUE ("theme_camp_id", "user_id")
+)
+;
+SELECT AddGeometryColumn('web_circular_street', 'street_line', 4326, 'LINESTRING', 2);
+CREATE INDEX "web_circular_street_street_line_id" ON "web_circular_street" USING GIST ( "street_line" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_playa_event', 'location_point', 4326, 'POINT', 2);
+CREATE INDEX "web_playa_event_location_point_id" ON "web_playa_event" USING GIST ( "location_point" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_playa_event', 'location_track', 4326, 'LINESTRING', 2);
+CREATE INDEX "web_playa_event_location_track_id" ON "web_playa_event" USING GIST ( "location_track" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_art_installation', 'location_point', 4326, 'POINT', 2);
+CREATE INDEX "web_art_installation_location_point_id" ON "web_art_installation" USING GIST ( "location_point" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_art_installation', 'location_poly', 4326, 'POLYGON', 2);
+CREATE INDEX "web_art_installation_location_poly_id" ON "web_art_installation" USING GIST ( "location_poly" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_theme_camp', 'location_point', 4326, 'POINT', 2);
+CREATE INDEX "web_theme_camp_location_point_id" ON "web_theme_camp" USING GIST ( "location_point" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_theme_camp', 'location_poly', 4326, 'POLYGON', 2);
+CREATE INDEX "web_theme_camp_location_poly_id" ON "web_theme_camp" USING GIST ( "location_poly" GIST_GEOMETRY_OPS );
+SELECT AddGeometryColumn('web_year', 'location_point', 4326, 'POINT', 2);
+CREATE INDEX "web_year_location_point_id" ON "web_year" USING GIST ( "location_point" GIST_GEOMETRY_OPS );
+CREATE INDEX "web_circular_street_year_id" ON "web_circular_street" ("year_id");
+CREATE INDEX "web_playa_event_year_id" ON "web_playa_event" ("year_id");
+CREATE INDEX "web_playa_event_hosted_by_camp_id" ON "web_playa_event" ("hosted_by_camp_id");
+CREATE INDEX "web_playa_event_located_at_art_id" ON "web_playa_event" ("located_at_art_id");
+CREATE INDEX "web_art_installation_year_id" ON "web_art_installation" ("year_id");
+CREATE INDEX "web_art_installation_slug" ON "web_art_installation" ("slug");
+CREATE INDEX "web_art_installation_circular_street_id" ON "web_art_installation" ("circular_street_id");
+CREATE INDEX "web_theme_camp_year_id" ON "web_theme_camp" ("year_id");
+CREATE INDEX "web_theme_camp_circular_street_id" ON "web_theme_camp" ("circular_street_id");
+COMMIT;

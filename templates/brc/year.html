@@ -1,0 +1,26 @@
+{% extends "brc/base.html" %}
+{% block title %} - {{ year.year }} {% endblock %}
+{% block body %}
+{% ifnotequal previous 2005 %}
+<a href='/brc/{{ previous }}/'><< {{ previous }}</a>
+{% endifnotequal %}
+<font size=+3><b>{{ year.year }}</b></font>
+{% ifnotequal next 2010 %}
+<a href='/brc/{{ next }}/'> {{ next }}>></a>
+{% endifnotequal %}
+<br />
+<img src='/brc/data/{{ year.year }}/{{ year.year }}.gif'>
+<ul>
+<li><b>Location:</b> {{ year.location }}</li>
+<li><b>Theme:</b> {{ year.theme }}</li>
+</ul>
+<h2><a href='/brc/{{ year.year }}/themecamps/'>Theme Camps</a></h2>
+<h2><a href='/brc/{{ year.year }}/art_installations/'>Art Installations</a></h2>
+<h2>Streets</h2>
+<ul>
+{% for street in streets %}
+<li>{{ street.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
+

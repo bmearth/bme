@@ -1,0 +1,16 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block rtab_id %}id="brc_tab"{% endblock %}
+
+{% block subnav %}
+    {% if user.is_authenticated %}
+        <ul>
+            <li><a href="{% url themecamps 2009 %} ">{% trans "Theme Camps" %}</a></li>
+            <li><a href="{% url art_installations 2009 %}">{% trans "Art Installations" %}</a></li>
+        </ul>
+    {% else %}
+        &nbsp;
+    {% endif %}
+{% endblock %}

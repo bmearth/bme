@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!--<link rel="stylesheet" href="http://spatialreference.org/static/css/base.css" />-->
+<title>Burning Man Earth {% block title %} {% endblock %}</title>
+<style type="text/css">
+        #attributes {
+            float:right; 
+            top: 70px;
+            width: 35%;
+        }
+        #attr_list input {
+            width:45%;
+        }    
+        #map {
+            width: 600px;
+            height: 600px;
+            border: 1px solid gray;
+        }
+</style>
+<script src="http://openlayers.org/api/2.5-rc5/OpenLayers.js"></script>
+<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<script type="text/javascript" defer="true">
+        <!--
+        var map, drawControls, geojson, lastFeature, wfs, vectors, featureid, markers, size, icon, offset;
+        function init(lon,lat){
+            map = new OpenLayers.Map('map', {
+               maxResolution: 1.40625/2,
+               numZoomLevels: 22, 
+               controls: [  
+                 new OpenLayers.Control.Scale(), 
+                 new OpenLayers.Control.PanZoomBar(), 
+                 new OpenLayers.Control.Permalink(), 
+                 new OpenLayers.Control.Navigation(), 
+                ]
+              } 
+            );
+	    
+	    markers = new OpenLayers.Layer.Markers( "Markers" );
+	    map.addLayer(markers);
+
+	    var size = new OpenLayers.Size(10,17);
+	    var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	    var icon = new OpenLayers.Icon('http://boston.openguides.org/markers/AQUA.png',size,offset);
+	    
+	    var bmsize = new OpenLayers.Size(42,80);
+	    var bmoffset = new OpenLayers.Pixel(-(bmsize.w/2), -bmsize.h);
+	    var bmicon = new OpenLayers.Icon('/theman.gif',bmsize,bmoffset);
+	    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(-119.2202599999999961, 40.7692400000000035),icon.clone()));
+	    markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat),icon.clone()));
+
+            var oam = new OpenLayers.Layer.WMS( "OpenAerialMap", 
+             [
+              "http://oam1.hypercube.telascience.org/tiles/",
+              "http://oam2.hypercube.telascience.org/tiles/",
+              "http://oam3.hypercube.telascience.org/tiles/"
+             ],
+                 {layers: 'openaerialmap'}, {'wrapDateLine': true} );
+            map.addLayer(oam);
+/*
+            var osm = new OpenLayers.Layer.WMS( "OpenStreetMap", 
+             [
+	      "http://earthdev.burningman.com/osm_tiles2/"
+              //"http://osm1.hypercube.telascience.org/tiles/",
+              //"http://osm2.hypercube.telascience.org/tiles/",
+              //"http://osm3.hypercube.telascience.org/tiles/"
+             ],
+                 {layers: 'osm-4326-hybrid'},
+                 {'attribution':'<a href="http://openstreetmap.org/">OpenStreetMap</a>', isBaseLayer: true, visibility: true, buffer:1});*/
+            var osm = new OpenLayers.Layer.OSM("OpenStreetMap", "http://earthdev.burningman.com/osm_tiles2/", {numZoomLevels: 19});
+            map.addLayer(osm);
+	    
+	    var brc = new OpenLayers.Layer.WMS( "BRC WMS", 
+                      "http://earthdev.burningman.com/cgi-bin/mapserv?map=/home/ortelius/brc2008.map", 
+		                            {layers: 'brc2008'} );
+
+	    map.addLayer(brc);
+
+            map.addControl(new OpenLayers.Control.Navigation());
+            map.addControl(new OpenLayers.Control.PanZoomBar());
+            map.addControl(new OpenLayers.Control.MousePosition());
+            map.addControl(new OpenLayers.Control.Permalink());
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+           
+
+	    if(!map.getCenter()){
+		map.setCenter(new OpenLayers.LonLat(lon,lat),17);
+		}            
+	}
+        // -->
+    </script>
+</head>
+<body onload="{% block onload %} {% endblock %}">
+<div id="header"><h1>Burning Man Earth</h1></div>
+<div id='navbar'>
+{% block defaultmenu %}
+<div id='defaultmenu'>
+<a href='/'>Home</a> |
+</div>
+{% endblock %}
+{% block usermenu %} {% endblock %}
+</div>
+<div id='content'>
+{% block content %}{% endblock %}
+</div>
+<div id='footer'><table border=0 width=100%><tr><td>&copy Burning Man LLC<br />Privacy Policy | Email Support
+</td><td align=right>{{ request.user }}<br />{{ request.user.email }}</td></tr></div>
+</body>
+</html

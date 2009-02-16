@@ -44,6 +44,7 @@
     {% if user.is_authenticated %}
         <table>
             <tr>
+                <td class="tab rtab_brc"><div><a href="{% url brc.views.index %}">{% trans "BRC" %}</a></div></td>
                 <td class="tab rtab_profile"><div><a href="{% url profile_detail user %}">{% trans "Profile" %}</a></div></td>
                 <td class="tab rtab_photos"><div><a href="{% url photos.views.photos %}">{% trans "Photos" %}</a></div></td>
                 <td class="tab rtab_blogs"><div><a href="{% url blog.views.blogs %}">{% trans "Blogs" %}</a></div></td>

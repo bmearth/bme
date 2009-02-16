@@ -1,0 +1,21 @@
+{% extends "brc/base.html" %}
+
+{% load i18n %}
+{% load humanize %}
+{% load pagination_tags %}
+{% load tagging_tags %}
+{% load wiki %}
+{% load markup %}
+{% load switchcase %}
+{% load restructuredtext %}
+{% load threadedcommentstags %}
+
+{% block head_title %}{% blocktrans %}Black Rock City{% endblocktrans %}{% endblock %}
+
+{% block body %}
+<ul>
+{% for year in years %}
+        <li><a href='/brc/{{ year.year }}/'>{{ year.year }} </a> -  {{ year.location }} - {{ year.theme }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
