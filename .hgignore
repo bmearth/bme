@@ -5,6 +5,9 @@ syntax:glob
 *~
 *.orig
 media/photos/*
+media/photos/*
+media/images/*
+media/avatars/*
 *.log
 *.swp
 local_settings.py
