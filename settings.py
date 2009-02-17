@@ -49,11 +49,11 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "site_media")
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "media")
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = '/site_media/'
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'misc',
     'photos',
     'tag_app',
+    'uni_form',
 	'brc',   
     'django.contrib.admin',
     'django.contrib.gis',
