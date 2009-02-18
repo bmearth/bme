@@ -43,3 +43,4 @@ http://django-mptt.googlecode.com/svn/trunk/
 -e git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
 
 -e hg+http://bitbucket.org/ingenieroariel/pinax-api#egg=pinax-api
+-e git://github.com/ingenieroariel/pinax
