@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'photos',
     'tag_app',
     'uni_form',
-	'brc',   
+    'brc',   
     'django.contrib.admin',
     'django.contrib.gis',
 
