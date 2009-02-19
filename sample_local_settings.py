@@ -1,4 +1,4 @@
-PINAX_ROOT='/home/user/bmedev/src/pinax'
+PINAX_ROOT='../pinax'
 
 DATABASE_ENGINE = 'postgresql_psycopg2'  
 DATABASE_NAME = 'bme'

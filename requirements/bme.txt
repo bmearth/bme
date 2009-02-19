@@ -1,0 +1,3 @@
+-r external_apps.txt
+
+-e git://github.com/ingenieroariel/pinax.git#egg=pinax
