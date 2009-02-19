@@ -8,12 +8,12 @@ from django.contrib.gis.geos import *
 from brc.models import *
 
 def index(request, template_name="brc/index.html"):
-	years = year.objects.all().order_by('-year')
+	years = Year.objects.all().order_by('-year')
 	return render_to_response(template_name, {"years": years,}, context_instance=RequestContext(request))
 
 def year_info(request, year_year):
-	xyear = year.objects.filter(year=year_year)
-	streets = circular_street.objects.filter(year=xyear[0])
+	xyear = Year.objects.filter(year=year_year)
+	streets = CircularStreet.objects.filter(year=xyear[0])
 	previous = int(year_year) -1
 	next = int(year_year) + 1
 	return render_to_response('brc/year.html', {'year': xyear[0],
@@ -22,53 +22,53 @@ def year_info(request, year_year):
 						'next' : next,}, context_instance=RequestContext(request))
 
 def art_installations(request, year_year):
-	xyear = year.objects.filter(year=year_year)
+	xyear = Year.objects.filter(year=year_year)
 	previous = int(year_year) -1
 	next = int(year_year) + 1
-	art_installations = art_installation.objects.filter(year=xyear[0])
+	ArtInstallations = ArtInstallation.objects.filter(year=xyear[0])
 	return render_to_response('brc/art_installations.html', {'year': xyear[0],
-							'art_installations': art_installations,
+							'art_installations': ArtInstallations,
 							'previous' : previous,
 							'next' : next,}, context_instance=RequestContext(request))
 
 def art_installation_id(request, year_year, art_installation_id):
-	xyear = year.objects.filter(year=year_year)
-	xart_installation = art_installation.objects.get(id=art_installation_id)
+	xyear = Year.objects.filter(year=year_year)
+	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
-							'art_installation': xart_installation,}, context_instance=RequestContext(request))
+							'art_installation': xArtInstallation,}, context_instance=RequestContext(request))
 
 def art_installation_name(request, year_year, art_installation_name):
-	xyear = year.objects.filter(year=year_year)
-	xart_installation = art_installation.objects.filter(year=xyear[0],slug=art_installation_name)
+	xyear = Year.objects.filter(year=year_year)
+	xArtInstallation = ArtInstallation.objects.filter(year=xyear[0],slug=art_installation_name)
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
-							'art_installation': xart_installation[0],}, context_instance=RequestContext(request))
+							'art_installation': xArtInstallation[0],}, context_instance=RequestContext(request))
 
 	
 def themecamps(request, year_year):
-	xyear = year.objects.filter(year=year_year)
+	xyear = Year.objects.filter(year=year_year)
 	previous = int(year_year) -1
 	next = int(year_year) + 1
-	theme_camps = theme_camp.objects.filter(year=xyear[0])
+	ThemeCamps = ThemeCamp.objects.filter(year=xyear[0])
 	return render_to_response('brc/themecamps.html', {'year': xyear[0],
-							'theme_camps': theme_camps,
+							'theme_camps': ThemeCamps,
 							'previous' : previous,
 							'next' : next,}, context_instance=RequestContext(request))
 	
 def themecampid(request, year_year, theme_camp_id):
-	xyear = year.objects.filter(year=year_year)
-	xtheme_camp = theme_camp.objects.get(id=theme_camp_id)
+	xyear = Year.objects.filter(year=year_year)
+	xThemeCamp = ThemeCamp.objects.get(id=theme_camp_id)
 	return render_to_response('brc/themecamp.html', {'year': xyear[0],
-							'theme_camp': xtheme_camp,}, context_instance=RequestContext(request))
+							'theme_camp': xThemeCamp,}, context_instance=RequestContext(request))
 
 def themecampname(request, year_year, theme_camp_name):
-	xyear = year.objects.filter(year=year_year)
-	theme_camp_name = theme_camp_name.replace('-',' ')
-	xtheme_camp = theme_camp.objects.filter(year=xyear[0],name__iexact=theme_camp_name)
+	xyear = Year.objects.filter(year=year_year)
+	ThemeCamp_name = ThemeCamp_name.replace('-',' ')
+	xThemeCamp =ThemeCamp.objects.filter(year=xyear[0],name__iexact=theme_camp_name)
 	return render_to_response('brc/themecamp.html', {'year': xyear[0],
-							'theme_camp': xtheme_camp[0],}, context_instance=RequestContext(request))
+							'theme_camp': xThemeCamp[0],}, context_instance=RequestContext(request))
 
 def geocode2(year_year, hour, minute, distance):
-	xyear = year.objects.filter(year=year_year)
+	xyear = Year.objects.filter(year=year_year)
 	hour = int(hour)
 	minute = int(minute)
 	radial = ((hour*30)+(minute*0.5))+45
@@ -99,9 +99,9 @@ def geocode(year_year, hour, minute, street):
 	elif(minute < 0):
 		return HttpResponse("invalid time")
 	
-	xyear = year.objects.filter(year=year_year)
+	xyear = Year.objects.filter(year=year_year)
 	street = street.replace('-',' ')
-	xstreet = circular_street.objects.filter(year=xyear[0],name__iexact=street)
+	xstreet = CircularStreet.objects.filter(year=xyear[0],name__iexact=street)
 	if xstreet.count() < 1:
 		return HttpResponse("invalid street")
 
@@ -120,7 +120,7 @@ def geocoder(request, year_year, hour, minute, street):
 
 def neighborhood(request, year_year, hour, minute, street):
 	pnt = geocode(year_year, hour, minute, street)
-	xyear = year.objects.filter(year=year_year)
+	xyear = Year.objects.filter(year=year_year)
 	previous = int(year_year) -1
 	next = int(year_year) + 1
 	time = hour + ":" + minute
@@ -141,7 +141,7 @@ def neighborhood(request, year_year, hour, minute, street):
 	elif(minute < 0):
 		return HttpResponse("invalid time")
 	street = street.replace('-',' ')
-	xstreet = circular_street.objects.filter(year=xyear[0],name__iexact=street)
+	xstreet = CircularStreet.objects.filter(year=xyear[0],name__iexact=street)
 	radial = ((hour*30)+(minute*0.5))+45
 	if radial >= 360:
 		radial = radial - 360
