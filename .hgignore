@@ -4,10 +4,10 @@ syntax:glob
 *.pyc
 *~
 *.orig
-bme/media/photos/*
-bme/media/photos/*
-bme/media/images/*
-bme/media/avatars/*
+media/photos/*
+media/photos/*
+media/images/*
+media/avatars/*
 *.log
 *.swp
 local_settings.py
