@@ -1,3 +1,4 @@
 -r external_apps.txt
 
 -e git://github.com/ingenieroariel/pinax.git#egg=pinax
+-e hg+http://bitbucket.org/ingenieroariel/django-wapi/#egg=django-wapi
