@@ -1,5 +1,6 @@
 {% extends "brc/base.html" %}
-{% block title %} - {{ year.year }} {% endblock %}
+{% load i18n %}
+{% block head_title %}{{ year.year }} {% endblock %}
 {% block body %}
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/'><< {{ previous }}</a>

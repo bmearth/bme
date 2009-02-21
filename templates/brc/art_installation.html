@@ -1,5 +1,5 @@
 {% extends "brc/base.html" %}
-{% block title %} - {{ year.year }} - {{ art_installation.name }} {% endblock %}
+{% block head_title %} {{ year.year }} - {{ art_installation.name }} {% endblock %}
 {% block body %}
 {{ art_installation.year.year }}<br />
 <a href='/brc/{{ art_installation.year.year }}/art_installations/'>Back to {{ art_installation.year.year }} Art Installations</a><br />

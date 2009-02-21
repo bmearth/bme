@@ -1,5 +1,5 @@
 {% extends "brc/base.html" %}
-{% block title %} - {{ year.year }} - Theme Camps{% endblock %}
+{% block head_title %} {{ year.year }} - Theme Camps{% endblock %}
 {% block body %}
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/themecamps/'><< {{ previous }}</a>
