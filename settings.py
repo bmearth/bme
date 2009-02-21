@@ -165,7 +165,7 @@ INSTALLED_APPS = (
     'brc',   
     'django.contrib.admin',
     'django.contrib.gis',
-
+	'django.contrib.databrowse',
 )
 
 ABSOLUTE_URL_OVERRIDES = {

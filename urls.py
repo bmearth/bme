@@ -2,6 +2,19 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
+from django.contrib import databrowse
+
+from brc.models import *
+
+databrowse.site.register(Year)
+databrowse.site.register(CircularStreet)
+databrowse.site.register(TimeStreet)
+databrowse.site.register(ThemeCamp)
+databrowse.site.register(ArtInstallation)
+databrowse.site.register(PlayaEvent)
+databrowse.site.register(Vehicle)
+databrowse.site.register(TrackPoint)
+databrowse.site.register(ThreeDModel)
 
 from account.openid_consumer import PinaxConsumer
 
@@ -28,6 +41,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', direct_to_template, {"template": "homepage.html"}, name="home"),
     
+    (r'^databrowse/(.*)', databrowse.site.root),
     (r'^about/', include('about.urls')),
     (r'^account/', include('account.urls')),
     (r'^openid/(.*)', PinaxConsumer()),
