@@ -1,4 +1,4 @@
-{% extends "tribes/base.html" %}
+{% extends "regionals/base.html" %}
 
 {% load i18n %}
 {% load uni_form %}
@@ -51,8 +51,8 @@
             <a href="{% clear_search_url request %}">Clear Search Terms</a>
         {% endif %}
     </form>
-    {% autopaginate tribes 10 %}
-    {% if tribes %}
+    {% autopaginate regionals 10 %}
+    {% if regionals %}
         <p>{% trans "Order by:" %}
             {% ifequal order 'most_topics' %}
                 <a href="{% url tribe_list_least_topics %}{% persist_getvars request %}">{% trans "Topics" %} &uarr;</a>
@@ -92,9 +92,9 @@
             {% endifequal %}
         </p>
         <dl>
-        {% for tribe in tribes %}
-            {% show_tribe tribe %}
-        {% endfor %}
+        {% for tribe in regionals %}
+        	<!-- show regional here -->
+	{% endfor %}
         </dl>
         {% paginate %}
     {% endif %}
