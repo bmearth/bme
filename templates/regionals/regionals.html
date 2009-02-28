@@ -8,10 +8,53 @@
 {% load extra_tagging_tags %}
 {% load tribe_tags %}
 
+{% block extra_head_base %}
+<style type="text/css">
+  #map { width: 800px; height: 400px; }
+</style>
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var markers, map, base_layer, kml, popup, feature;
+        function init(){
+            map = new OpenLayers.Map('map');
+            base_layer = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+               "http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
+            map.addLayers([base_layer]);
+            
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+            map.setCenter(new OpenLayers.LonLat(-40,15),2); 
+
+	    var markers = new OpenLayers.Layer.Markers( "Markers" );
+            map.addLayer(markers);
+	    
+	    var size = new OpenLayers.Size(20,30);
+            var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	    var icon = new OpenLayers.Icon('http://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Burning_Man_Icon.png/78px-Burning_Man_Icon.png',size,offset);
+{% for regional in regionals %}
+	var marker{{regional.id}} = new OpenLayers.Marker(new OpenLayers.LonLat({{regional.location.x}}, {{regional.location.y}}),icon.clone());
+	markers.addMarker(marker{{regional.id}});
+{% endfor %}
+	}
+
+ 	        function mousedown(evt) {
+ 	            if (popup == null) {
+ 	                popup = feature.createPopup(true);
+ 	                popup.setContentHTML("<div style='background-color:red; width:150;height:100'><a href='http://www.somethingconstructive.net' target='_blank'>click me</a></div>");
+ 	                popup.setBackgroundColor("yellow");
+ 	                popup.setOpacity(0.7);
+ 	                markers.map.addPopup(popup);
+ 	            } else {
+ 	                popup.toggle();
+ 	               }
+ 	            OpenLayers.Event.stop(evt);
+ 	        }
+    </script>
+{% endblock %}
 {% block head_title %}{% blocktrans %}Regionals{% endblocktrans %}{% endblock %}
 
 {% block body %}
     <h1>{% trans "Regionals" %}</h1>
+<div id='map'>
 
     <p>It is often reported that upon leaving Burning Man, participants feel possessed of a desire to make their year-round world feel more like life in Black Rock City. Through the Burning Man Regional Network, these Burners can stay connected to the flame, and bring it into their local communities. We encourage you to learn all about the Regional Network, to get in touch with your local Regional group, and to participate ... throughout the year.</p>
 
@@ -23,6 +66,9 @@
     </ul>
 
     <p>There are now Regionals on five continents:North America, Africa, Asia, Australasia, and Europe.  To find your local group, click on the appropriate colored area of the map below.</p>
+{% for regional in regionals %}
+	{{ regional.name }} {{ regional.description }} <br />
+{% endfor %}
 
     {% if user.is_authenticated %}
         <div class="form-toggle">
@@ -92,7 +138,7 @@
             {% endifequal %}
         </p>
         <dl>
-        {% for tribe in regionals %}
+        {% for regional in regionals %}
         	<!-- show regional here -->
 	{% endfor %}
         </dl>
@@ -104,6 +150,7 @@
 {% block extra_body %}
     <script type="text/javascript">
         $(document).ready(function() {
+		init();		
             $('#start-tribe').hide();
             $('#start-tribe-toggle').click(function() {
                 $('#start-tribe').toggle();
