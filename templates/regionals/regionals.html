@@ -66,9 +66,6 @@
     </ul>
 
     <p>There are now Regionals on five continents:North America, Africa, Asia, Australasia, and Europe.  To find your local group, click on the appropriate colored area of the map below.</p>
-{% for regional in regionals %}
-	{{ regional.name }} {{ regional.description }} <br />
-{% endfor %}
 
     {% if user.is_authenticated %}
         <div class="form-toggle">
