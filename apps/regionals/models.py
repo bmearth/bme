@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
-from tribes.models import *
+from tribes.models import Tribe 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
