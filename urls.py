@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib import databrowse
 
 from brc.models import *
+from regionals.models import *
 
 databrowse.site.register(Year)
 databrowse.site.register(CircularStreet)
@@ -56,6 +57,7 @@ urlpatterns = patterns('',
     (r'^announcements/', include('announcements.urls')),
     (r'^tweets/', include('microblogging.urls')),
     (r'^tribes/', include('tribes.urls')),
+    (r'^regionals/', include('regionals.urls')),
     (r'^projects/', include('projects.urls')),
     (r'^comments/', include('threadedcomments.urls')),
     (r'^robots.txt$', include('robots.urls')),

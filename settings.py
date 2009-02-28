@@ -3,6 +3,7 @@
 
 import os.path
 
+
 PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -13,7 +14,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through django.views.static.serve.
-SERVE_MEDIA = DEBUG
+SERVE_MEDIA = True
 
 ADMINS = (
     # ('Jeffrey Johnson', 'ortelius@gmail.com'),
@@ -162,7 +163,8 @@ INSTALLED_APPS = (
     'photos',
     'tag_app',
     'uni_form',
-    'brc',   
+    'brc',
+    'regionals',
     'django.contrib.admin',
     'django.contrib.gis',
 	'django.contrib.databrowse',
@@ -242,3 +244,8 @@ TEMPLATE_DIRS = (
 )
 
 
+import logging
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+)
