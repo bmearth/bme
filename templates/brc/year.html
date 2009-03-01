@@ -1,5 +1,38 @@
 {% extends "brc/base.html" %}
 {% load i18n %}
+{% block extra_head_base %}
+<style type="text/css">
+  #map { width: 550px; height: 500px; }
+</style>
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+    <script type="text/javascript">
+        var markers, map, base_layer, kml, popup, feature;
+        function init(){
+	    map = new OpenLayers.Map ("map", {
+                controls:[
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.PanZoomBar(),
+                    new OpenLayers.Control.Attribution()],
+                maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+                maxResolution: 156543.0399,
+                numZoomLevels: 19,
+                units: 'm',
+                projection: new OpenLayers.Projection("EPSG:900913"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326")
+            } );
+	   layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+            map.addLayers([layerMapnik]);
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+            var lat=40.786389
+        var lon=-119.206389
+        var zoom=14
+
+	    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+            map.setCenter (lonLat, zoom);
+}
+    </script>
+{% endblock %}
 {% block head_title %}{{ year.year }} {% endblock %}
 {% block body %}
 {% ifnotequal previous 2005 %}
@@ -16,11 +49,19 @@
 </ul>
 <h2><a href='/brc/{{ year.year }}/themecamps/'>Theme Camps</a></h2>
 <h2><a href='/brc/{{ year.year }}/art_installations/'>Art Installations</a></h2>
+<div id='map'>
 <h2>Streets</h2>
 <ul>
 {% for street in streets %}
 <li>{{ street.name }}</li>
 {% endfor %}
 </ul>
+{% endblock %}
+{% block extra_body %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+		init();		
+            });
+    </script>
 {% endblock %}
 
