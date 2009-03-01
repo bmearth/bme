@@ -54,7 +54,6 @@
 
 {% block body %}
     <h1>{% trans "Regionals" %}</h1>
-<div id='map'>
 
     <p>It is often reported that upon leaving Burning Man, participants feel possessed of a desire to make their year-round world feel more like life in Black Rock City. Through the Burning Man Regional Network, these Burners can stay connected to the flame, and bring it into their local communities. We encourage you to learn all about the Regional Network, to get in touch with your local Regional group, and to participate ... throughout the year.</p>
 
@@ -66,6 +65,7 @@
     </ul>
 
     <p>There are now Regionals on five continents:North America, Africa, Asia, Australasia, and Europe.  To find your local group, click on the appropriate colored area of the map below.</p>
+<div id='map'></div>
 
     {% if user.is_authenticated %}
         <div class="form-toggle">
