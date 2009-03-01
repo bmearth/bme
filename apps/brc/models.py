@@ -66,7 +66,7 @@ class ThemeCamp(models.Model):
     def save(self):
         if self.location_poly:
             self.location_point = self.location_poly.centroid
-        super(theme_camp, self).save()
+        super(ThemeCamp, self).save()
 
 
 class ArtInstallation(models.Model):
