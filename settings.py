@@ -4,7 +4,7 @@
 import os.path
 
 
-PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # tells Pinax to use the default theme
