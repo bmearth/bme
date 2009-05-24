@@ -151,8 +151,7 @@ INSTALLED_APPS = (
     'microblogging',
     'locations',
     'oauth_provider',
-    'wapi',
-    'pinax_api',
+    'api',
     # internal (for now)
     'analytics',
     'profiles',
