@@ -1,0 +1,9 @@
+{% extends "brc/base.html" %}
+{% block head_title %} {{ year.year }} - {{ art_car.name }} {% endblock %}
+{% block body %}
+{{ art_car.year.year }}<br />
+<a href='/brc/{{ art_car.year.year }}/art_cars/'>Back to {{ art_car.year.year }} Art Cars</a><br />
+<h1>{{ art_car.name }}</h1>
+{{ art_car.artist }} <br /><br />
+{{ art_car.description }} <br /><br />
+{% endblock %}

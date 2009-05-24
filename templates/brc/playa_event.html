@@ -1,0 +1,9 @@
+{% extends "brc/base.html" %}
+{% block head_title %} {{ year.year }} - {{ playa_event.name }} {% endblock %}
+{% block body %}
+{{ playa_event.year.year }}<br />
+<a href='/brc/{{ playa_event.year.year }}/playa_events/'>Back to {{ playa_event.year.year }} Playa Events</a><br />
+<h1>{{ playa_event.name }}</h1>
+{{ playa_event.artist }} <br /><br />
+{{ playa_event.description }} <br /><br />
+{% endblock %}

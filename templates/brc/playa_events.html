@@ -1,0 +1,18 @@
+{% extends "brc/base.html" %}
+{% block head_title %} {{ year.year }} - Playa Events{% endblock %}
+{% block body %}
+{% ifnotequal previous 2005 %}
+<a href='/brc/{{ previous }}/playa_events/'><< {{ previous }}</a>
+{% endifnotequal %}
+<font size=+3><b>{{ year.year }}</b></font>
+{% ifnotequal next 2010 %}
+<a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
+{% endifnotequal %}
+<h2>Playa Events</h2>
+<ul>
+{% for playa_event in playa_events %}
+<li><a href='/brc/{{ year.year }}/playa_event/{{playa_event.id }}/'>{{ playa_event.name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+
