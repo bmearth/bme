@@ -1,4 +1,5 @@
 import math
+
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core.paginator import InvalidPage
@@ -21,16 +22,6 @@ def year_info(request, year_year):
 						'previous' : previous,
 						'next' : next,}, context_instance=RequestContext(request))
 
-def art_installations(request, year_year):
-	xyear = Year.objects.filter(year=year_year)
-	previous = int(year_year) -1
-	next = int(year_year) + 1
-	ArtInstallations = ArtInstallation.objects.filter(year=xyear[0])
-	return render_to_response('brc/art_installations.html', {'year': xyear[0],
-							'art_installations': ArtInstallations,
-							'previous' : previous,
-							'next' : next,}, context_instance=RequestContext(request))
-
 def art_installation_id(request, year_year, art_installation_id):
 	xyear = Year.objects.filter(year=year_year)
 	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
@@ -43,7 +34,16 @@ def art_installation_name(request, year_year, art_installation_name):
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
 							'art_installation': xArtInstallation[0],}, context_instance=RequestContext(request))
 
-	
+def art_installations(request, year_year):
+	xyear = Year.objects.filter(year=year_year)
+	previous = int(year_year) -1
+	next = int(year_year) + 1
+	ArtInstallations = ArtInstallation.objects.filter(year=xyear[0])
+	return render_to_response('brc/art_installations.html', {'year': xyear[0],
+							'art_installations': ArtInstallations,
+							'previous' : previous,
+							'next' : next,}, context_instance=RequestContext(request))
+
 def themecamps(request, year_year):
 	xyear = Year.objects.filter(year=year_year)
 	previous = int(year_year) -1
@@ -66,6 +66,41 @@ def themecampname(request, year_year, theme_camp_name):
 	xThemeCamp =ThemeCamp.objects.filter(year=xyear[0],name__iexact=theme_camp_name)
 	return render_to_response('brc/themecamp.html', {'year': xyear[0],
 							'theme_camp': xThemeCamp[0],}, context_instance=RequestContext(request))
+def art_cars(request, year_year):
+	xyear = Year.objects.filter(year=year_year)
+	previous = int(year_year) -1
+	next = int(year_year) + 1
+	xArtCars = Vehicle.objects.filter(year=xyear[0])
+	return render_to_response('brc/art_cars.html', {'year': xyear[0],
+							'art_cars': xArtCars,
+							'previous' : previous,
+							'next' : next,}, context_instance=RequestContext(request))
+
+def art_car_id(request, year_year, art_car_id):
+	xyear = Year.objects.filter(year=year_year)
+	xArtCar = Vehicle.objects.get(id=art_car_id)
+	return render_to_response('brc/art_car.html', {'year': xyear[0],
+							'art_car': xArtCar,}, context_instance=RequestContext(request))
+
+
+
+def playa_events(request, year_year):
+	xyear = Year.objects.filter(year=year_year)
+	previous = int(year_year) -1
+	next = int(year_year) + 1
+	xPlayaEvents = PlayaEvent.objects.filter(year=xyear[0])
+	return render_to_response('brc/playa_events.html', {'year': xyear[0],
+							'playa_events': xPlayaEvents,
+							'previous' : previous,
+							'next' : next,}, context_instance=RequestContext(request))
+
+def playa_event_id(request, year_year, playa_event_id):
+	xyear = Year.objects.filter(year=year_year)
+	xPlayaEvent = PlayaEvent.objects.get(id=playa_event_id)
+	return render_to_response('brc/playa_event.html', {'year': xyear[0],
+							'playa_event': xPlayaEvent,}, context_instance=RequestContext(request))
+
+
 
 def geocode2(year_year, hour, minute, distance):
 	xyear = Year.objects.filter(year=year_year)
