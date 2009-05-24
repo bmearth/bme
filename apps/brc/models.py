@@ -89,7 +89,7 @@ class ArtInstallation(models.Model):
 
 class Vehicle(models.Model):
     VEHICLE_TYPE_CHOICES = (
-            ('UNKWN', 'Unkwnown'),
+            ('UNKWN', 'Unknown'),
             ('MUTANT', 'Mutant Vehicle'),
             ('UTIL', 'Utility Vehicle'),
             ('LEVEH', 'Law Enforcement Vehicle'),
