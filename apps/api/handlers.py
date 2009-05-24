@@ -1,5 +1,10 @@
 from piston.handler import BaseHandler
+from piston.emitters import Emitter, JSONEmitter
 from brc.models import *
+from api.emitters import GeoJSONEmitter
+
+JSONEmitter.unregister('json')
+Emitter.register('json', GeoJSONEmitter, content_type='text/javascript; charset=utf-8')
 
 class ArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
