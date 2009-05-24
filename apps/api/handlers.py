@@ -28,7 +28,7 @@ class ThemeCampHandler(BaseHandler):
 
 	@classmethod
 	def read(self, request):
-		base = PlayaEvent.objects
+		base = ThemeCamp.objects
 		return base.all()
 
 class CircularStreetHandler(BaseHandler):
