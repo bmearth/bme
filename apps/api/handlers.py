@@ -29,7 +29,7 @@ class PlayaEventHandler(BaseHandler):
 class ThemeCampHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ThemeCamp 
-	fields = ('id', 'year', 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_track', 'url', 'contact_email') 
+	fields = ('id', 'year', 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_poly', 'url', 'contact_email') 
 
 	@classmethod
 	def read(self, request):
