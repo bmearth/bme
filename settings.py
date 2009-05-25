@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'schedule',
     'microblogging',
     'locations',
+    'piston',
     'api',
     # internal (for now)
     'analytics',
