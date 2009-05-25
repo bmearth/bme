@@ -1,14 +1,17 @@
 from django.conf.urls.defaults import *
 from piston.resource import Resource
 from api.handlers import * 
+from piston.authentication import OAuthAuthentication
 
-year_handler = Resource(YearHandler)
-camp_handler = Resource(ThemeCampHandler)
-art_handler = Resource(ArtInstallationHandler)
-event_handler = Resource(PlayaEventHandler)
-user_handler = Resource(UserHandler)
-cstreet_handler = Resource(CircularStreetHandler)
-tstreet_handler = Resource(TimeStreetHandler)
+auth = OAuthAuthentication()
+
+year_handler = Resource(YearHandler, authentication=auth)
+camp_handler = Resource(ThemeCampHandler, authentication=auth)
+art_handler = Resource(ArtInstallationHandler, authentication=auth)
+event_handler = Resource(PlayaEventHandler, authentication=auth)
+user_handler = Resource(UserHandler, authentication=auth)
+cstreet_handler = Resource(CircularStreetHandler, authentication=auth)
+tstreet_handler = Resource(TimeStreetHandler, authentication=auth)
 
 urlpatterns = patterns('',
    url(r'^year/', year_handler),
