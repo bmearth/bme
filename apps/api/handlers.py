@@ -103,6 +103,10 @@ class AnonymousTimeStreetHandler(AnonymousBaseHandler):
 		base = TimeStreet.objects
 		return base.all()
 
+	@staticmethod
+	def resource_uri():
+	    return ('tstreet_handler', ['id'])
+	    
 class TimeStreetHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = TimeStreet
