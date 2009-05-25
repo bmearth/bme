@@ -11,7 +11,6 @@ django-notification
 django-pagination
 django-robots
 django-messages
-django-oauth
 django-imagekit
 django-piston
 django-timezones
