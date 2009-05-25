@@ -17,12 +17,12 @@ user_fields = ('id', 'username', 'first_name', 'last_name', 'active')
 class AnonymousArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ArtInstallation 
-	fields = art_installation_fields
+	fields = art_fields
 	
 class ArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ArtInstallation 
-	fields = art_installation_fields
+	fields = art_fields
 	anonymous = AnonymousArtInstallationHandler
 
 class AnonymousPlayaEventHandler(AnonymousBaseHandler):
@@ -83,4 +83,4 @@ class YearHandler(BaseHandler):
 class UserHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = User
-	fields = user_fie
+	fields = user_fields
