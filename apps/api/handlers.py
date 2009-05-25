@@ -6,147 +6,81 @@ from api.emitters import GeoJSONEmitter
 JSONEmitter.unregister('json')
 Emitter.register('json', GeoJSONEmitter, content_type='text/javascript; charset=utf-8')
 
+art_fields = ('id', 'name', 'year', 'slug', 'artist', 'description', 'url', 'contact_email', 'location_point', 'location_poly', 'circular_street', 'time_address')
+playa_fields = ('id', 'name', 'year', 'description', 'url', 'contact_email', 'hometown', 'location_point', 'location_poly', 'circular_street', 'time_address', 'participants')
+theme_fields = ('id', 'year', 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_poly', 'url', 'contact_email') 
+cstreet_fields = ('id', 'year', 'name', 'order', 'width', 'distance_from_center', 'street_line')
+tstreet_fields = ('id', 'year', 'hour', 'minute', 'name', 'width', 'street_line')
+year_fields = ('id', 'location', 'location_point', 'participants', 'theme')
+user_fields = ('id', 'username', 'first_name', 'last_name', 'active')
+
 class AnonymousArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ArtInstallation 
-	fields = ('id', 'name', 'year', 'slug', 'artist', 'description', 'url', 'contact_email', 'location_point', 'location_poly', 'circular_street', 'time_address')
-
-	@classmethod
-	def read(self, request):
-		base = ArtInstallation.objects
-		return base.all()
-
-
+	fields = art_installation_fields
+	
 class ArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ArtInstallation 
-	fields = ('id', 'name', 'year', 'slug', 'artist', 'description', 'url', 'contact_email', 'location_point', 'location_poly', 'circular_street', 'time_address')
+	fields = art_installation_fields
 	anonymous = AnonymousArtInstallationHandler
-	@classmethod
-	def read(self, request):
-		base = ArtInstallation.objects
-		return base.all()
 
 class AnonymousPlayaEventHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = PlayaEvent 
-	fields = ('id', 'name', 'year', 'description', 'url', 'contact_email', 'hometown', 'location_point', 'location_poly', 'circular_street', 'time_address', 'participants')
-
-	@classmethod
-	def read(self, request):
-		base = PlayaEvent.objects
-		return base.all()
-
+	fields = playa_fields
 
 class PlayaEventHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = PlayaEvent 
-	fields = ('id', 'name', 'year', 'description', 'url', 'contact_email', 'hometown', 'location_point', 'location_poly', 'circular_street', 'time_address', 'participants')
+	fields = playa_fields
 	anonymous = AnonymousPlayaEventHandler
-	@classmethod
-	def read(self, request):
-		base = PlayaEvent.objects
-		return base.all()
-
 
 class AnonymousThemeCampHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = ThemeCamp 
-	fields = ('id', 'year', 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_poly', 'url', 'contact_email') 
-
-	@classmethod
-	def read(self, request):
-		base = ThemeCamp.objects
-		return base.all()
-
+	fields = theme_fields
 
 class ThemeCampHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ThemeCamp 
-	fields = ('id', 'year', 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_poly', 'url', 'contact_email') 
+	fields = theme_fields
 	anonymous = AnonymousThemeCampHandler
-	@classmethod
-	def read(self, request):
-		base = ThemeCamp.objects
-		return base.all()
 
 class AnonymousCircularStreetHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = CircularStreet 
-
-	fields = ('id', 'year', 'name', 'order', 'width', 'distance_from_center', 'street_line')
-
-	@classmethod
-	def read(self, request):
-		base = CircularStreet.objects
-		return base.all()
+	fields = cstreet_fields
 
 class CircularStreetHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = CircularStreet 
+	fields = cstreet_fields
 	anonymous = AnonymousCircularStreetHandler
-	fields = ('id', 'year', 'name', 'order', 'width', 'distance_from_center', 'street_line')
-
-	@classmethod
-	def read(self, request):
-		base = CircularStreet.objects
-		return base.all()
 
 class AnonymousTimeStreetHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = TimeStreet
+	fields = tstreet_fields
 
-	fields = ('id', 'year', 'hour', 'minute', 'name', 'width', 'street_line')
-
-	@classmethod
-	def read(self, request):
-		base = TimeStreet.objects
-		return base.all()
-
-	@staticmethod
-	def resource_uri():
-	    return ('tstreet_handler', ['id'])
-	    
 class TimeStreetHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = TimeStreet
+	fields = tstreet_fields
 	anonymous = AnonymousTimeStreetHandler
-	fields = ('id', 'year', 'hour', 'minute', 'name', 'width', 'street_line')
-
-	@classmethod
-	def read(self, request):
-		base = TimeStreet.objects
-		return base.all()
 
 class AnonymousYearHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = Year   
-
-	fields = ('id', 'location', 'location_point', 'participants', 'theme')
-
-	@classmethod
-	def read(self, request):
-		base = Year.objects
-		return base.all()
+	fields = year_fields
 
 class YearHandler(BaseHandler):
 	allow_methods = ('GET',)
-	model = Year   
+	model = Year
+	fields = year_fields
 	anonymous = AnonymousYearHandler
-	fields = ('id', 'location', 'location_point', 'participants', 'theme')
-
-	@classmethod
-	def read(self, request):
-		base = Year.objects
-		return base.all()
 
 class UserHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = User
-
-	fields = ('id', 'username', 'first_name', 'last_name', 'active') 
-
-	@classmethod
-	def read(self, request):
-		base = User.objects
-		return base.all()
+	fields = user_fie
