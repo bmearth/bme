@@ -21,9 +21,12 @@
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326")
             } );
-	   layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
-            map.addLayers([layerMapnik]);
-            map.addControl(new OpenLayers.Control.LayerSwitcher());
+	   //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+            //map.addLayers([layerMapnik]);
+	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/", {numZoomLevels: 19});
+	map.addLayer(newLayer);
+    
+	map.addControl(new OpenLayers.Control.LayerSwitcher());
             var lat=40.786389
         var lon=-119.206389
         var zoom=14
