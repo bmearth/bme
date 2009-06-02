@@ -4,6 +4,7 @@
 {{ art_car.year.year }}<br />
 <a href='/brc/{{ art_car.year.year }}/art_cars/'>Back to {{ art_car.year.year }} Art Cars</a><br />
 <h1>{{ art_car.name }}</h1>
+{% if art_car.image %} <img src='/media/{{ art_car.image }}'><br />{% endif %}
 {{ art_car.artist }} <br /><br />
 {{ art_car.description }} <br /><br />
 {% endblock %}

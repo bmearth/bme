@@ -4,7 +4,7 @@
 <a href='/brc/{{art_installation.year.year }}'>{{ art_installation.year.year }}</a><br />
 <a href='/brc/{{ art_installation.year.year }}/art_installations/'>Back to {{ art_installation.year.year }} Art Installations</a><br />
 <h1>{{ art_installation.name }}</h1>
-{% if art_installation.image %} <img src='/media/{{ art_installation.image }}'>{% endif %}
+{% if art_installation.image %} <img src='/media/{{ art_installation.image }}'><br />{% endif %}
 <h3>{{ art_installation.artist }}</h3>
 <a href='{{ art_installation.url }}' target='_blank'>{{ art_installation.url }}</a> <br />
 {{ art_installation.contact_email }} <br /><br />
