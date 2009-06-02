@@ -1,9 +1,12 @@
 {% extends "brc/base.html" %}
 {% block head_title %} {{ year.year }} - {{ art_installation.name }} {% endblock %}
 {% block body %}
-{{ art_installation.year.year }}<br />
+<a href='/brc/{{art_installation.year.year }}'>{{ art_installation.year.year }}</a><br />
 <a href='/brc/{{ art_installation.year.year }}/art_installations/'>Back to {{ art_installation.year.year }} Art Installations</a><br />
 <h1>{{ art_installation.name }}</h1>
-{{ art_installation.artist }} <br /><br />
+{% if art_installation.image %} <img src='/media/{{ art_installation.image }}'>{% endif %}
+<h3>{{ art_installation.artist }}</h3>
+<a href='{{ art_installation.url }}' target='_blank'>{{ art_installation.url }}</a> <br />
+{{ art_installation.contact_email }} <br /><br />
 {{ art_installation.description }} <br /><br />
 {% endblock %}
