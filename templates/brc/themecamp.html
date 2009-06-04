@@ -1,4 +1,5 @@
 {% extends "brc/base.html" %}
+{% load comments_tag %}
 {% block head_title %} {{ year.year }} - {{ theme_camp.name }} {% endblock %}
 {% block body %}
 <a href='/brc/{{ theme_camp.year.year }}'>{{ theme_camp.year.year }}</a><br />
@@ -7,8 +8,10 @@
 {% if theme_camp.image %} <img src='/media/{{ theme_camp.image }}'><br />{% endif %}
 <a href='{{ theme_camp.url }}' target="_top">{{ theme_camp.url }}</a><br/>
 <a href='mailto:{{ theme_camp.contact_email }}'>{{ theme_camp.contact_email }}</a><br/><br />
-{{ theme_camp.description }} <br /><br />
 {{ theme_camp.home_town }}<br/>
+{{ theme_camp.description }} <br /><br />
+<h3>Comments on This Camp:</h3>
+{% comments theme_camp %}
 <!--
 <a href='/brc/{{ year.year }}/{{ theme_camp.time_address|time:"h:i" }}/{{theme_camp.circular_street.name|lower|slugify }}/'>{{ theme_camp.time_address|time:"h:i" }} & {{ theme_camp.circular_street.name }}</a><br/>
 -->
