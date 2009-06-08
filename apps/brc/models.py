@@ -150,7 +150,7 @@ class PlayaEvent(models.Model):
     start_date_time = models.DateTimeField(null=True, blank=True)
     end_date_time = models.DateTimeField(null=True, blank=True)
     duration = models.IntegerField(null=True, blank=True)
-    repeats = models.BooleanField(null=True, blank=True)
+    repeats = models.BooleanField()
     hosted_by_camp = models.ForeignKey(ThemeCamp, null=True, blank=True)
     located_at_art = models.ForeignKey(ArtInstallation, null=True, blank=True)
     location_point = models.PointField(null=True, blank=True)
