@@ -15,7 +15,7 @@
 </div>
 
 <div class="tablewrapper">
-    <div class="calendarname">{{ calendar.name }}</div>
+    <h2>{{ calendar.name }}</h2>
     {% prevnext "week_calendar" calendar.slug periods.week "\Week W, M Y" %}
     <div class="now">
       <a href="{% url week_calendar calendar.slug %}">

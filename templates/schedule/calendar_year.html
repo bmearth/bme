@@ -1,8 +1,16 @@
 {% extends "schedule/base.html" %}
 {% load scheduletags %}
 {% block body %}
+<div class="navigation">
+  <a href="{% url month_calendar calendar.slug %}">
+    Current Month Calendar
+  </a>
+  <a href="{% url year_calendar calendar.slug %}">
+    Current Year Calendar
+  </a>
+</div>
 <div class="tablewrapper">
-    <div class="calendarname">{{ calendar.name }}</div>
+    <h2>{{ calendar.name }}</h2>
     {% prevnext "year_calendar" calendar.slug periods.year "Y" %}
     <table align="center">
     <tr>
@@ -28,12 +36,4 @@
     {% endfor %}
     </tr>
 </table></p>
-<div class="navigation">
-  <a href="{% url month_calendar calendar.slug %}">
-    Current Month Calendar
-  </a>
-  <a href="{% url year_calendar calendar.slug %}">
-    Current Year Calendar
-  </a>
-</div>
 {% endblock %}

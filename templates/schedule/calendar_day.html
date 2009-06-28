@@ -18,22 +18,20 @@
   </a>
 </div>
 <div class="tablewrapper">
-    <div class="calendarname">{{ calendar.name }}</div>
+    <h2>{{ calendar.name }}</h2>
     {% prevnext "day_calendar" calendar.slug periods.day "l, F d, Y" %}
     <div class="now">
-      <a href="{% url day_calendar calendar.slug %}">
-        Today
-      </a>
+      <a href="{% url day_calendar calendar.slug %}">Today</a>
     </div>
 </div>
-<div style="position:absolute;">
-    <div style="position:absolute;left:100px;">
-      {% daily_table periods.day 420 120 600 0 12 %}
+<br /><br />
+<div style="position:relative;">
+    <div style="position:absolute;left:0px;">
+      {% daily_table periods.day 380 120 600 0 12 %}
     </div>
 
-    <div style="position:absolute;left:600px;">
-      {% daily_table periods.day 420 120 600 12 24 %}
+    <div style="position:relative;left:420px;">
+      {% daily_table periods.day 380 120 600 12 24 %}
     </div>
 </div>
-
 {% endblock %}
