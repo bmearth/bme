@@ -1,0 +1,16 @@
+{% extends "brc/event_form_base.html" %}
+{% load i18n %}
+{% block head_title %}{% blocktrans %}Create or Edit Playa Event{% endblocktrans %}{% endblock %}
+{% block body %}
+<b>{% trans "Create or change Playa Event." %}</b>
+<br/><br/>
+<form action="" method="post">
+<table>
+{{ form.as_table }}
+</table>
+<br/>
+<input type="submit" value="{% trans "Save" %}">
+<input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
+<input type="hidden" name="next" value="{{next|default:""}}"/>
+</form>
+{% endblock %}
