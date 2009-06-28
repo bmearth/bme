@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.db import connection
 from django.contrib.auth.models import User
+from schedule.models import Event 
 import datetime
 
 class Year(models.Model):
@@ -129,7 +130,7 @@ class ThreeDModel(models.Model):
     model_url = models.URLField() #Google 3D Warehouse
     artist = models.CharField(max_length=200, null=True, blank=True)
 
-class PlayaEvent(models.Model):
+class PlayaEvent(Event):
     EVENT_TYPE_CHOICES = (
         ('NONE', 'None'),
         ('AA', 'AA Meeting'),
@@ -141,16 +142,10 @@ class PlayaEvent(models.Model):
         ('MUSIC', 'Music Event'),
         ('PERF', 'Performance Event'))
     def __unicode__(self):
-        return self.year.year + ":" + self.name
+        return self.year.year + ":" + self.title
     year = models.ForeignKey(Year)
-    name = models.CharField(max_length=100)
-    #slug = models.SlugField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    slug = models.SlugField(max_length=255)
     type = models.CharField(max_length=6, choices=EVENT_TYPE_CHOICES)
-    start_date_time = models.DateTimeField(null=True, blank=True)
-    end_date_time = models.DateTimeField(null=True, blank=True)
-    duration = models.IntegerField(null=True, blank=True)
-    repeats = models.BooleanField()
     hosted_by_camp = models.ForeignKey(ThemeCamp, null=True, blank=True)
     located_at_art = models.ForeignKey(ArtInstallation, null=True, blank=True)
     location_point = models.PointField(null=True, blank=True)

@@ -41,10 +41,10 @@ class VehicleAdmin(BME_OSMAdmin):
     search_fields = ('name','description')
 
 class PlayaEventAdmin(BME_OSMAdmin):
-    list_display = ('name', 'year', 'type', 'start_date_time', 'end_date_time')
+    list_display = ('title', 'year', 'type', 'start', 'end')
     list_filter = ['year', 'type']
-    ordering = ('name','start_date_time')
-    search_fields = ('name','description')
+    ordering = ('title','start')
+    search_fields = ('title','description')
 
 class TrackPointAdmin(BME_OSMAdmin):
     list_display = ('user', 'vehicle', 'xypoint', 'xypoint_time')
