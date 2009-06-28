@@ -22,7 +22,7 @@ from django.utils.encoding import smart_unicode
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.gis.geos.base import GEOSGeometry
+from django.contrib.gis.geos.geometry import GEOSGeometry
 
 class GeoJSONEmitter(JSONEmitter):
     """

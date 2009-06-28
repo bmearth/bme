@@ -1,4 +1,5 @@
 {% extends "brc/base.html" %}
+{% load comments_tag %}
 {% block head_title %} {{ year.year }} - {{ playa_event.name }} {% endblock %}
 {% block body %}
 {{ playa_event.year.year }}<br />
@@ -6,4 +7,6 @@
 <h1>{{ playa_event.name }}</h1>
 {{ playa_event.artist }} <br /><br />
 {{ playa_event.description }} <br /><br />
+<h3>Comments on This Event:</h3>
+{% comments playa_event %}
 {% endblock %}
