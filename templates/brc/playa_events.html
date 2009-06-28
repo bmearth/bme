@@ -9,9 +9,12 @@
 <a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
 {% endifnotequal %}
 <h2>Playa Events</h2>
+{% ifequal year.year '2009' %}
+<a href='/brc/event/create/what-where-when'>Create New Event</a><br/><br/>
+{% endifequal %}
 <ul>
 {% for playa_event in playa_events %}
-<li><a href='/brc/{{ year.year }}/playa_event/{{playa_event.id }}/'>{{ playa_event.name }}</a></li>
+<li><a href='/brc/{{ year.year }}/playa_event/{{playa_event.id }}/'>{{ playa_event.title }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}
