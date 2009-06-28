@@ -92,7 +92,7 @@ def playa_events(request, year_year):
 	xyear = Year.objects.filter(year=year_year)
 	previous = int(year_year) -1
 	next = int(year_year) + 1
-	xPlayaEvents = PlayaEvent.objects.filter(year=xyear[0])
+	xPlayaEvents = PlayaEvent.objects.filter(year=xyear[0]).order_by('start')
 	return render_to_response('brc/playa_events.html', {'year': xyear[0],
 							'playa_events': xPlayaEvents,
 							'previous' : previous,
@@ -166,6 +166,7 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
         if instance is None:
             event.creator = request.user
             event.calendar = calendar
+            event.year = Year.objects.get(year=str(event.start.year))
         event.save()
         #next = next or reverse('event', args=[event.id])
         #next = get_next_url(request, next)

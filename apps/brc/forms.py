@@ -5,7 +5,6 @@ from schedule.models import Occurrence
 import datetime
 import time
 
-
 class SpanForm(forms.ModelForm):
 
     start = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
@@ -18,16 +17,15 @@ class SpanForm(forms.ModelForm):
 
 
 class PlayaEventForm(SpanForm):
+    end_recurring_period = forms.DateTimeField(help_text = _("This date is ignored for one time only events."), required=False)
+    
     def __init__(self, hour24=False, *args, **kwargs):
         super(PlayaEventForm, self).__init__(*args, **kwargs)
     
-    end_recurring_period = forms.DateTimeField(help_text = _("This date is ignored for one time only events."), required=False)
-    
     class Meta:
         model = PlayaEvent
-	fields = ['title', 'year', 'start', 'end', 'rule', 'type', 'description', 'url', 'contact_email', 'hosted_by_camp', 'located_at_art']
+	fields = ['start', 'end', 'title', 'rule', 'type', 'description', 'url', 'contact_email', 'hosted_by_camp', 'located_at_art']
         exclude = ('creator', 'created_on', 'calendar', 'slug', 'location_point', 'location_track')
-        
 
 class OccurrenceForm(SpanForm):
     
