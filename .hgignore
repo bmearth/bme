@@ -7,6 +7,9 @@ syntax:glob
 media/photos/*
 media/photos/*
 media/images/*
+media/art_install/*
+media/theme_camp/*
+media/vehicle/*
 media/avatars/*
 *.log
 *.swp
