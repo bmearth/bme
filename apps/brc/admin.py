@@ -9,20 +9,22 @@ class BME_OSMAdmin(admin.OSMGeoAdmin):
     default_lon = -13269816.5229190997779369
     default_zoom = 13
     display_srid = 4326
-
+    list_per_page = 20
 
 class YearAdmin(admin.OSMGeoAdmin):
     list_display = ('year','location')
 
 
 class TimeStreetAdmin(BME_OSMAdmin):
-    list_display = ('name', 'year',)
+    list_display = ('name', 'year', 'street_line')
     list_filter = ['year']
+    list_editable  = ('street_line',)
 
-class CircularStreetAdmin(admin.OSMGeoAdmin):
-    list_display = ('name', 'year','order', 'distance_from_center')
+class CircularStreetAdmin(BME_OSMAdmin):
+    list_display = ('name', 'year','order', 'distance_from_center', 'street_line')
     list_filter = ['year']   
     ordering = ('year','order')
+    list_editable = ('street_line',)
 
 class ThemeCampAdmin(BME_OSMAdmin):
     list_display = ('name', 'year', 'circular_street', 'time_address','location_point', 'location_poly')
