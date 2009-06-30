@@ -14,7 +14,6 @@ from regionals.models import *
 import haystack
 haystack.autodiscover()
 
-
 #databrowse.site.register(Year)
 #databrowse.site.register(CircularStreet)
 #databrowse.site.register(TimeStreet)
@@ -26,7 +25,6 @@ haystack.autodiscover()
 #databrowse.site.register(ThreeDModel)
 
 from account.openid_consumer import PinaxConsumer
-
 
 import os.path
 
@@ -75,7 +73,7 @@ urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
     (r'^photos/', include('photos.urls')),
     (r'^avatar/', include('avatar.urls')),
-    (r'^swaps/', include('swaps.urls')),
+#   (r'^swaps/', include('swaps.urls')),
     (r'^flag/', include('flag.urls')),
     (r'^schedule/', include('schedule.urls')),
     (r'^locations/', include('locations.urls')),
