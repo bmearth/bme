@@ -17,7 +17,7 @@ TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = True
 
 ADMINS = (
-    # ('Jeffrey Johnson', 'ortelius@gmail.com'),
+    ('Jeffrey Johnson', 'ortelius@burningman.com'),
 )
 
 MANAGERS = ADMINS
@@ -28,6 +28,8 @@ DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
 
 # Local time zone for this installation. Choices can be found here:
 # http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
@@ -167,6 +169,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
 	'django.contrib.databrowse',
+	'haystack',
 )
 
 ABSOLUTE_URL_OVERRIDES = {

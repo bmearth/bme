@@ -7,17 +7,26 @@ from django.contrib import databrowse
 from brc.models import *
 from regionals.models import *
 
-databrowse.site.register(Year)
-databrowse.site.register(CircularStreet)
-databrowse.site.register(TimeStreet)
-databrowse.site.register(ThemeCamp)
-databrowse.site.register(ArtInstallation)
-databrowse.site.register(PlayaEvent)
-databrowse.site.register(Vehicle)
-databrowse.site.register(TrackPoint)
-databrowse.site.register(ThreeDModel)
+#from haystack.sites import SearchSite
+#mysite = SearchSite()
+#mysite.register(PlayaEvent)
+
+import haystack
+haystack.autodiscover()
+
+
+#databrowse.site.register(Year)
+#databrowse.site.register(CircularStreet)
+#databrowse.site.register(TimeStreet)
+#databrowse.site.register(ThemeCamp)
+#databrowse.site.register(ArtInstallation)
+#databrowse.site.register(PlayaEvent)
+#databrowse.site.register(Vehicle)
+#databrowse.site.register(TrackPoint)
+#databrowse.site.register(ThreeDModel)
 
 from account.openid_consumer import PinaxConsumer
+
 
 import os.path
 
@@ -75,6 +84,7 @@ urlpatterns = patterns('',
     (r'^feeds/tweets/(.*)/$', 'django.contrib.syndication.views.feed', tweets_feed_dict),
     (r'^feeds/posts/(.*)/$', 'django.contrib.syndication.views.feed', blogs_feed_dict),
     (r'^feeds/bookmarks/(.*)/?$', 'django.contrib.syndication.views.feed', bookmarks_feed_dict),
+	(r'^search/', include('haystack.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together
