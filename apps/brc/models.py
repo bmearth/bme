@@ -14,6 +14,8 @@ class Year(models.Model):
     theme = models.CharField(max_length=20, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     objects = models.GeoManager()
+    event_start = models.DateField(null=True)
+    event_end = models.DateField(null=True)
     class Meta:
         ordering = ('year',)
 
