@@ -7,8 +7,10 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.contrib.gis.geos import *
 from django.contrib.auth.decorators import login_required
-from schedule.models import *
-from schedule.views import *
+
+
+from swingtime.models import Event, Occurrence
+from swingtime.views import *
 from brc.models import *
 from brc.forms import PlayaEventForm
 
@@ -86,7 +88,34 @@ def art_car_id(request, year_year, art_car_id):
 	return render_to_response('brc/art_car.html', {'year': xyear[0],
 							'art_car': xArtCar,}, context_instance=RequestContext(request))
 
+def all_playa_events(request, year_year, template='brc/all_playa_events.html', queryset=None):
+  xyear = Year.objects.get(year=year_year)
+  previous = int(xyear.year) -1
+  next = int(xyear.year) + 1
 
+  if queryset:
+      queryset = queryset._clone()
+  else:
+      queryset = Occurrence.objects.select_related()
+      
+  occurrences=queryset.filter(start_time__range=(xyear.event_start, xyear.event_end)).order_by('start_time')
+  
+  by_day = [
+      (dt, list(items)) 
+      for dt,items in itertools.groupby(occurrences, lambda o: o.start_time.date())
+  ]
+  
+  data=dict(
+    year=xyear,
+    by_day=by_day,
+    previous=previous,
+    next=next,
+  )
+  return render_to_response(
+      template, 
+      data,
+      context_instance=RequestContext(request)
+  )
 
 def playa_events(request, year_year):
 	xyear = Year.objects.filter(year=year_year)

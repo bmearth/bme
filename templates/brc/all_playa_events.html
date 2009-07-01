@@ -1,0 +1,47 @@
+{% extends "brc/base.html" %}
+{% block head_title %} {{ year.year }} - Playa Events{% endblock %}
+{% block body %}
+{% ifnotequal previous 2005 %}
+<a href='/brc/{{ previous }}/playa_events/'><< {{ previous }}</a>
+{% endifnotequal %}
+<font size=+3><b><a href='/brc/{{ year.year }}'>{{ year.year }}</a></b></font>
+{% ifnotequal next 2010 %}
+<a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
+{% endifnotequal %}
+<h2>Playa Events</h2>
+{% ifequal year.year '2009' %}
+<a href='/brc/event/create/what-where-when'>Create New Event</a><br/><br/>
+{% endifequal %}
+
+{% if by_day %}
+<table border=1 width=100%>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Title</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dt, occurrences in by_day %}
+    <tr>
+      <th rowspan="{{ occurrences|length }}">
+        {{ dt|date:"l - M jS"}}
+      </th>
+      {% for o in occurrences %}
+      <td>{{ o.title}}</td>
+      <td>{{ o.start_time|date:"P" }}</td>
+      <td>{{ o.end_time|date:"P" }}</td>
+    </tr>
+      {% if not forloop.last %}
+    <tr>
+      {% endif %}
+      {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No events occurring in {{ year.year }}</p>
+  {% endif %}
+  {% endblock %}
