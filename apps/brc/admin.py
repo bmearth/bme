@@ -1,6 +1,10 @@
 from django.conf import settings
+from swingtime.admin import EventNoteInline, OccurrenceInline
 from django.contrib.gis import admin
 from brc.models import *
+
+
+
 class BME_OSMAdmin(admin.OSMGeoAdmin):
     wms_url = 'http://earthdev.burningman.com/cgi-bin/mapserv?map=/home/ortelius/brc2008.map'
     wms_layer = 'brc2008'
@@ -43,10 +47,11 @@ class VehicleAdmin(BME_OSMAdmin):
     search_fields = ('name','description')
 
 class PlayaEventAdmin(BME_OSMAdmin):
-    list_display = ('title', 'year', 'type', 'start', 'end')
-    list_filter = ['year', 'type']
-    ordering = ('title','start')
+    list_display = ('title', 'event_type', 'year')
+    list_filter = ['year', 'event_type']
+    ordering = ['title']
     search_fields = ('title','description')
+    inlines = [EventNoteInline, OccurrenceInline]
 
 class TrackPointAdmin(BME_OSMAdmin):
     list_display = ('user', 'vehicle', 'xypoint', 'xypoint_time')
