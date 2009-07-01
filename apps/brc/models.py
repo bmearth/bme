@@ -2,7 +2,7 @@ from django.contrib.gis.db import models
 from django.db import connection
 from django.contrib.auth.models import User
 from swingtime.models import Event
-import datetime
+from datetime import datetime, timedelta
 
 class Year(models.Model):
     def __unicode__(self):
@@ -18,6 +18,14 @@ class Year(models.Model):
     event_end = models.DateField(null=True)
     class Meta:
         ordering = ('year',)
+    
+    def daterange(self):
+      """
+      Returns a list of datetime objects for every day of the event
+      """
+      numdays = (self.event_end - self.event_start).days + 1
+      return [self.event_start + timedelta(days=x) for x in range(0,numdays)]
+
 
 class CircularStreet(models.Model):
     def __unicode__(self):
@@ -170,3 +178,4 @@ class PlayaEvent(Event):
     url = models.URLField(null=True, blank=True)
     contact_email = models.EmailField(null=True, blank=True)
     objects = models.GeoManager()
+    creator = models.ForeignKey(User, null=False)
