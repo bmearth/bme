@@ -1,0 +1,94 @@
+{% extends "brc/base.html" %}
+{% load comments_tag %}
+{% load i18n %}
+{% block head_title %} {{ year.year }} Event - {{ playa_event.title }} {% endblock %}
+{% block body %}
+{{ playa_event.year.year }}<br />
+<a href='/brc/{{ playa_event.year.year }}/playa_events/'>Back to {{ playa_event.year.year }} Playa Events</a><br />
+
+{% if user.is_authenticated %}
+{% ifequal user playa_event.creator %}
+<div class="event_actions" align="center">
+  {% if back_url %}
+  <a href="{{ back_url }}">
+    <img border="0" src="{{ MEDIA_URL }}img/left_mod.png" alt="{% trans "Back" %}"/>
+  </a>
+  &nbsp;
+  {% endif %}
+  <a href="{% url edit_event playa_event.year.year playa_event.id %}">
+    <img border="0" src="{{ MEDIA_URL }}img/pencil.png" alt="{% trans "Change" %}"/>
+  </a>
+  &nbsp;
+  <a href="{% url delete_event playa_event.id %}">
+    <img border="0" src="{{ MEDIA_URL }}img/delete.png" alt="{% trans "Delete" %}"/>
+  </a>
+</div>
+{% endifequal %}
+{% endif %}
+
+<h2 align="center">{{playa_event.title}}</h2>
+<table align="center">
+
+
+ {% if playa_event.occurrence_set.count %}
+     {% for o in playa_event.occurrence_set.all %}
+     <tr>
+       <td><b>Occurrence:</b></td>
+       <td>
+         {% if user.is_authenticated %}
+         {% ifequal user playa_event.creator %}
+         <a href="{% url swingtime-occurrence playa_event.id o.id %}">
+           {% endifequal %}
+           {% endif %}
+             {{ o.start_time|date:"l, F jS, Y P" }} &ndash; 
+             {{ o.end_time|date:"l, F jS, Y P" }}
+         {% if user.is_authenticated %}
+         {% ifequal user playa_event.creator %}
+         [Edit]
+         </a>
+         {% endifequal %}
+         {% endif %}
+       </td>
+     </tr>
+     {% endfor %}
+ {% else %}
+ {% endif %}
+{% ifnotequal playa_event.event_type.abbr "none" %}
+<tr>
+<td><b>Type:</b></td>
+<td>{{ playa_event.event_type.label }}</td>
+</tr>
+{% endifnotequal %}
+<tr>
+{% if playa_event.hosted_by_camp %}
+<td><b>Hosted by Camp:</b></td>
+<td><a href="/brc/{{ playa_event.hosted_by_camp.year}}/themecamp/{{playa_event.hosted_by_camp.id}}">{{ playa_event.hosted_by_camp.name }}</a></td>
+</tr>
+{% endif %}
+{% if playa_event.located_at_art %}
+<tr>
+<td><b>Located at Art:</b></td>
+<td><a href="/brc/{{ playa_event.located_at_art.year}}/art_installation/{{playa_event.located_at_art.id}}">{{ playa_event.located_at_art.name }}</a></td>
+</tr>
+{% endif %}
+<tr>
+{% if playa_event.url %}
+<td><b>URL:</b></td>
+<td><a href='{{ playa_event.url }}' target="_blank">{{ playa_event.url }}</td>
+</tr>
+{% endif %}
+<tr>
+{% if playa_event.contact_email %}
+<td><b>Contact Email:</b></td>
+<td><a href='mailto:{{ playa_event.contact_email }}'>{{ playa_event.contact_email }}</td>
+</tr>
+{% endif %}
+</table>
+{% if playa_event.description %}
+<h3>Description</h3>
+<p>{{playa_event.description}}</p>
+{% endif %}
+
+<h3>Comments on This Event:</h3>
+{% comments playa_event %}
+{% endblock %}
