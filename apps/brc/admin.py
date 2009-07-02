@@ -14,6 +14,7 @@ class BME_OSMAdmin(admin.OSMGeoAdmin):
     default_zoom = 13
     display_srid = 4326
     list_per_page = 20
+    openlayers_url = 'http://www.openlayers.org/api/2.8/OpenLayers.js'
 
 class YearAdmin(admin.OSMGeoAdmin):
     list_display = ('year','location')
@@ -70,3 +71,4 @@ admin.site.register(PlayaEvent, PlayaEventAdmin)
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(TrackPoint, TrackPointAdmin)
 admin.site.register(ThreeDModel, ThreeDModelAdmin)
+

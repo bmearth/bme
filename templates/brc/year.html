@@ -23,7 +23,7 @@
             } );
 	   //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
             //map.addLayers([layerMapnik]);
-	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/", {numZoomLevels: 19});
+	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
 	map.addLayer(newLayer);
     
 	map.addControl(new OpenLayers.Control.LayerSwitcher());

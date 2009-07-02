@@ -103,7 +103,7 @@
     // The admin map for this geometry field.
     {{ module }}.map = new OpenLayers.Map('{{ id }}_map', options);
     // Base Layer
-    var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/", {numZoomLevels: 19});
+    var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
     {{ module }}.map.addLayer(newLayer);
     {{ module }}.layers.base = {% block base_layer %}new OpenLayers.Layer.WMS( "{{ wms_name }}", "{{ wms_url }}", {layers: '{{ wms_layer }}'} );{% endblock %}
     {{ module }}.map.addLayer({{ module }}.layers.base);

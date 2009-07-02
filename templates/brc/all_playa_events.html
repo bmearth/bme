@@ -14,8 +14,8 @@
 {% endifequal %}
 
 {% if by_day %}
-<table border=1 width=100%>
-  <thead>
+<table width=100%>
+  <thead border=1>
     <tr>
       <th>Day</th>
       <th>Title</th>
@@ -23,14 +23,14 @@
       <th>End</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody border=1>
     {% for dt, occurrences in by_day %}
     <tr>
       <th rowspan="{{ occurrences|length }}">
         {{ dt|date:"l - M jS"}}
       </th>
       {% for o in occurrences %}
-      <td>{{ o.title}}</td>
+      <td><a href="{% url playa_event year.year o.event.playaevent.id %}">{{ o.title}}</a></td>
       <td>{{ o.start_time|date:"P" }}</td>
       <td>{{ o.end_time|date:"P" }}</td>
     </tr>

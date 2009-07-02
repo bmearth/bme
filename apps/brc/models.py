@@ -25,6 +25,7 @@ class Year(models.Model):
       """
       numdays = (self.event_end - self.event_start).days + 1
       return [self.event_start + timedelta(days=x) for x in range(0,numdays)]
+      
 
 
 class CircularStreet(models.Model):
