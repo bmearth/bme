@@ -24,5 +24,6 @@ urlpatterns = patterns('',
      url(r'^event/delete/(?P<event_id>\d+)/$',
       'brc.views.delete_event',
       name="delete_event"),
+      url(r'^(?P<year_year>\d{4})/playa_event/create/$','brc.views.add_event', name='playa_event_create',),
      url(r'^swingtime/', include('swingtime.urls')),
 )

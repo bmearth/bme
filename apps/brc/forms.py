@@ -1,8 +1,9 @@
 from django import forms
+from django.forms import widgets
 from django.utils.translation import ugettext_lazy as _
-from brc.models import Year, PlayaEvent
+from brc.models import Year, PlayaEvent, ArtInstallation, ThemeCamp
 from swingtime.conf import settings as swingtime_settings
-from swingtime.models import Event, Occurrence
+from swingtime.models import Event, Occurrence, EventType, Note
 from swingtime.forms import timeslot_options
 from swingtime import utils
 from datetime import datetime, date, time
@@ -69,7 +70,7 @@ default_timeslot_offset_options = timeslot_offset_options()
 
 class PlayaSplitDateTimeWidget(forms.MultiWidget):
     '''
-    A Widget that splits datetime input into a SelectDateWidget for dates and
+    A Widget that splits datetime input into a custome Select for dates and
     Select widget for times.
     
     '''
@@ -90,28 +91,98 @@ class PlayaSplitDateTimeWidget(forms.MultiWidget):
 
 
 #===============================================================================
-class PlayaEventForm(forms.ModelForm):
-    '''
-    A simple form for adding and updating Event attributes
+class PlayaEventForm(forms.Form):
+  '''
+  A simple form for adding and updating Event attributes
 
-    '''
+  '''
 
-    #===========================================================================
-    class Meta:
-        model = PlayaEvent
-        fields = ['type', 'description', 'url', 'contact_email', 'hosted_by_camp', 'located_at_art']
-        exclude = ('creator', 'slug', 'location_point', 'location_track')
+  title  = forms.CharField(required=True, max_length=32, label='Title: ')
+  description  = forms.CharField(required=False, max_length=100, label='Description: ')
+  event_type = forms.ModelChoiceField(queryset=EventType.objects.all(), empty_label=None, label='Event Type: ')
+  url  = forms.URLField(required=False, verify_exists=True, label='URL: ')
+  contact_email = forms.EmailField(required=False, label='Contact email')\
+  # The querysets below are overridden in the __init__. It was the only way I could figure out how
+  # to handle an arbitrary year argument.
+  hosted_by_camp = forms.ModelChoiceField(required=False, queryset=ThemeCamp.objects.all(), label='Hosted By Camp: ')
+  located_at_art = forms.ModelChoiceField(required=False, queryset=ArtInstallation.objects.all(), label='Located at Art Installation: ')
 
-    #---------------------------------------------------------------------------
-    def __init__(self, *args, **kws):
-        super(PlayaEventForm, self).__init__(*args, **kws)
-        self.fields['description'].required = False
+  start_time=forms.DateTimeField(
+    label='Start: ',
+  )
 
+  end_time=forms.DateTimeField(
+    label='End: '
+  )
 
+  note = forms.CharField(widget=widgets.Textarea(attrs={'rows':'10', 'cols':'40'}), required=False, label='Note to moderator: ')
+
+  #---------------------------------------------------------------------------
+  def __init__(self, *args, **kws):
+    super(PlayaEventForm, self).__init__(*args, **kws)
+    self.fields['description'].required = False
+
+    # Because we'd like to have the Date be selected from a pulldown of 
+    # valid dates, we needed a way to pass the year to the form, then
+    # to populate the select widget.
+    # 
+    # The year object is passed in as an "initial" dict from the view.
+    #
+    # I couldn't figure out a way to pass the choices in if the widget
+    # for the day field was set in the day field definition, so what worked
+    # was to define the widget and the choices altogether right here.
+    #
+    # If the format of the pulldown needs to be changed, it should be
+    # changed here as well. This is uglier than it should be.
+    # -cjs
+    #
+    year = self.initial.get('year', None)
+    if year:
+      playa_day_choices=[(d, d.strftime('%A, %B %d')) for d in year.daterange()]
+      self.fields['start_time'].widget=PlayaSplitDateTimeWidget(choices=playa_day_choices)
+      self.fields['end_time'].widget=PlayaSplitDateTimeWidget(choices=playa_day_choices)
+      self.fields['hosted_by_camp'].queryset=ThemeCamp.objects.filter(year=year)
+      self.fields['located_at_art'].queryset=ArtInstallation.objects.filter(year=year)
     
+  def clean(self):
+    cleaned_data=self.cleaned_data
+    start=cleaned_data['start_time']
+    end = cleaned_data['end_time']
+
+
+    if end < start:
+      raise forms.ValidationError("Event cannot end before it starts!")
+
+    # Always return the full collection of cleaned data.
+    return cleaned_data
+
+  def save(self, commit=False):
+    playa_event = PlayaEvent(
+      title = self.cleaned_data['title'],
+      description = self.cleaned_data['description'],
+      event_type = self.cleaned_data['event_type'],
+      url=self.cleaned_data['url'],
+      contact_email=self.cleaned_data['contact_email'],
+      hosted_by_camp=self.cleaned_data['hosted_by_camp'],
+      located_at_art = self.cleaned_data['located_at_art'],
+    )
+    playa_event.add_occurrences(
+      self.cleaned_data['start_time'], 
+      self.cleaned_data['end_time'],
+    )
+    
+    if self.cleaned_date['note'] is not None:
+        playa_event.notes.create(note=note)
+    
+    if commit:
+      playa_event.save()
+      
+    return playa_event
     
 class PlayaEventOccurrenceForm(forms.Form):
-
+  '''
+  For use in editing occurrences
+  '''
   def __init__(self, *args, **kws):
       super(PlayaEventOccurrenceForm, self).__init__(*args, **kws)
       # Because we'd like to have the Date be selected from a pulldown of 

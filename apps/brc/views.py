@@ -8,13 +8,11 @@ from django.template import RequestContext
 from django.contrib.gis.geos import *
 from django.contrib.auth.decorators import login_required
 
-
 from swingtime.models import Event, Occurrence
 from swingtime import utils, forms
 from swingtime.views import *
 from brc.models import *
 from brc import forms as brcforms
-
 
 from dateutil import parser
 
@@ -226,56 +224,34 @@ def playa_occurrence_view(
         context_instance=RequestContext(request)
     )
 
-
-#-------------------------------------------------------------------------------
-def playa_add_event(
-    request, 
-    template='swingtime/add_event.html',
-    event_form_class=forms.EventForm,
-    recurrence_form_class=forms.MultipleOccurrenceForm
+@login_required
+def add_event(
+  request, 
+  year_year, 
+  template_name='brc/add_event.html'
 ):
-    '''
-    Add a new ``Event`` instance and 1 or more associated ``Occurrence``s.
+  user = request.user
+  
+  if request.method=='POST':
+    form=brcforms.PlayaEventForm(data=request.POST)
+    if form.is_valid():
+      new_playa_event=form.save(commit=False)
+      new_playa_event.creator=user
+      new_playa_event.year = Year.objects.get(year=year_year)
+      new_playa_event.save()
+      #next = next or reverse('event', args=[event.id])
+      #next = get_next_url(request, next)
+      #find a better way to to do this!
+      next = "/brc/" + event.year.year + "/playa_event/" + str(event.id)
+      return HttpResponseRedirect(next)
+  else:
+    form=brcforms.PlayaEventForm(initial=dict(year=Year.objects.get(year=year_year)))
 
-    Context parameters:
-
-    dtstart
-        a datetime.datetime object representing the GET request value if present,
-        otherwise None
-
-    event_form
-        a form object for updating the event
-
-    recurrence_form
-        a form object for adding occurrences
-
-    '''
-    dtstart = None
-    if request.method == 'POST':
-        event_form = event_form_class(request.POST)
-        recurrence_form = recurrence_form_class(request.POST)
-        if event_form.is_valid() and recurrence_form.is_valid():
-            event = event_form.save()
-            recurrence_form.save(event)
-            return http.HttpResponseRedirect(event.get_absolute_url())
-
-    else:
-        if 'dtstart' in request.GET:
-            try:
-                dtstart = parser.parse(request.GET['dtstart'])
-            except:
-                # TODO A badly formatted date is passed to add_event
-                dtstart = datetime.now()
-
-        event_form = event_form_class()
-        recurrence_form = recurrence_form_class(initial=dict(dtstart=dtstart))
-
-    return render_to_response(
-        template,
-        dict(dtstart=dtstart, event_form=event_form, recurrence_form=recurrence_form),
-        context_instance=RequestContext(request)
-    )
-
+  return render_to_response(template_name, {
+      "form": form,
+  }, context_instance=RequestContext(request))
+  
+  
 @login_required
 def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
     template_name='schedule/create_event.html'):
@@ -354,6 +330,10 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
         "calendar": calendar,
         "next":next
     }, context_instance=RequestContext(request))
+
+
+
+
 
 def delete_event(request, event_id, next=None, login_required=True):
     """
