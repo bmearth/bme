@@ -3,10 +3,13 @@ import urllib2
 from BeautifulSoup import BeautifulSoup
 import re
 
-sys.path.append('/var/projects')
+sys.path.append('/home/bme/src/pinax/apps')
+sys.path.append('/home/bme/src')
+sys.path.append('/home/bme/src/bme/apps')
+
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
-from bme.web.models import *
+from brc.models import *
 
 def slugify(inStr):
     removelist = ["a", "an", "as", "at", "before", "but", "by", "for","from","is", "in", "into", "like", "of", "off", "on", "onto","per","since", "than", "the", "this", "that", "to", "up", "via","with"];
@@ -29,14 +32,23 @@ def process_page(url):
 	for installation in installations:
 		try:
 			title = installation.next.next
-			artists = installation.next
+			artists = title.next
 			description = artists.next
+			contact = description.next.next
+			if(contact.string):
+				if(contact.string.strip() == 'Contact:'):
+					contact = contact.next
+			print title.strip()
+			print artists.strip()
+			print description.strip()
+			#print contact.string.strip()
+			print
 
-			xyear = year.objects.get(year='2008')
-			newart = art_installation(name = title.strip(),
-					year = xyear,
-					artist = str(artists),
-					slug = slugify(title),
+			year = Year.objects.get(year='2009')
+			newart = ArtInstallation(name = title.strip(),
+					year = year,
+					artist = str(artists.strip()),
+					slug = slugify(title.strip()),
 					description = description.strip())
 			newart.save()
 			print newart
@@ -44,9 +56,7 @@ def process_page(url):
 			print title
 			print "Unexpected error:", sys.exc_info()
 
-pages = ['http://www.burningman.com/installations/08_art_honor.html',
-            'http://www.burningman.com/installations/08_art_theme.html',
-            'http://www.burningman.com/installations/08_art_playa.html',]
+pages = ['http://www.burningman.com/installations/09_art_brc.html',]
 
 for page in pages:
 	process_page(page)
