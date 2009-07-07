@@ -11,8 +11,8 @@ from regionals.models import *
 #mysite = SearchSite()
 #mysite.register(PlayaEvent)
 
-import haystack
-haystack.autodiscover()
+#import haystack
+#haystack.autodiscover()
 
 #databrowse.site.register(Year)
 #databrowse.site.register(CircularStreet)
@@ -75,7 +75,7 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
 #   (r'^swaps/', include('swaps.urls')),
     (r'^flag/', include('flag.urls')),
-    (r'^schedule/', include('schedule.urls')),
+#   (r'^schedule/', include('schedule.urls')),
     (r'^playaevent/', include('swingtime.urls')),
     (r'^locations/', include('locations.urls')),
     (r'^brc/', include('brc.urls')),
