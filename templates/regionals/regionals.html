@@ -67,6 +67,7 @@
     <p>There are now Regionals on five continents:North America, Africa, Asia, Australasia, and Europe.  To find your local group, click on the appropriate colored area of the map below.</p>
 <div id='map'></div>
 
+	{% comment %}
     {% if user.is_authenticated %}
         <div class="form-toggle">
             <p><span id="start-tribe-toggle">{% trans "Start your own tribe" %}</a></p>
@@ -86,6 +87,7 @@
         {% url acct_login as login_url %}
         <p>{% blocktrans %}<a href="{{ signup_url }}">Sign up</a> and <a href="{{ login_url }}">log in </a> to create your own tribe or join an existing one.{% endblocktrans %}</p>
     {% endif %}
+	{% endcomment %}
     
     <form method="GET" action="">
         <input type="text" name="search" value="{{ search_terms }}" />
@@ -136,7 +138,7 @@
         </p>
         <dl>
         {% for regional in regionals %}
-        	<!-- show regional here -->
+        	{{ regional }}<br/>
 	{% endfor %}
         </dl>
         {% paginate %}
