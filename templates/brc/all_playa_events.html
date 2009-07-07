@@ -10,11 +10,11 @@
 {% endifnotequal %}
 <h2>Playa Events</h2>
 {% ifequal year.year '2009' %}
-<a href='/brc/event/create/what-where-when'>Create New Event</a><br/><br/>
+<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a><br/><br/>
 {% endifequal %}
 
 {% if by_day %}
-<table width=100%>
+<table width=100% border='1'>
   <thead border=1>
     <tr>
       <th>Day</th>
@@ -30,9 +30,9 @@
         {{ dt|date:"l - M jS"}}
       </th>
       {% for o in occurrences %}
-      <td><a href="{% url playa_event year.year o.event.playaevent.id %}">{{ o.title}}</a></td>
-      <td>{{ o.start_time|date:"P" }}</td>
-      <td>{{ o.end_time|date:"P" }}</td>
+      <td><center><a href="{% url playa_event_view year.year o.event.playaevent.id %}">{{ o.title}}</a></center></td>
+      <td><center>{{ o.start_time|date:"P" }}</center></td>
+      <td><center>{{ o.end_time|date:"P" }}</center></td>
     </tr>
       {% if not forloop.last %}
     <tr>

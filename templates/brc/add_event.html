@@ -1,9 +1,12 @@
 {% extends "brc/base.html" %}
 {% load i18n %}
-{% block head_title %}{% blocktrans %}Create or Edit Playa Event{% endblocktrans %}{% endblock %}
+{% block head_title %}{% blocktrans %}Create or Edit Your Playa Event{% endblocktrans %}{% endblock %}
 {% block body %}
-<b>{% trans "Create or change Playa Event." %}</b>
-<br/><br/>
+{% if form.instance.id %}
+	<h2>{% trans "Edit Your Playa Event." %}</h2>
+{% else %}
+	<h2>{% trans "Create Your Playa Event." %}</h2>
+{% endif %}
 <form action="" method="post">
 <table>
 {{ form.as_table }}

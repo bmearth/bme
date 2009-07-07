@@ -3,14 +3,15 @@
 
 {% block head_title %} {{ year.year }} - {{ art_installation.name }} {% endblock %}
 {% block body %}
+<img src='http://www.burningman.com/sections/installations/installations_section.gif'><br/>
 <a href='/brc/{{art_installation.year.year }}'>{{ art_installation.year.year }}</a><br />
 <a href='/brc/{{ art_installation.year.year }}/art_installations/'>Back to {{ art_installation.year.year }} Art Installations</a><br />
 <h1>{{ art_installation.name }}</h1>
 {% if art_installation.image %} <img src='/media/{{ art_installation.image }}'><br />{% endif %}
-<h3>{{ art_installation.artist }}</h3>
-<a href='{{ art_installation.url }}' target='_blank'>{{ art_installation.url }}</a> <br />
-{{ art_installation.contact_email }} <br /><br />
-{{ art_installation.description }} <br /><br />
+{% if art_installation.artist %}<h3>{{ art_installation.artist }}</h3>{% endif %}
+{% if art_installation.url %}<a href='{{ art_installation.url }}' target='_blank'>{{ art_installation.url }}</a> <br />{% endif %}
+{% if art_installation.contact_email %}{{ art_installation.contact_email }} <br /><br />{% endif %}
+{% if art_installation.description %}{{ art_installation.description }} <br /><br />{% endif %}
 <h3>Comments on This Art Installation:</h3>
 {% comments art_installation %}
 

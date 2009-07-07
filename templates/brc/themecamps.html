@@ -1,6 +1,7 @@
 {% extends "brc/base.html" %}
 {% block head_title %} {{ year.year }} - Theme Camps{% endblock %}
 {% block body %}
+<img src='http://www.burningman.com/sections/themecamps/themecamps_section.gif'><br/>
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/themecamps/'><< {{ previous }}</a>
 {% endifnotequal %}

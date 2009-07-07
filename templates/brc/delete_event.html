@@ -1,0 +1,13 @@
+{% extends "brc/base.html" %}
+{% load i18n %}
+{% block head_title %}{% blocktrans %}Delete Event?{% endblocktrans %}{% endblock %}
+{% block body %}
+<h3>{% trans "Are you sure that you really want to delete this Playa Event?" %}</h3>
+
+<h2>{{ object.title }}</h2>
+<form action="." method="POST">
+	<input type="submit" value="{% trans "Delete" %}" />
+	<input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
+	<input type="hidden" name="next" value="{{next|default:""}}"/>
+</form>
+{% endblock %}
