@@ -37,7 +37,7 @@
 #inbox_tab .rtab_inbox a,
 #locations_tab .rtab_locations a
 {
-    color: #000 !important; /* selected tab text colour */
+	 color: #000 !important; /* selected tab text colour */
 }
 #home_tab .tab_home div,
 #apps_tab .tab_apps div,
@@ -56,7 +56,7 @@
 #locations_tab .rtab_locations div
 {
     margin: 0;
-    background-color: #DEF !important; /* selected tab colour */
+	/* background-color: #DEF !important;  selected tab colour */
     border-left: 1px solid #000 !important; /* tab border */
     border-top: 1px solid #000 !important; /* tab border */
     border-right: 1px solid #000 !important; /* tab border */
