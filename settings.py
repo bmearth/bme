@@ -2,7 +2,14 @@
 # Django settings for complete pinax project.
 
 import os.path
+import logging
 
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = '/tmp/bme.log',
+    filemode = 'w'
+)
 
 PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -182,7 +189,7 @@ NOTIFICATION_LANGUAGE_MODULE = 'account.Account'
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-CONTACT_EMAIL = "ortelius@gmail.com"
+CONTACT_EMAIL = "ortelius@burningman.com"
 SITE_NAME = "Burning Man Earth"
 LOGIN_URL = "/account/login"
 LOGIN_REDIRECT_URLNAME = "what_next"
