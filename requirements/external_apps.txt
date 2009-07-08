@@ -39,5 +39,8 @@ http://django-mptt.googlecode.com/svn/trunk/
 # Do editable checkouts (yay!)
 -e svn+http://django-schedule.googlecode.com/svn/trunk#egg=django-schedule
 -e svn+http://django-app-plugins.googlecode.com/svn/trunk#egg=django-app-plugins
--e git://github.com/brosner/django-openid.git#egg=django-openid
--e git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
+
+
+# Removed from here and included the packages from github in the bme project
+#-e git://github.com/brosner/django-openid.git#egg=django-openid
+#-e git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
