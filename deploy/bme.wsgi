@@ -1,5 +1,8 @@
 # complete_project.wsgi is configured to live in projects/complete_project/deploy.
 
+import site
+
+site.addsitedir('/home/bme/lib/python2.5/site-packages')
 import os
 import sys
 
