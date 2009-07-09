@@ -37,7 +37,7 @@ http://django-voting.googlecode.com/svn/trunk/
 http://django-mptt.googlecode.com/svn/trunk/
 
 # Do editable checkouts (yay!)
-#-e svn+http://django-swingtime.googlecode.com/svn/trunk#egg=django-swingtime
+-e svn+http://django-schedule.googlecode.com/svn/trunk#egg=django-schedule
 -e svn+http://django-app-plugins.googlecode.com/svn/trunk#egg=django-app-plugins
 
 
