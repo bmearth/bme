@@ -22,4 +22,4 @@ http://geopy.googlecode.com/svn/trunk/
 http://pypi.python.org/packages/source/M/Markdown/Markdown-2.0.tar.gz
 
 -e git+git://github.com/pinax/diff-match-patch.git#egg=diff-match-patch
--e git+git://github.com/pinax/atom-format.git#egg=atom-format
+#-e git+git://github.com/pinax/atom-format.git#egg=atom-format
