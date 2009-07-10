@@ -156,7 +156,7 @@ INSTALLED_APPS = (
     'imagekit',
     'avatar',
     'flag',
-#    'schedule',
+    'schedule',
     'swingtime',
     'microblogging',
     'locations',
