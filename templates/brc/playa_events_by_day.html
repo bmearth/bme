@@ -17,13 +17,13 @@
       {% if prev_day %}
       <a href="{% url playa_events_by_day year.year prev_day %}">&lt;&lt;&nbsp;{{ prev_day_dt|date:"l, N j y" }}</a>
       {% else %}
-      <span style="color:#D3D3D3">&larr;</span>
+      <span style="color:#D3D3D3">&lt;&lt;&nbsp;previous day</span>
       {% endif %}
       &nbsp;&nbsp; 
       {% if next_day %}
       <a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j y" }} &nbsp;&gt;&gt</a>
       {% else %}
-      <span style="color:#D3D3D3">&rarr;</span>
+      <span style="color:#D3D3D3">next day&nbsp;&gt;&gt;</span>
       {% endif %}
   </h4>
 </div>
