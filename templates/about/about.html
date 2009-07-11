@@ -1,0 +1,17 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "About" %}{% endblock %}
+
+{% block body %}
+    {% blocktrans %}
+	<center>
+	<a href='http://python.org'><img src='/media/img/python-powered-w-200x80.png'></a><br/><br/>
+	<a href='http://djangoproject.com'><img src='/media/img/djangopowered126x54.gif'></a><br/><br/>
+	<a href='http://geodjango.com'><img src='/media/img/geodjango.png'></a><br/><br/>
+	<a href='http://pinaxproject.com'><img src='/media/img/pinax_logo.png'></a><br/><br/>
+	<a href='http://openlayers.org'><img src='/media/img/openlayers_logo.png'></a><br/><br/>
+	</center>
+    {% endblocktrans %}
+{% endblock %}
