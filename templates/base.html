@@ -45,7 +45,11 @@
         
         <div id="tabhead">
             <div class="logo" dir="ltr">{% block logo_link_image %}{% endblock %}</div>
-            <div class="login">{% block login %}{% endblock %}{% block locale_switcher %}{% endblock %}<div style="text-align: right;"></div></div>
+<span class="login">
+<img src="/media/img/bg-login-left.gif" width="12" height="32" />
+<span class="innerlogin">{% block login %}{% endblock %}</span>
+<img src="/media/img/bg-login-right.gif" width="12" height="32" />
+</span>
             <div class="tabs" {% block tab_id %}{% endblock %}>{% block tabs %}{% endblock %}</div>
             <div class="right_tab" {% block rtab_id %}{% endblock %}>{% block right_tab %}{% endblock %}</div>
         </div>
