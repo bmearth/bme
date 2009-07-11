@@ -55,7 +55,7 @@ class Event(models.Model):
     Container model for general metadata and associated ``Occurrence`` entries.
     '''
     title = models.CharField(max_length=32)
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=2000)
     event_type = models.ForeignKey(EventType)
     notes = generic.GenericRelation(Note)
 
