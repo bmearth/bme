@@ -135,7 +135,7 @@ def all_playa_events(request,
 	data=dict(year=year,by_day=by_day,previous=previous,next=next,)
 	return render_to_response(template, data,context_instance=RequestContext(request))
 
-def playa_events_by_day(request, year_year, playa_day, template='brc/playa_events_by_day.html', queryset=None):
+def playa_events_by_day(request, year_year, playa_day=1, template='brc/playa_events_by_day.html', queryset=None):
 	'''
 	View a day's worth of playa events
 	
