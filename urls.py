@@ -75,7 +75,7 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
 #   (r'^swaps/', include('swaps.urls')),
     (r'^flag/', include('flag.urls')),
-#   (r'^schedule/', include('schedule.urls')),
+    (r'^schedule/', include('schedule.urls')),
     (r'^playaevent/', include('swingtime.urls')),
     (r'^locations/', include('locations.urls')),
     (r'^brc/', include('brc.urls')),
@@ -83,7 +83,7 @@ urlpatterns = patterns('',
     (r'^feeds/tweets/(.*)/$', 'django.contrib.syndication.views.feed', tweets_feed_dict),
     (r'^feeds/posts/(.*)/$', 'django.contrib.syndication.views.feed', blogs_feed_dict),
     (r'^feeds/bookmarks/(.*)/?$', 'django.contrib.syndication.views.feed', bookmarks_feed_dict),
-	(r'^search/', include('haystack.urls')),
+#	(r'^search/', include('haystack.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together

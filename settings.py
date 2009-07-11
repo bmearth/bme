@@ -159,7 +159,7 @@ INSTALLED_APPS = (
     'imagekit',
     'avatar',
     'flag',
-#    'schedule',
+    'schedule',
     'swingtime',
     'microblogging',
     'locations',
@@ -180,7 +180,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
 	'django.contrib.databrowse',
-	'haystack',
+#	'haystack',
 )
 
 ABSOLUTE_URL_OVERRIDES = {

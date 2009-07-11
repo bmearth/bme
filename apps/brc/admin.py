@@ -52,6 +52,34 @@ class PlayaEventAdmin(BME_OSMAdmin):
     search_fields = ('title','description', 'print_description')
     inlines = [EventNoteInline, OccurrenceInline]
 
+    actions = ['make_accepted', 'make_rejected', 'make_unmoderated']
+    def make_accepted(self, request, queryset):
+      rows_updated=queryset.update(moderation='A')
+      if rows_updated == 1:
+          message_bit = "1 event was"
+      else:
+          message_bit = "%s events were" % rows_updated
+      self.message_user(request, "%s successfully marked as Accepted." % message_bit)
+    make_accepted.short_description = "Moderate selected events as accepted"
+    
+    def make_rejected(self, request, queryset):
+      rows_updated=queryset.update(moderation='R')
+      if rows_updated == 1:
+          message_bit = "1 event was"
+      else:
+          message_bit = "%s events were" % rows_updated
+      self.message_user(request, "%s successfully marked as Rejected." % message_bit)
+    make_rejected.short_description = "Moderate selected events as rejected"
+    
+    def make_unmoderated(self, request, queryset):
+      rows_updated=queryset.update(moderation='U')
+      if rows_updated == 1:
+          message_bit = "1 event was"
+      else:
+          message_bit = "%s events were" % rows_updated
+      self.message_user(request, "%s successfully marked as Unmoderated." % message_bit)
+    make_unmoderated.short_description = "Moderate selected events as unmoderated"
+
 class TrackPointAdmin(BME_OSMAdmin):
     list_display = ('user', 'vehicle', 'xypoint', 'xypoint_time')
     list_filter = ['user', 'vehicle']
