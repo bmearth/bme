@@ -229,7 +229,7 @@ class PlayaEventForm(forms.ModelForm):
 	class Meta:
 		model = PlayaEvent
 		exclude = ('year', 'slug', 'location_point', 'location_track', 'creator')
-		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','start_time','end_time', 'all_day', 'repeats', 'repeat_days', 'list_online', 'list_contact_online']
+		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','all_day', 'repeats', 'repeat_days', 'start_time','end_time', 'list_online', 'list_contact_online']
 
 class PlayaEventOccurrenceForm(forms.ModelForm):
 	'''

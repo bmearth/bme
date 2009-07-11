@@ -1,6 +1,9 @@
 {% extends "brc/base.html" %}
 {% load i18n %}
 {% block head_title %}{% blocktrans %}Create or Edit Your Playa Event{% endblocktrans %}{% endblock %}
+{% block extra_head %}
+ <script src="{{ MEDIA_URL }}js/event_form.js" type="text/javascript"></script>
+{% endblock %}
 {% block body %}
 {% if form.instance.id %}
 	<h2>{% trans "Edit Your Playa Event." %}</h2>
@@ -9,7 +12,12 @@
 {% endif %}
 <form action="" method="post">
 <table>
-{{ form.as_table }}
+ {% for field in form %}
+	{% if field.errors %}
+		<tr><td colspan=2>{{ field.errors }}</td></tr>	
+	{% endif %}
+	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:</td><td> {{ field }}</td></tr>
+    {% endfor %}
 </table>
 <br/>
 <input type="submit" value="{% trans "Save" %}">
