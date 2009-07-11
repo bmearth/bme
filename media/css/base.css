@@ -75,24 +75,37 @@ h1 {
     padding-left: 5px;
     padding-top: 0;
 }
+
 #tabhead .logo img {
     padding: 21px 0 0 30px;
     width: 360px;
     height: 72px;
 }
+
 #tabhead .login {
-    position: absolute;
-    top: 0px;
-    right: 60px;
-    height: 32px;
-    padding: 8px 0 0 0;
-    text-align: center;
-    width: 301px;
-    background: url('/media/img/bg-login.gif') no-repeat left top;
-    font-size: 12px;
-    color: #fff; /* login bar text colour */
-}
+	position: absolute;
+	top: -12px;
+	right: 60px;
+	margin 0;
+	padding: 0;
+	width: auto;
 	
+}
+
+#tabhead .innerlogin {
+	font-size: 12px;
+    padding: 10px 2px 8px 4px;
+    margin: 0 0 0 -4px;
+	display: inline;
+	color: #fff; /* login bar text colour */
+    background: url('/media/img/bg-login-slice.gif') repeat-x;
+}
+
+#tabhead .login img {
+	position: relative; 
+	top: 10px;
+}
+
 #tabhead .login a, #tabhead .login b {
 	padding: 0 4px;
 }
@@ -182,8 +195,8 @@ table.contact_list td {
     padding: 5px 10px;
 }
 
-#body th {
-	text-align: top;
+#body table th {
+	align: top;
 }
 
 .friendship_request {
