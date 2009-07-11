@@ -341,6 +341,23 @@ def delete_event(request,
 		login_required = login_required
 	)
 
+def delete_occurrence(request,
+	year_year,
+	occurrence_id,
+	next=None,
+):
+	occurrence = get_object_or_404(Occurrence, id=occurrence_id)
+	next = "/brc/" + year_year + "/playa_event/" + str(occurrence.event.id)
+	return delete_object(
+		request,model = Occurrence,
+		object_id = occurrence_id,
+		post_delete_redirect = next,
+		template_name = "brc/delete_occurrence.html",
+		extra_context = dict(next=next),
+		login_required = login_required
+	)
+	
+
 #-------------------------------------------------------------------------------
 #---------- Misc ----------
 #-------------------------------------------------------------------------------

@@ -142,6 +142,8 @@ class PlayaEventForm(forms.ModelForm):
 
 	def __init__(self, *args, **kws):
 		super(PlayaEventForm, self).__init__(*args, **kws)
+
+		# This is irrelevant now because we dont allow editing of the occurrences when editing event metadata, but kept here for now
 		if(kws['instance'] is not None):
 			# Set the initial form values properly for recurring events
 			if(Occurrence.objects.filter(event=self.instance).count()>1):
@@ -164,6 +166,8 @@ class PlayaEventForm(forms.ModelForm):
 
 		if self.cleaned_data['all_day']:
 			pass 
+		elif self.instance:
+			pass
 		elif end < start:
 			raise forms.ValidationError("Event cannot end before it starts!")
 		elif end == start:

@@ -29,13 +29,20 @@
        <td valign='top'><b>Date/Time(s):</b></td>
        <td>
      	{% for o in playa_event.occurrence_set.all %}
-             {{ o.start_time|date:"l, F jS, Y P" }} &ndash; 
-             {{ o.end_time|date:"P" }}
+		{% if playa_event.all_day %}
+			{{ o.start_time|date:"l, F jS" }} - All Day
+		{% else %}
+	             {{ o.start_time|date:"l, F jS, Y P" }} &ndash; 
+        	     {{ o.end_time|date:"P" }}
+		{% endif %}
          {% if user.is_authenticated %}
          {% ifequal user playa_event.creator %}
          <a href="{% url playa_occurrence_edit playa_event.year playa_event.id o.id %}">
-         [Edit]
-         </a>
+        <img border="0" src="{{ MEDIA_URL }}img/pencil.png" alt="{% trans "Change" %}"/> 
+	</a>
+ 	<a href="{% url occurrence_delete playa_event.year.year o.id %}">
+    	<img border="0" src="{{ MEDIA_URL }}img/delete.png" alt="{% trans "Delete" %}"/>
+  	</a>
          {% endifequal %}
          {% endif %}
 	<br/>

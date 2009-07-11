@@ -31,8 +31,12 @@
       </th>
       {% for o in occurrences %}
       <td><center><a href="{% url playa_event_view year.year o.event.playaevent.id %}">{{ o.title}}</a></center></td>
-      <td><center>{{ o.start_time|date:"P" }}</center></td>
-      <td><center>{{ o.end_time|date:"P" }}</center></td>
+	{% if o.event.playaevent.all_day %}
+		<td colspan=2><center>All Day</td>
+	{% else %}
+	      <td><center>{{ o.start_time|date:"P" }}</center></td>
+	      <td><center>{{ o.end_time|date:"P" }}</center></td>
+	{% endif %}
     </tr>
       {% if not forloop.last %}
     <tr>

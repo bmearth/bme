@@ -12,6 +12,10 @@
 {% endif %}
 {% if form.non_field_errors %}<ul class="errorList">{{ form.non_field_errors.as_ul }}</ul>{% endif %}
 <form action="" method="post">
+{% if form.instance.id %}
+	<input id='existing' type='hidden' name='existing' value='true'>	
+{% endif %}
+
 <table>
  {% for field in form %}
 	{% if field.errors %}
@@ -20,6 +24,9 @@
 	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:</td><td> {{ field }}</td></tr>
     {% endfor %}
 </table>
+{% if form.instance.id %}
+	<p><b>You must edit time/date of occurrences from the single event view page <a href='/brc/2009/playa_event/{{ form.instance.id }}/'>Here</a> (loopy edit this)</b></p>
+{% endif %}
 <br/>
 <input type="submit" value="{% trans "Save" %}">
 <input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
