@@ -1,0 +1,62 @@
+{% extends "brc/base.html" %}
+{% block head_title %} {{ year.year }} - Playa Events{% endblock %}
+{% block body %}
+{% ifnotequal previous 2005 %}
+<a href='/brc/{{ previous }}/playa_events/'><< {{ previous }}</a>
+{% endifnotequal %}
+<font size=+3><b><a href='/brc/{{ year.year }}'>{{ year.year }}</a></b></font>
+{% ifnotequal next 2010 %}
+<a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
+{% endifnotequal %}
+<h2>Daily Event View</h2>
+{% ifequal year.year '2009' %}
+<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a><br/><br/>
+{% endifequal %}
+<div id="date-nav">
+  <h4>
+      {% if prev_day %}
+      <a href="{% url playa_events_by_day year.year prev_day %}">&lt;&lt;&nbsp;{{ prev_day_dt|date:"l, N j y" }}</a>
+      {% else %}
+      <span style="color:#D3D3D3">&larr;</span>
+      {% endif %}
+      &nbsp;&nbsp; 
+      {% if next_day %}
+      <a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j y" }} &nbsp;&gt;&gt</a>
+      {% else %}
+      <span style="color:#D3D3D3">&rarr;</span>
+      {% endif %}
+  </h4>
+</div>
+<div id="daily_events">
+  <h3 class='day_header'>Events for  {{ day|date:"l M jS, Y"}}</h3>
+
+  {% if all_day_occ %}
+  <h4 class='day_sub_header'>All Day Events</h4>
+  <div class='all_day_listing'>
+    <ul>
+      {% for o in all_day_occ %}
+        <li><a href="{% url playa_event_view year.year o.event.playaevent.id %}">{{ o.title }}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+
+  {% if timed_occ %}
+  <h4 class='day_sub_header'>Scheduled Events</h4>
+  <div class='timed_listing'>
+    <ul>
+      {% for o in timed_occ %}
+        <li><a href="{% url playa_event_view year.year o.event.playaevent.id %}">{{ o.title }}</a>
+          <span class="event-times">
+          ({{ o.start_time|date:"P" }} - {{ o.end_time|date:"P" }})
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+
+  {% if not all_day_occ and not timed_occ %}
+    <p>No events scheduled for {{ day|date:"l,  M jS"}}</p>
+  {% endif %}
+</div>
+{% endblock %}

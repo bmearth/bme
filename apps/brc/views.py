@@ -1,6 +1,6 @@
 import math
 
-from datetime import datetime
+from datetime import datetime, date, time
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core.paginator import InvalidPage
 from django.http import HttpResponse, HttpResponseRedirect
@@ -134,6 +134,92 @@ def all_playa_events(request,
   
 	data=dict(year=year,by_day=by_day,previous=previous,next=next,)
 	return render_to_response(template, data,context_instance=RequestContext(request))
+
+def playa_events_by_day(request, year_year, playa_day, template='brc/playa_events_by_day.html', queryset=None):
+	'''
+	View a day's worth of playa events
+	
+	Context parameters:
+	
+	year_year: The 4 digit year
+	playa_day: The current day of the festival, defined as the index into a
+		list from event_start to event_end, starting with 1
+	'''
+
+	year = get_object_or_404(Year, year=year_year)
+	
+	event_date_list = year.daterange()
+	
+	# Normalize playa_day to start at 0
+	playa_day =int(playa_day)
+		
+	if playa_day < 1:
+		return http.HttpResponseBadRequest('Bad Request')
+	
+	if playa_day > len(event_date_list): 
+		return http.HttpResponseBadRequest('Bad Request')
+	
+	playa_day_dt = event_date_list[playa_day-1]
+	previous_playa_day = playa_day  -1
+	next_playa_day = playa_day  +1
+	
+	if playa_day == 0:
+		previous_playa_day = None
+		previous_playa_day_dt = None
+		next_playa_day_dt = event_date_list[next_playa_day-1]
+	elif playa_day == len(event_date_list):
+		next_playa_day = None
+		next_playa_day_dt = None
+		previous_playa_day_dt=event_date_list[previous_playa_day-1]
+	else:
+		next_playa_day_dt = event_date_list[next_playa_day-1]
+		previous_playa_day_dt=event_date_list[previous_playa_day-1]
+
+		
+	if queryset:
+		queryset = queryset._clone()
+	else:
+		queryset = Occurrence.objects.select_related().filter(event__playaevent__moderation='A', event__playaevent__list_online=True)
+
+	dt_begin = datetime.combine(playa_day_dt, time(0))
+	dt_end = datetime.combine(playa_day_dt, time(23,30))
+
+	occurrences=queryset.filter(start_time__range=(dt_begin, dt_end)).order_by('-event__playaevent__all_day', 'start_time')
+	
+	# This is an optimization to avoid making 2 trips to the database. We want
+	# a list of all the events that are all, and another with those that are 
+	# not. 
+	#
+	# The below will cause 2 database round trips.
+	# all_day_occurrences = occurrences.filter(event__playaevent__all_day=True)
+	# timed_occurrences = occurrences.filter(event__playaevent__all_day=False)
+	#
+	# Instead, if we do an iterator over the original queryset, we can group
+	# them in memory. It's important to sort the original queryset by all_day,
+	# since it would otherwise cause strange results from itertools.groupby
+	
+	by_all_day=dict([(all_day, list(items)) for all_day, items in itertools.groupby(occurrences, lambda o: o.event.playaevent.all_day)])
+
+	all_day_occurrences = by_all_day.setdefault(True)
+	timed_occurrences = by_all_day.setdefault(False)
+	
+	data= dict(
+		year = year,
+		day = playa_day_dt,
+		next_day = next_playa_day,
+		next_day_dt = next_playa_day_dt,
+		prev_day = previous_playa_day,
+		prev_day_dt = previous_playa_day_dt,
+		event_dates = event_date_list,
+		all_day_occ = all_day_occurrences,
+		timed_occ = timed_occurrences,
+	)
+	
+	return render_to_response(
+		template,
+		data,
+		context_instance=RequestContext(request)
+	)
 
 def playa_event_view(request,
 	year_year,
