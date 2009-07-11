@@ -10,6 +10,7 @@
 {% else %}
 	<h2>{% trans "Create Your Playa Event." %}</h2>
 {% endif %}
+{% if form.non_field_errors %}<ul class="errorList">{{ form.non_field_errors.as_ul }}</ul>{% endif %}
 <form action="" method="post">
 <table>
  {% for field in form %}

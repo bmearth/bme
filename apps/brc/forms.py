@@ -162,7 +162,9 @@ class PlayaEventForm(forms.ModelForm):
 		start=self.cleaned_data['start_time']
 		end = self.cleaned_data['end_time']
 
-		if end < start:
+		if self.cleaned_data['all_day']:
+			pass 
+		elif end < start:
 			raise forms.ValidationError("Event cannot end before it starts!")
 		elif end == start:
 			raise forms.ValidationError("Event cannot start and end at the same time!")
@@ -170,10 +172,6 @@ class PlayaEventForm(forms.ModelForm):
 		# Should Check that Camp and Art are not BOTH Chosen here
 		# Also Check that at least one type of location is specified
 	
-		# Depending on Date selections, update Start and End Fields
-
-		# If All Day Event is selected, set times to 12:00-11:59
-
 		# Always return the full collection of cleaned data.
 		return self.cleaned_data
 
@@ -215,13 +213,22 @@ class PlayaEventForm(forms.ModelForm):
 		else:
 			# New Event, add occurrence
 			if(self.cleaned_data['repeats']):
-				#Handle for Repeating Events
-				start_time = self.cleaned_data['start_time'].time()
-				end_time = self.cleaned_data['end_time'].time()
+				if(self.cleaned_data['all_day']):
+					start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
+					end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
+				else:
+					start_time = self.cleaned_data['start_time'].time()
+					end_time = self.cleaned_data['end_time'].time()
 				for day in self.cleaned_data['repeat_days'] :
 					event_start = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), start_time) 
 					event_end = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), end_time) 
 					playa_event.add_occurrences(event_start,event_end)
+			elif(self.cleaned_data['all_day']):
+				start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
+				end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
+				event_start = datetime.combine(self.cleaned_data['start_time'].date(), start_time) 
+				event_end = datetime.combine(self.cleaned_data['end_time'].date(), end_time) 
+				playa_event.add_occurrences(event_start, event_end)
 			else:	
 				playa_event.add_occurrences(self.cleaned_data['start_time'], self.cleaned_data['end_time'])
 
