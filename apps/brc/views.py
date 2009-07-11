@@ -147,6 +147,8 @@ def playa_events_by_day(request, year_year, playa_day, template='brc/playa_event
 	'''
 
 	year = get_object_or_404(Year, year=year_year)
+	previous = int(year.year) -1
+	next = int(year.year) + 1
 	
 	event_date_list = year.daterange()
 	
@@ -206,6 +208,8 @@ def playa_events_by_day(request, year_year, playa_day, template='brc/playa_event
 	data= dict(
 		year = year,
 		day = playa_day_dt,
+		next = next,
+		previous = previous,
 		next_day = next_playa_day,
 		next_day_dt = next_playa_day_dt,
 		prev_day = previous_playa_day,
