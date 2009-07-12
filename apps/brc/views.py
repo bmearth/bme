@@ -266,7 +266,8 @@ def playa_event_view(request,
 	'''
 
 	return render_to_response(template, dict(playa_event=event, event_form=event_form_class, recurrence_form=recurrence_form_class),context_instance=RequestContext(request))
- 
+
+@login_required 
 def playa_occurrence_view(request,
 	year_year,
 	playa_event_id, 
@@ -283,18 +284,18 @@ def playa_occurrence_view(request,
 	form: a form object for updating the occurrence
 	'''
 	occurrence = get_object_or_404(Occurrence, pk=playa_occurrence_id, event__pk=playa_event_id)
+	next = "/brc/" + occurrence.event.playaevent.year.year + "/playa_event/" + str(occurrence.event.playaevent.id)
 	if request.method == 'POST':
 		form = form_class(request.POST, instance=occurrence)
 		if form.is_valid():
 			form.save(occurrence.event, playa_occurrence_id)
-			next = "/brc/" + occurrence.event.playaevent.year.year + "/playa_event/" + str(occurrence.event.playaevent.id)
 			return HttpResponseRedirect(next)
 		else:
 			form = form_class(instance=occurrence)
 	else:
 		form = form_class(instance=occurrence)
 
-	return render_to_response(template,dict(occurrence=occurrence, form=form),context_instance=RequestContext(request))
+	return render_to_response(template,dict(occurrence=occurrence, form=form, next=next),context_instance=RequestContext(request))
 
 @login_required
 def create_or_edit_event(request, 

@@ -124,16 +124,17 @@ class PlayaEventForm(forms.ModelForm):
 	playa_day_choices_short=[(d, d.strftime('%A %d')) for d in year.daterange()]
 
 	title  = forms.CharField(required=True, max_length=40, label='Title')
-	print_description  = forms.CharField(required=False, max_length=150, label='Print Description', help_text="Print description for publication in the What Where When.", widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
-	description  = forms.CharField(required=False, max_length=2000, label='Online Description', widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
+	print_description  = forms.CharField(required=True, max_length=150, label='Print Description', help_text="Print description for publication in the What Where When.", widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
+	description  = forms.CharField(required=True, max_length=2000, label='Online Description', widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
 	event_type = forms.ModelChoiceField(queryset=EventType.objects.all(), empty_label=None, label='Event Type')
 	url  = forms.URLField(required=False, verify_exists=True, label='URL')
 	contact_email = forms.EmailField(required=False, label='Contact email')
 	other_location = forms.CharField(required=False, label='Other Location', max_length=150)
 	hosted_by_camp = PlayaModelChoiceField(required=False, label='Hosted By Camp',queryset=ThemeCamp.objects.filter(year=year).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name'))
 	located_at_art = PlayaModelChoiceField(required=False, label='Located at Art Installation', queryset=ArtInstallation.objects.filter(year=year).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name'))
-	start_time=forms.DateTimeField(label='Start', widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
-	end_time=forms.DateTimeField(label='End', widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
+	start_time=forms.DateTimeField(label='Start', required=True, widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
+	check_location=forms.BooleanField(required=False, label='Check Playa Info for camp location', initial=False)
+	end_time=forms.DateTimeField(label='End', required=True, widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
 	all_day=forms.BooleanField(required=False, label='All Day Event')
 	repeats=forms.BooleanField(required=False, label='Repeats', help_text='If your event repeats at different times on different days, <br/>check the days on which it repeats, <br/>and edit the times on the following pages')
 	repeat_days = MultipleIntegerField(playa_day_choices_short, label='Repeat Days',widget=forms.CheckboxSelectMultiple)
@@ -173,9 +174,13 @@ class PlayaEventForm(forms.ModelForm):
 		elif end == start:
 			raise forms.ValidationError("Event cannot start and end at the same time!")
 
-		# Should Check that Camp and Art are not BOTH Chosen here
-		# Also Check that at least one type of location is specified
-	
+
+		if(self.cleaned_data['hosted_by_camp'] and self.cleaned_data['located_at_art']):
+			raise forms.ValidationError("Your Event can be located at EITHER a camp or an art installation (but not both)")
+		
+		if((self.cleaned_data['hosted_by_camp'] is None) and (self.cleaned_data['located_at_art'] is None) and (len(self.cleaned_data['other_location'].strip())<1)):
+			raise forms.ValidationError("Your Event must be located at a Camp, or an Art Installation or some Other Location (cant be nowhere)")
+		
 		# Always return the full collection of cleaned data.
 		return self.cleaned_data
 
@@ -201,6 +206,7 @@ class PlayaEventForm(forms.ModelForm):
 		playa_event.hosted_by_camp=self.cleaned_data['hosted_by_camp']
 		playa_event.located_at_art = self.cleaned_data['located_at_art']
 		playa_event.other_location=self.cleaned_data['other_location']
+		playa_event.check_location=self.cleaned_data['check_location']
 		playa_event.all_day = self.cleaned_data['all_day']
 		playa_event.list_online=self.cleaned_data['list_online']
 		playa_event.list_contact_online=self.cleaned_data['list_contact_online']
@@ -240,7 +246,7 @@ class PlayaEventForm(forms.ModelForm):
 	class Meta:
 		model = PlayaEvent
 		exclude = ('year', 'slug', 'location_point', 'location_track', 'creator')
-		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','all_day', 'repeats', 'repeat_days', 'start_time','end_time', 'list_online', 'list_contact_online']
+		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','check_location','all_day', 'repeats', 'repeat_days', 'start_time','end_time', 'list_online', 'list_contact_online']
 
 class PlayaEventOccurrenceForm(forms.ModelForm):
 	'''
@@ -256,8 +262,10 @@ class PlayaEventOccurrenceForm(forms.ModelForm):
 		cleaned_data = self.cleaned_data
 		start=cleaned_data.get('start_time')
 		end = cleaned_data.get('end_time')
-    
-		if end < start:
+	
+		if(self.instance.event.playaevent.all_day):
+			pass
+		elif end < start:
 			raise forms.ValidationError("Event cannot end before it starts!")
     
 		# Always return the full collection of cleaned data.
@@ -265,9 +273,16 @@ class PlayaEventOccurrenceForm(forms.ModelForm):
     
 	def save(self, event, occurrence_id):
 		if(occurrence_id is not None):
-			self.instance.start_time = self.cleaned_data['start_time']
-			self.instance.end_time = self.cleaned_data['end_time']
-			self.instance.save()
+			if(event.playaevent.all_day):
+				start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
+				end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
+				self.instance.start_time = datetime.combine(self.cleaned_data['start_time'], start_time)
+				self.instance.end_time = datetime.combine(self.cleaned_data['start_time'], end_time)
+				self.instance.save()
+			else:
+				self.instance.start_time = self.cleaned_data['start_time']
+				self.instance.end_time = self.cleaned_data['end_time']
+				self.instance.save()
 		else:
 			# Add new Occurrence
 			event.add_occurrences(self.cleaned_data['start_time'], self.cleaned_data['end_time'])

@@ -157,6 +157,7 @@ class PlayaEvent(Event):
 	hosted_by_camp = models.ForeignKey(ThemeCamp, null=True, blank=True)
 	located_at_art = models.ForeignKey(ArtInstallation, null=True, blank=True)
 	other_location = models.CharField(max_length=255, null=True, blank=True)
+	check_location = models.BooleanField()
 	location_point = models.PointField(null=True, blank=True)
 	location_track = models.LineStringField(null=True, blank=True)
 	url = models.URLField(null=True, blank=True)
