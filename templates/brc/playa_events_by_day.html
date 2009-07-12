@@ -2,7 +2,7 @@
 {% block head_title %} {{ year.year }} - Playa Events{% endblock %}
 {% block body %}
 {% ifnotequal previous 2005 %}
-<a href='/brc/{{ previous }}/playa_events/'><< {{ previous }}</a>
+<a href='/brc/{{ previous }}/playa_events/'>&lt;&lt; {{ previous }}</a>
 {% endifnotequal %}
 <font size=+3><b><a href='/brc/{{ year.year }}'>{{ year.year }}</a></b></font>
 {% ifnotequal next 2010 %}
