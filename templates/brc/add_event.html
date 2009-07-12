@@ -21,7 +21,7 @@
 	{% if field.errors %}
 		<tr><td colspan=2>{{ field.errors }}</td></tr>	
 	{% endif %}
-	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:</td><td> {{ field }}</td></tr>
+	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:<br/><span class='event_form_help'>{{ field.help_text }}</span></td><td> {{ field }}</td></tr>
     {% endfor %}
 </table>
 {% if form.instance.id %}
