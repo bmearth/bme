@@ -6,9 +6,9 @@
 {% endblock %}
 {% block body %}
 {% if form.instance.id %}
-	<h2>{% trans "Edit Your Playa Event." %}</h2>
+	<h2>{% trans "Edit Your Playa Event" %}</h2>
 {% else %}
-	<h2>{% trans "Create Your Playa Event." %}</h2>
+	<h2>{% trans "Create Your Playa Event" %}</h2>
 {% endif %}
 {% if form.non_field_errors %}<ul class="errorList">{{ form.non_field_errors.as_ul }}</ul>{% endif %}
 <form action="" method="post">
@@ -25,7 +25,7 @@
     {% endfor %}
 </table>
 {% if form.instance.id %}
-	<p><b>You must edit time/date of occurrences from the single event view page <a href='/brc/2009/playa_event/{{ form.instance.id }}/'>Here</a> (loopy edit this)</b></p>
+	<p><b>If you would like to edit the individual times/dates for each occurrence of your event, visit your <a href='{% url playa_event_view 2009 form.instance.id %}'>single event view</a> page.</b></p>
 {% endif %}
 <br/>
 <input type="submit" value="{% trans "Save" %}">
