@@ -124,7 +124,7 @@ class PlayaEventForm(forms.ModelForm):
 	playa_day_choices_short=[(d, d.strftime('%A %d')) for d in year.daterange()]
 
 	title  = forms.CharField(required=True, max_length=40, label='Title')
-	print_description  = forms.CharField(required=True, max_length=150, label='Print Description', help_text="Print description for publication in the What Where When.", widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
+	print_description  = forms.CharField(required=True, max_length=150, label='Print Description', help_text="Print description for publication in the What Where When. 150 characters max.", widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
 	description  = forms.CharField(required=True, max_length=2000, label='Online Description', widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
 	event_type = forms.ModelChoiceField(queryset=EventType.objects.all(), empty_label=None, label='Event Type')
 	url  = forms.URLField(required=False, verify_exists=True, label='URL')
@@ -136,7 +136,7 @@ class PlayaEventForm(forms.ModelForm):
 	check_location=forms.BooleanField(required=False, label='Check Playa Info for camp location', initial=False)
 	end_time=forms.DateTimeField(label='End', required=True, widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
 	all_day=forms.BooleanField(required=False, label='All Day Event')
-	repeats=forms.BooleanField(required=False, label='Repeats', help_text='If your event repeats at different times on different days, <br/>check the days on which it repeats, <br/>and edit the times on the following pages')
+	repeats=forms.BooleanField(required=False, label='Repeats', help_text='If your event repeats at different times on different days, check the days on which it repeats, and edit the times on the following page.')
 	repeat_days = MultipleIntegerField(playa_day_choices_short, label='Repeat Days',widget=forms.CheckboxSelectMultiple)
 	list_online=forms.BooleanField(required=False, label='List Event Online', initial=True)
 	list_contact_online=forms.BooleanField(required=False, label='List Contact Info Online', initial=True)
