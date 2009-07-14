@@ -10,25 +10,26 @@
     <a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
   {% endifnotequal %}
 {% endcomment %}
+
 <h2>Daily Event View</h2>
 
 <div id="date-nav">
   <h4>
       {% if prev_day %}
-      <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&lt;&lt;&nbsp;{{ prev_day_dt|date:"l, N j y" }}</a></div>
+      <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&#8678;&nbsp;{{ prev_day_dt|date:"l, N j, y" }}</a></div>
       {% else %}
-      <div class="span-left"><span style="color:#D3D3D3">&lt;&lt;&nbsp;previous day</span></div>
+      <div class="span-left"><span style="color:#D3D3D3">&#8678;&nbsp;previous day</span></div>
       {% endif %}
      
       {% if next_day %}
-      <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j y" }} &nbsp;&gt;&gt</a></div>
+      <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j, y" }} &nbsp;&#8680;</a></div>
       {% else %}
-      <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&gt;&gt;</span></div>
+      <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&#8680;</span></div>
       {% endif %}
   </h4>
 </div>
 <div id="daily_events">
-  <span class="day_top_sub_header">Events for  {{ day|date:"l M jS, Y"}}</span><div id="create-new">{% ifequal year.year '2009' %}<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>{% endifequal %}</div>
+  <span class="day_top_sub_header">Events for  {{ day|date:"l, N j, Y"}}</span><div id="create-new">{% ifequal year.year '2009' %}<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>{% endifequal %}</div>
 
   {% if all_day_occ %}
   <h4 class='day_sub_header'>All Day Events</h4>
@@ -60,3 +61,4 @@
   {% endif %}
 </div>
 {% endblock %}
+

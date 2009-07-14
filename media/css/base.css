@@ -139,7 +139,7 @@ h3 {
 
 #date-nav {
 	margin: 0 0 0 130px;
-	width: 545px;
+	width: 540px;
 	padding: 0 0 10px 0;
 }
 
@@ -149,12 +149,12 @@ h3 {
 }
 .span-left {
 	float: left;
-	width: 150px;
+	width: auto;
 }
 
 .span-right {
 	float: right;
-	width: 150px;
+	width: auto;
 }
 
 #daily_events {
@@ -188,8 +188,9 @@ h3 {
 }
 
 .day_top_sub_header {
-	color: #b66523;
+	color: #eb9540;
 	font-weight: bold;
+	font-size: 15px;
 	padding: 6px 0 0 0;
 	line-height: 32px;
 }
