@@ -74,9 +74,14 @@ h1 {
 h2 {
 	color: #ca4d01;
 }
+
+h3 {
+	color: #ca4d01;
+}
+
 #tabhead {
     position: relative;
-    background: #fbf9ed url('/media/img/bg-orange-swirl.gif') no-repeat left top;
+    background: #fbf9ed url('media/img/bg-orange-swirl.gif') no-repeat left top;
     height: 104px;
     border-bottom: 1px solid #ba4409; /* tab border */
 }
@@ -108,7 +113,7 @@ h2 {
     margin: 0 0 0 -4px;
 	display: inline;
 	color: #fff; /* login bar text colour */
-    background: url('/media/img/bg-login-slice.gif') repeat-x;
+    background: url('media/img/bg-login-slice.gif') repeat-x;
 }
 
 #tabhead .login img {
@@ -182,26 +187,36 @@ h2 {
 	margin-bottom: 4px;
 }
 
-
+.day_top_sub_header {
+	color: #b66523;
+	font-weight: bold;
+	padding: 6px 0 0 0;
+	line-height: 32px;
+}
 
 
 #create-new {
-	margin: 0 -10px 0 99px;
 	color: #1a1c1e;
 	text-align: left;
-	background: url('/media/img/bg-create-button.gif') no-repeat;
-	padding: 4px 0 0 39px;
-	width: 160px;
-	height: 27px
+	margin: -28px 0 0 342px;
+	background: url('media/img/bg-create-button.gif') no-repeat;
+	width: 170px;
+	height: 27px;
+	line-height: 24px;
 }
 
+
+
 #create-new a {
-	color: #1a1c1e;
+	color: #fff;
 	text-decoration: none;
+	margin: 40px 0 0 0;
+	padding: 12px 6px 0 42px;
+	font-size: 12px;
 }
 
 #create-new a:hover {
-	color: #ad2703;
+	color: #ffdb60;
 }
 
 
@@ -231,6 +246,11 @@ input[type="text"], input[type="password"], textarea {
     color: #666;
     font-size: 12pt;
     background: #F3F3F3 url('/site_media/pinax/images/form-shadow.png') left top repeat-x;
+}
+
+.event_form_help {
+	color: #999;
+	font-size: 12px;
 }
 /*
 input[type="submit"] {

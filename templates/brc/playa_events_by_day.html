@@ -9,9 +9,7 @@
 <a href='/brc/{{ next }}/playa_events/'> {{ next }}>></a>
 {% endifnotequal %}
 <h2>Daily Event View</h2>
-{% ifequal year.year '2009' %}
-<div id="create-new"><a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a></div>
-{% endifequal %}
+
 <div id="date-nav">
   <h4>
       <span class="date-left">{% if prev_day %}
@@ -28,8 +26,7 @@
   </h4>
 </div>
 <div id="daily_events">
-  <h3 class='day_header'>Events for  {{ day|date:"l M jS, Y"}}</h3>
-
+  <span class="day_top_sub_header">Events for  {{ day|date:"l M jS, Y"}}</span>{% ifequal year.year '2009' %}<div id="create-new"><a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a></div>{% endifequal %}
   {% if all_day_occ %}
   <h4 class='day_sub_header'>All Day Events</h4>
   <div class='all_day_listing'>
