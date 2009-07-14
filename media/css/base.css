@@ -11,8 +11,14 @@ body {
     font-size: 10pt;
 }
 a, a:visited {
-    color: #13C;
+    color: #ca3501;
+    text-decoration: none;
 }
+
+a:hover {
+    text-decoration: underline;
+}
+
 img {
     border: 0;
 }
@@ -63,6 +69,10 @@ td {
 }
 h1 {
     margin: 0;
+}
+
+h2 {
+	color: #ca4d01;
 }
 #tabhead {
     position: relative;
@@ -117,9 +127,98 @@ h1 {
     color: #ffdb60; /* login bar link hover colour */
 }
 
+#daily_events {
+	margin: 0 auto;
+	width: 500px;
+}
+
+#date-nav {
+	margin: 0 0 0 130px;
+	width: 545px;
+	padding: 0 0 10px 0;
+}
+
+#date-nav h4 {
+	margin: 3px 0 10px 0;
+	padding: 0 0 6px 0;
+}
+.span-left {
+	float: left;
+	width: 150px;
+}
+
+.span-right {
+	float: right;
+	width: 150px;
+}
+
+#daily_events {
+	clear: both;
+	border: 1px solid #d9d9d9;
+	padding: 10px 20px 20px 20px;
+}
+
+.all_day_listing ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.all_day_listing ul li {
+	background: #ecf7fe;
+	padding: 4px 20px;
+	margin-bottom: 4px;
+}	
+
+.timed_listing ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.timed_listing ul li {
+	background: #faf6ea; 
+	padding: 4px 20px;
+	margin-bottom: 4px;
+}
+
+
+
+
+#create-new {
+	margin: 0 -10px 0 99px;
+	color: #1a1c1e;
+	text-align: left;
+	background: url('/media/img/bg-create-button.gif') no-repeat;
+	padding: 4px 0 0 39px;
+	width: 160px;
+	height: 27px
+}
+
+#create-new a {
+	color: #1a1c1e;
+	text-decoration: none;
+}
+
+#create-new a:hover {
+	color: #ad2703;
+}
+
+
+#body table tr td {
+	padding: 0 10px 8px 0;
+	vertical-align: top;
+
+}
+
+#body table tr .label {
+	   text-align : right;
+}
+
 form th {
     text-align : left;
 }
+
 form.signup input[type="submit"], form.login input[type="submit"] {
     margin: 20px 0;
     font-size: 14pt;
