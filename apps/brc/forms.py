@@ -123,7 +123,7 @@ class PlayaEventForm(forms.ModelForm):
 	playa_day_choices=[(d, d.strftime('%A, %B %d')) for d in year.daterange()]
 	playa_day_choices_short=[(d, d.strftime('%A %d')) for d in year.daterange()]
 
-	title  = forms.CharField(required=True, max_length=32, label='Title')
+	title  = forms.CharField(required=True, max_length=50, label='Title')
 	print_description  = forms.CharField(required=True, max_length=150, label='Print Description', help_text="Print description for publication in the What Where When. 150 characters max.", widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
 	description  = forms.CharField(required=True, max_length=2000, label='Online Description', widget=widgets.Textarea(attrs={'rows':'5', 'cols':'40'}))
 	event_type = forms.ModelChoiceField(queryset=EventType.objects.all(), empty_label=None, label='Event Type')
