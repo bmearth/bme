@@ -1,4 +1,4 @@
-iimport logging
+import logging
 from django import forms
 from django.forms import widgets
 from django.utils.translation import ugettext_lazy as _
