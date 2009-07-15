@@ -147,12 +147,12 @@ h3 {
 }
 .span-left {
 	float: left;
-	width: 150px;
+	width: auto;
 }
 
 .span-right {
 	float: right;
-	width: 150px;
+	width: auto;
 }
 
 #daily_events {
@@ -161,12 +161,16 @@ h3 {
 	padding: 10px 20px 20px 20px;
 }
 
+.event_actions {
+	padding: 0 0 20px 0;
+}
+
 .event-d {
 	width: 500px;
 }
 
 .event-name {
-	margin: 0 0 0 130px;
+	margin: 0;
 	width: 500px;
 }
 
@@ -174,7 +178,7 @@ h3 {
 	margin: 0 auto;
 	width: 500px;
 	border: 1px solid #d9d9d9; 
-	padding: 20px;
+	padding: 0 20px 20px 20px;
 }
 
 .all_day_listing ul {
@@ -202,8 +206,9 @@ h3 {
 }
 
 .day_top_sub_header {
-	color: #b66523;
+	color: #eb9540;
 	font-weight: bold;
+	font-size: 15px;
 	padding: 6px 0 0 0;
 	line-height: 32px;
 }

@@ -16,15 +16,15 @@
 <div id="date-nav">
   <h4>
       {% if prev_day %}
-      <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&#8678;&nbsp;{{ prev_day_dt|date:"l, N j, y" }}</a></div>
+      <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&#2190;&nbsp;{{ prev_day_dt|date:"l, N j, y" }}</a></div>
       {% else %}
-      <div class="span-left"><span style="color:#D3D3D3">&#8678;&nbsp;previous day</span></div>
+      <div class="span-left"><span style="color:#D3D3D3">&#2190;&nbsp;previous day</span></div>
       {% endif %}
      
       {% if next_day %}
-      <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j, y" }} &nbsp;&#8680;</a></div>
+      <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j, y" }} &nbsp;&#2192;</a></div>
       {% else %}
-      <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&#8680;</span></div>
+      <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&#2192;</span></div>
       {% endif %}
   </h4>
 </div>
