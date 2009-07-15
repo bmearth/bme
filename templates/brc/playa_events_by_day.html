@@ -15,18 +15,18 @@
 
 <div id="date-nav">
   <h4>
-      {% if prev_day %}
-      <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&#2190;&nbsp;{{ prev_day_dt|date:"l, N j, y" }}</a></div>
-      {% else %}
-      <div class="span-left"><span style="color:#D3D3D3">&#2190;&nbsp;previous day</span></div>
-      {% endif %}
-     
-      {% if next_day %}
-      <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j, y" }} &nbsp;&#2192;</a></div>
-      {% else %}
-      <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&#2192;</span></div>
-      {% endif %}
-  </h4>
+        {% if prev_day %}
+        <div class="span-left"><a href="{% url playa_events_by_day year.year prev_day %}">&larr;&nbsp;{{ prev_day_dt|date:"l, N j, y" }}</a></div>
+        {% else %}
+        <div class="span-left"><span style="color:#D3D3D3">&larr;&nbsp;previous day</span></div>
+        {% endif %}
+
+        {% if next_day %}
+        <div class="span-right"><a href="{% url playa_events_by_day year.year next_day %}">{{ next_day_dt|date:"l, N j, y" }} &nbsp;&rarr;</a></div>
+        {% else %}
+        <div class="span-right"><span style="color:#D3D3D3">next day&nbsp;&rarr;</span></div>
+        {% endif %}
+    </h4>
 </div>
 <div id="daily_events">
   <span class="day_top_sub_header">Events for  {{ day|date:"l, N j, Y"}}</span><div id="create-new">{% ifequal year.year '2009' %}<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>{% endifequal %}</div>
