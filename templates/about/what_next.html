@@ -13,9 +13,10 @@
         <dl class="what_next">
             <dt><a href="{% url acct_email %}">verify an email address</a></dt>
             <dd>so you can receive notifications, reset your password and so people can find you more easily.</dd>
-            
+            {% if not BME_PRODUCTION %}
             <dt><a href="{% url profile_detail user %}">fill out your profile</a></dt>
             <dd>to tell the world a little about yourself.</dd>
+            {% endif %}
             
             <dt><a href="{% url playa_event_add 2009 %}">submit an event </a></dt>
             <dd>to the playa calendar.</dd>
