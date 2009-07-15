@@ -20,15 +20,14 @@
 </div>
 {% endifequal %}
 {% endif %}
-
-<h2>{{playa_event.title}}</h2>
-<table cellpadding="5" cellspacing="10">
+<div class="event-table">
+<div class="event-name"><h2>{{playa_event.title}}</h2></div>
+<table cellpadding="8" cellspacing="10" width="510">
 
  {% if playa_event.occurrence_set.count %}
      <tr>
-       <td valign='top'><b>Date/Time(s):</b><br />
-       <span class="event_form_help">Edit or delete the date and time of your event</span></td>
-       <td>
+       <td valign="top" width="170"><b>Date/Time(s):</b></td>
+       <td  width="330">
      	{% for o in playa_event.occurrence_set.all %}
 		{% if playa_event.all_day %}
 			{{ o.start_time|date:"l, F jS" }} - All Day
@@ -93,7 +92,7 @@
 </table>
 {% if playa_event.description %}
 <h3>Description</h3>
-<p>{{playa_event.description}}</p>
+<p class="event-d">{{playa_event.description}}</p></div>
 {% endif %}
 
 {% comment %}

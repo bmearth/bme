@@ -77,11 +77,12 @@ h2 {
 
 h3 {
 	color: #ca4d01;
+
 }
 
 #tabhead {
     position: relative;
-    background: #fbf9ed url('/media/img/bg-orange-swirl.gif') no-repeat left top;
+    background: #fbf9ed url('bg-orange-swirl.gif') no-repeat left top;
     height: 104px;
     border-bottom: 1px solid #ba4409; /* tab border */
 }
@@ -99,22 +100,19 @@ h3 {
 
 #tabhead .login {
 	position: absolute;
-	top: -12px;
+	top: 0px;
+    background: url('bg-login-slice.gif') repeat-x;
 	right: 60px;
 	margin 0;
-	padding: 0;
+	padding: 8px 12px;
 	width: auto;
+	font-size: 12px;
+	color: #fff; /* login bar text colour */
+
 	
 }
 
-#tabhead .innerlogin {
-	font-size: 12px;
-    padding: 10px 2px 8px 4px;
-    margin: 0 0 0 -4px;
-	display: inline;
-	color: #fff; /* login bar text colour */
-    background: url('/media/img/bg-login-slice.gif') repeat-x;
-}
+
 
 #tabhead .login img {
 	position: relative; 
@@ -139,7 +137,7 @@ h3 {
 
 #date-nav {
 	margin: 0 0 0 130px;
-	width: 540px;
+	width: 545px;
 	padding: 0 0 10px 0;
 }
 
@@ -149,18 +147,34 @@ h3 {
 }
 .span-left {
 	float: left;
-	width: auto;
+	width: 150px;
 }
 
 .span-right {
 	float: right;
-	width: auto;
+	width: 150px;
 }
 
 #daily_events {
 	clear: both;
 	border: 1px solid #d9d9d9;
 	padding: 10px 20px 20px 20px;
+}
+
+.event-d {
+	width: 500px;
+}
+
+.event-name {
+	margin: 0 0 0 130px;
+	width: 500px;
+}
+
+.event-table { 
+	margin: 0 auto;
+	width: 500px;
+	border: 1px solid #d9d9d9; 
+	padding: 20px;
 }
 
 .all_day_listing ul {
@@ -188,9 +202,8 @@ h3 {
 }
 
 .day_top_sub_header {
-	color: #eb9540;
+	color: #b66523;
 	font-weight: bold;
-	font-size: 15px;
 	padding: 6px 0 0 0;
 	line-height: 32px;
 }
@@ -200,7 +213,7 @@ h3 {
 	color: #1a1c1e;
 	text-align: left;
 	margin: -28px 0 0 342px;
-	background: url('/media/img/bg-create-button.gif') no-repeat;
+	background: url('bg-create-button.gif') no-repeat;
 	width: 170px;
 	height: 27px;
 	line-height: 24px;
