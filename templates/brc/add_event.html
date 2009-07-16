@@ -28,6 +28,8 @@
 	<p><b>If you would like to edit the individual times/dates for each occurrence of your event, visit your <a href='{% url playa_event_view 2009 form.instance.id %}'>single event view</a> page.</b></p>
 {% endif %}
 <br/>
+	<p><b>All events are moderated before being posted to the events calendar. Do not panic if you do not see your event immediately after submitting it. It may take 24 to 48 hours to be posted. </b></p>
+
 <input type="submit" value="{% trans "Save" %}">
 <input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
 <input type="hidden" name="next" value="{{next|default:""}}"/>
