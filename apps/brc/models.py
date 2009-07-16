@@ -1,9 +1,16 @@
 from django.contrib.gis.db import models
+from django.conf import settings
 from django.db import connection
 from django.contrib.auth.models import User
 from swingtime.models import Event
 from datetime import datetime, timedelta
 	
+if "notification" in settings.INSTALLED_APPS:
+    from notification import models as notification
+else:
+    notification = None
+    
+
 MODERATION_CHOICES = (
 	('U', 'UnModerated'),
 	('A', 'Accepted'),
@@ -149,22 +156,45 @@ class ThreeDModel(models.Model):
 
 class PlayaEvent(Event):
 
-	def __unicode__(self):
-		return self.year.year + ":" + self.title
-	year = models.ForeignKey(Year)
-	print_description = models.CharField(max_length=150, null=False, blank=True)
-	slug = models.SlugField(max_length=255)
-	hosted_by_camp = models.ForeignKey(ThemeCamp, null=True, blank=True)
-	located_at_art = models.ForeignKey(ArtInstallation, null=True, blank=True)
-	other_location = models.CharField(max_length=255, null=True, blank=True)
-	check_location = models.BooleanField()
-	location_point = models.PointField(null=True, blank=True)
-	location_track = models.LineStringField(null=True, blank=True)
-	url = models.URLField(null=True, blank=True)
-	contact_email = models.EmailField(null=True, blank=True)
-	all_day = models.BooleanField()
-	list_online = models.BooleanField()
-	list_contact_online = models.BooleanField()
-	creator = models.ForeignKey(User, null=False)
-	moderation =  models.CharField(max_length=1, choices=MODERATION_CHOICES, default='U')
-	objects = models.GeoManager()
+  def __unicode__(self):
+    return self.year.year + ":" + self.title
+  year = models.ForeignKey(Year)
+  print_description = models.CharField(max_length=150, null=False, blank=True)
+  slug = models.SlugField(max_length=255)
+  hosted_by_camp = models.ForeignKey(ThemeCamp, null=True, blank=True)
+  located_at_art = models.ForeignKey(ArtInstallation, null=True, blank=True)
+  other_location = models.CharField(max_length=255, null=True, blank=True)
+  check_location = models.BooleanField()
+  location_point = models.PointField(null=True, blank=True)
+  location_track = models.LineStringField(null=True, blank=True)
+  url = models.URLField(null=True, blank=True)
+  contact_email = models.EmailField(null=True, blank=True)
+  all_day = models.BooleanField()
+  list_online = models.BooleanField()
+  list_contact_online = models.BooleanField()
+  creator = models.ForeignKey(User, null=False)
+  moderation =  models.CharField(max_length=1, choices=MODERATION_CHOICES, default='U')
+  objects = models.GeoManager()
+
+
+
+  def event_moderation(sender, instance,  **kwargs):
+    if isinstance(instance, PlayaEvent):
+      event = instance
+#     get old event instance
+#     compare old event moderation to new event moderation
+      if notification:
+        notification.send([event.creator], "brc_event_moderation", {"user": event.creator, "event": event}, on_site=False)
+        
+        
+#  models.signals.pre_save.connect(event_creation, sender=PlayaEvent)
+
+def event_creation(sender, instance,  **kwargs):
+  if isinstance(instance, PlayaEvent):
+    event = instance
+    
+    if kwargs['created']:
+      if notification:
+        notification.send([event.creator], "brc_event_creation", {"user": event.creator, "event": event}, on_site=False)
+# models.signals.post_save.connect(event_creation, sender=PlayaEvent)
+      

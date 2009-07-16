@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans with event.title as event_title %}
+Event {{ event_title }} received
+{% endblocktrans %}

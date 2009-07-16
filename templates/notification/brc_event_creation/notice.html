@@ -1,0 +1,5 @@
+{% load i18n %}{% url profile_detail username=event.creator.username as user_url %}
+{% blocktrans with event.get_absolute_url as event_url  and event.title as event_title %}
+Your event <a href="{{ event_url }}">{{ event_title }}</a> has been submitted. A moderator will review it in the next few days.
+The event will appear in the playa calendar when it has been approved.
+{% endblocktrans %}
