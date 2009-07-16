@@ -9,6 +9,7 @@ from swingtime.models import Event, Occurrence, EventType, Note
 from swingtime.forms import timeslot_options
 from swingtime import utils
 from datetime import datetime, date, time
+from django.shortcuts import get_object_or_404
 
 MINUTES_INTERVAL = swingtime_settings.TIMESLOT_INTERVAL.seconds // 60
 SECONDS_INTERVAL = utils.time_delta_total_seconds(swingtime_settings.DEFAULT_OCCURRENCE_DURATION)
@@ -119,7 +120,7 @@ class PlayaEventForm(forms.ModelForm):
 	'''
 	
 	curr_year='2009'
-	year = Year.objects.filter(year=curr_year)[0]
+	year = get_object_or_404(Year, year=curr_year)
 	playa_day_choices=[(d, d.strftime('%A, %B %d')) for d in year.daterange()]
 	playa_day_choices_short=[(d, d.strftime('%A %d')) for d in year.daterange()]
 
