@@ -267,6 +267,39 @@ def playa_event_view(request,
 
 	return render_to_response(template, dict(playa_event=event, event_form=event_form_class, recurrence_form=recurrence_form_class),context_instance=RequestContext(request))
 
+@login_required
+def playa_events_view_mine(
+  request,
+  year_year,
+  template='brc/playa_view_my_events.html',
+):
+  '''
+  View all of a users PlayaEvents
+  '''
+  
+  user=request.user
+  year = get_object_or_404(Year, year=year_year)
+  
+  my_events = PlayaEvent.objects.filter(year=year, creator=user).order_by('moderation')
+  by_moderation=dict([(moderation, list(items)) for moderation, items in itertools.groupby(my_events, lambda e: e.moderation)])
+
+  approved_events = by_moderation.setdefault('A')
+  unmoderated_events = by_moderation.setdefault('U')
+  rejected_events = by_moderation.setdefault('R')
+
+  data = dict (
+    year = year,
+    approved_events = approved_events,
+    unmoderated_events = unmoderated_events,
+    rejected_events = rejected_events,
+  )
+  
+  return render_to_response(
+    template,
+    data,
+    context_instance=RequestContext(request)
+)
+  
 @login_required 
 def playa_occurrence_view(request,
 	year_year,

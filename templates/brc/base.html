@@ -15,7 +15,9 @@
             <li><a href="{% url art_cars 2009 %}">{% trans "Mutant Vehicles" %}</a></li>
         </ul>
       {% else %}
-        &nbsp;
+        <ul>
+          <li><a href="{% url playa_events_view_mine 2009 %} ">{% trans "My Event Submissions" %}</a></li>
+        </ul>
       {% endif %}
     {% else %}
         &nbsp;

@@ -51,6 +51,20 @@
      </tr>
  {% else %}
  {% endif %}
+{% ifequal user playa_event.creator %}
+<tr>
+  <td><b>Status:</b></td>
+  {% ifequal playa_event.moderation 'A' %}
+  <td class='mod-accepted'>>Accepted</span></td>
+  {% endifequal %}
+  {% ifequal playa_event.moderation 'U' %}
+  <td class='mod-unmoderated'>Not yet moderated</span></td>
+  {% endifequal %}
+  {% ifequal playa_event.moderation 'R' %}
+  <td class='mod-rejected'>Rejected</span></td>
+  {% endifequal %}
+</tr>
+{% endifequal %}
 {% ifnotequal playa_event.event_type.abbr "none" %}
 <tr>
 <td><b>Type:</b></td>
@@ -94,6 +108,7 @@
 <h3>Description</h3>
 <p class="event-d">{{playa_event.description}}</p></div>
 {% endif %}
+
 
 {% comment %}
 <h3>Comments on This Event:</h3>
