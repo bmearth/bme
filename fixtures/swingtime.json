@@ -1,0 +1,542 @@
+[
+    {
+        "pk": 1, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "none", 
+            "label": "None"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "kid", 
+            "label": "Kid-friendly"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "work", 
+            "label": "Class/Workshop"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "fire", 
+            "label": "Fire"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "care", 
+            "label": "Care/Support"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "perf", 
+            "label": "Performance"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "adlt", 
+            "label": "Adult-orientated"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "cere", 
+            "label": "Ritual/Ceremony"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "swingtime.eventtype", 
+        "fields": {
+            "abbr": "prty", 
+            "label": "Gathering/Party"
+        }
+    }, 
+    {
+        "pk": 100, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 16, 
+            "description": "Testing all-day event.", 
+            "title": "24 Hour Pancake Special"
+        }
+    }, 
+    {
+        "pk": 101, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Coffee Time", 
+            "title": "Coffee Time"
+        }
+    }, 
+    {
+        "pk": 88, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 17, 
+            "description": "Web description", 
+            "title": "Coffee Time Hijinks Ham Steaks"
+        }
+    }, 
+    {
+        "pk": 41, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Contact improv jams are a great way to explore your free movement style, and interact with other dancers. This is not a class but a freestyle jam. If you would like to learn more about contact, we will have two daily classes in the fundamentals of contact improv at our camp (Camp Contact) at 1 pm and 3:30 pm.", 
+            "title": "Contact Jam"
+        }
+    }, 
+    {
+        "pk": 89, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 11, 
+            "description": "An introductory session on dust, loving it and accepting it.", 
+            "title": "Dust Worship"
+        }
+    }, 
+    {
+        "pk": 98, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 17, 
+            "description": "Ride your bikes through the park.", 
+            "title": "Park Ride"
+        }
+    }, 
+    {
+        "pk": 90, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 11, 
+            "description": "the lady has the pie in her bike basket. vegan and butter crusts.", 
+            "title": "Pie Time"
+        }
+    }, 
+    {
+        "pk": 102, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 14, 
+            "description": "", 
+            "title": "Porta Potty Relay Race"
+        }
+    }, 
+    {
+        "pk": 108, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Test", 
+            "title": "Test"
+        }
+    }, 
+    {
+        "pk": 111, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 12, 
+            "description": "Test All Day", 
+            "title": "Test All Day"
+        }
+    }, 
+    {
+        "pk": 97, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "", 
+            "title": "Test Repeating All Day Event"
+        }
+    }, 
+    {
+        "pk": 110, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Testing", 
+            "title": "Testing"
+        }
+    }, 
+    {
+        "pk": 109, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Testing Check Location", 
+            "title": "Testing Check Location"
+        }
+    }, 
+    {
+        "pk": 99, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 11, 
+            "description": "Yes. Never stops blowing. That wind. Welcome.", 
+            "title": "Windy All The Time"
+        }
+    }, 
+    {
+        "pk": 112, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 11, 
+            "description": "Testing", 
+            "title": "aewdf[lpakjds'f[pjadsk;fjasd;kfjas;dokfj;asdkjf;as"
+        }
+    }, 
+    {
+        "pk": 84, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 10, 
+            "description": "", 
+            "title": "pizza!"
+        }
+    }, 
+    {
+        "pk": 135, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 00:00:00", 
+            "event": 108
+        }
+    }, 
+    {
+        "pk": 137, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 00:00:00", 
+            "event": 110
+        }
+    }, 
+    {
+        "pk": 139, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 01:00:00", 
+            "event": 112
+        }
+    }, 
+    {
+        "pk": 86, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 02:00:00", 
+            "event": 84
+        }
+    }, 
+    {
+        "pk": 111, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 40, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 10:00:00", 
+            "end_time": "2009-08-31 11:00:00", 
+            "event": 41
+        }
+    }, 
+    {
+        "pk": 92, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 14:00:00", 
+            "end_time": "2009-08-31 15:00:00", 
+            "event": 89
+        }
+    }, 
+    {
+        "pk": 93, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 15:00:00", 
+            "end_time": "2009-08-31 16:00:00", 
+            "event": 90
+        }
+    }, 
+    {
+        "pk": 112, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-01 00:00:00", 
+            "end_time": "2009-09-01 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 89, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-01 08:00:00", 
+            "end_time": "2009-09-01 10:00:00", 
+            "event": 88
+        }
+    }, 
+    {
+        "pk": 125, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-01 10:00:00", 
+            "end_time": "2009-09-01 16:00:00", 
+            "event": 102
+        }
+    }, 
+    {
+        "pk": 109, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-01 18:00:00", 
+            "end_time": "2009-09-01 20:00:00", 
+            "event": 98
+        }
+    }, 
+    {
+        "pk": 136, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-02 00:00:00", 
+            "end_time": "2009-08-31 23:59:00", 
+            "event": 109
+        }
+    }, 
+    {
+        "pk": 113, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-02 00:00:00", 
+            "end_time": "2009-09-02 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 120, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-02 08:00:00", 
+            "end_time": "2009-09-02 09:00:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 94, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-02 15:00:00", 
+            "end_time": "2009-09-02 16:00:00", 
+            "event": 90
+        }
+    }, 
+    {
+        "pk": 105, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 00:00:00", 
+            "end_time": "2009-09-03 23:59:00", 
+            "event": 97
+        }
+    }, 
+    {
+        "pk": 114, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 00:00:00", 
+            "end_time": "2009-09-03 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 121, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 08:00:00", 
+            "end_time": "2009-09-03 09:00:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 90, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 08:00:00", 
+            "end_time": "2009-09-03 10:00:00", 
+            "event": 88
+        }
+    }, 
+    {
+        "pk": 126, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 14:00:00", 
+            "end_time": "2009-09-03 16:30:00", 
+            "event": 102
+        }
+    }, 
+    {
+        "pk": 110, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-03 20:00:00", 
+            "end_time": "2009-09-03 22:00:00", 
+            "event": 98
+        }
+    }, 
+    {
+        "pk": 106, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-04 00:00:00", 
+            "end_time": "2009-09-04 23:59:00", 
+            "event": 97
+        }
+    }, 
+    {
+        "pk": 115, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-04 00:00:00", 
+            "end_time": "2009-09-04 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 138, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-04 00:00:00", 
+            "end_time": "2009-09-04 23:59:00", 
+            "event": 111
+        }
+    }, 
+    {
+        "pk": 122, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-04 08:00:00", 
+            "end_time": "2009-09-04 09:00:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 95, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-04 15:00:00", 
+            "end_time": "2009-09-04 16:00:00", 
+            "event": 90
+        }
+    }, 
+    {
+        "pk": 119, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-05 00:00:00", 
+            "end_time": "2009-08-31 23:59:00", 
+            "event": 100
+        }
+    }, 
+    {
+        "pk": 116, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-05 00:00:00", 
+            "end_time": "2009-09-05 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 107, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-05 00:00:00", 
+            "end_time": "2009-09-05 23:59:00", 
+            "event": 97
+        }
+    }, 
+    {
+        "pk": 123, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-05 08:00:00", 
+            "end_time": "2009-09-05 09:00:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 91, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-05 08:00:00", 
+            "end_time": "2009-09-05 10:00:00", 
+            "event": 88
+        }
+    }, 
+    {
+        "pk": 117, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-06 00:00:00", 
+            "end_time": "2009-09-06 23:59:00", 
+            "event": 99
+        }
+    }, 
+    {
+        "pk": 124, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-06 08:00:00", 
+            "end_time": "2009-09-06 09:00:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 127, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-06 10:00:00", 
+            "end_time": "2009-09-06 16:00:00", 
+            "event": 102
+        }
+    }, 
+    {
+        "pk": 118, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-09-07 00:00:00", 
+            "end_time": "2009-09-07 23:59:00", 
+            "event": 99
+        }
+    }
+]
