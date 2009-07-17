@@ -5,9 +5,6 @@
 <h2>View My Events</h2>
 
 
-<div id="daily_events">
-  <span class="day_top_sub_header">Events for  {{ request.user.username }}
-</div>
 
   {% if approved_events %}
   <h4 class='day_sub_header'>Approved Events</h4>
@@ -16,11 +13,6 @@
       {% for e in approved_events %}
         <li>
           <a href="{% url playa_event_view year.year e.id %}">{{ e.title }}</a>
-          {%if not e.all_day %}
-            <span class="event-times">
-              ({{ o.start_time|date:"P" }} - {{ o.end_time|date:"P" }})
-            </span>
-          {% endif %}
         </li>
       {% endfor %}
     </ol>
