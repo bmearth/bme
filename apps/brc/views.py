@@ -358,17 +358,7 @@ def delete_event(request,
 	playa_event_id, 
 	next=None, 
 ):
-	"""
-	After the event is deleted there are three options for redirect, tried in
-	this order:
-
-	# Try to find a 'next' GET variable
-	# If the key word argument redirect is set
-	# Lastly redirect to the event detail of the recently create event
-	"""
 	event = get_object_or_404(PlayaEvent, id=playa_event_id)
-	#next = next or reverse('day_calendar', args=[event.calendar.slug])
-	#next = get_next_url(request, next)
 	next = "/brc/" + event.year.year + "/playa_events/"
 	return delete_object(
 		request,model = PlayaEvent,
@@ -385,15 +375,27 @@ def delete_occurrence(request,
 	next=None,
 ):
 	occurrence = get_object_or_404(Occurrence, id=occurrence_id)
-	next = "/brc/" + year_year + "/playa_event/" + str(occurrence.event.id)
-	return delete_object(
-		request,model = Occurrence,
-		object_id = occurrence_id,
-		post_delete_redirect = next,
-		template_name = "brc/delete_occurrence.html",
-		extra_context = dict(next=next),
-		login_required = login_required
-	)
+	if(Occurrence.objects.filter(event=occurrence.event).count() == 1): #Last Occurrence 
+		event = get_object_or_404(PlayaEvent, id=occurrence.event.id)
+		next = "/brc/" + occurrence.event.playaevent.year.year + "/playa_events/"
+		return delete_object(
+			request,model = PlayaEvent,
+			object_id = occurrence.event.id,
+			post_delete_redirect = next,
+			template_name = "brc/delete_event.html",
+			extra_context = dict(next=next, msg="This is the only occurrence of this event, the entire event will be deleted. Are you Sure?"),
+			login_required = login_required
+		)
+	else:
+		next = "/brc/" + year_year + "/playa_event/" + str(occurrence.event.id)
+		return delete_object(
+			request,model = Occurrence,
+			object_id = occurrence_id,
+			post_delete_redirect = next,
+			template_name = "brc/delete_occurrence.html",
+			extra_context = dict(next=next),
+			login_required = login_required
+		)
 	
 
 #-------------------------------------------------------------------------------

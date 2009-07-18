@@ -2,8 +2,11 @@
 {% load i18n %}
 {% block head_title %}{% blocktrans %}Delete Event?{% endblocktrans %}{% endblock %}
 {% block body %}
+{% if msg %}
+<h3>{{ msg }}</h3>
+{% else %}
 <h3>{% trans "Are you sure that you really want to delete this Playa Event?" %}</h3>
-
+{% endif %}
 <h2>{{ object.title }}</h2>
 <form action="." method="POST">
 	<input type="submit" value="{% trans "Delete" %}" />
