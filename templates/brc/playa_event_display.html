@@ -1,6 +1,7 @@
 {% load comments_tag %}
 {% load i18n %}
 <br/>
+
 {% if user.is_authenticated %}
 {% ifequal user playa_event.creator %}
 <div class="event_actions">
@@ -20,13 +21,22 @@
 </div>
 {% endifequal %}
 {% endif %}
+
 <div class="event-table">
 <div class="event-name"><h2>{{playa_event.title}}</h2></div>
 <table cellpadding="8" cellspacing="10" width="510">
 
  {% if playa_event.occurrence_set.count %}
      <tr>
-       <td valign="top" width="170"><b>Date/Time(s):</b></td>
+       <td valign="top" width="170"><b>Date/Time(s): </b>
+{% if user.is_authenticated %}
+{% ifequal user playa_event.creator %}
+  	<a href="{% url playa_occurrence_add playa_event.year.year playa_event.id %}">
+    	<img border="0" src="{{ MEDIA_URL }}img/add.png" alt="{% trans "Add" %}"/>
+  	</a>
+{% endifequal %}
+{% endif %}
+	</td>
        <td  width="330">
      	{% for o in playa_event.occurrence_set.all %}
 		{% if playa_event.all_day %}

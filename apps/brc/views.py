@@ -299,36 +299,35 @@ def playa_events_view_mine(
     data,
     context_instance=RequestContext(request)
 )
-  
+
 @login_required 
 def playa_occurrence_view(request,
 	year_year,
 	playa_event_id, 
-	playa_occurrence_id, 
+	playa_occurrence_id=None, 
 	template='brc/occurrence_detail.html',
 	form_class=brcforms.PlayaEventOccurrenceForm
 ):
-	'''
-	View a specific occurrence and optionally handle any updates.
-	
-	Context parameters:
-	
-	occurrence: the occurrence object keyed by ``pk``
-	form: a form object for updating the occurrence
-	'''
-	occurrence = get_object_or_404(Occurrence, pk=playa_occurrence_id, event__pk=playa_event_id)
-	next = "/brc/" + occurrence.event.playaevent.year.year + "/playa_event/" + str(occurrence.event.playaevent.id)
+	occurrence = None
+	if(playa_occurrence_id is not None):
+		occurrence = get_object_or_404(Occurrence, pk=playa_occurrence_id, event__pk=playa_event_id)
+	event = get_object_or_404(PlayaEvent, pk=playa_event_id)
+	next = "/brc/" + event.year.year + "/playa_event/" + str(event.id)
 	if request.method == 'POST':
 		form = form_class(request.POST, instance=occurrence)
 		if form.is_valid():
-			form.save(occurrence.event, playa_occurrence_id)
+			form.save(event, playa_occurrence_id)
+			if(occurrence is not None):
+				request.user.message_set.create(message="Your Event Occurrence was Updated successfully.")
+			else:
+				request.user.message_set.create(message="Your Event Occurrence was Added successfully.")
 			return HttpResponseRedirect(next)
 		else:
 			form = form_class(instance=occurrence)
 	else:
 		form = form_class(instance=occurrence)
 
-	return render_to_response(template,dict(occurrence=occurrence, form=form, next=next),context_instance=RequestContext(request))
+	return render_to_response(template,dict(event=event, occurrence=occurrence, form=form, next=next),context_instance=RequestContext(request))
 
 @login_required
 def create_or_edit_event(request, 
@@ -347,6 +346,10 @@ def create_or_edit_event(request,
 		if form.is_valid():
 			event = form.save(year_year, user, playa_event_id)
 			next = "/brc/" + event.year.year + "/playa_event/" + str(event.id)
+			if(playa_event_id is not None):
+				request.user.message_set.create(message="Your Event Updated successfully.")
+			else:
+				request.user.message_set.create(message="Your Event was Added successfully. Please wait for it to be moderated")
 			return HttpResponseRedirect(next)
 	else:
 		form=brcforms.PlayaEventForm(initial=dict(year=Year.objects.get(year=year_year)), instance=instance)
