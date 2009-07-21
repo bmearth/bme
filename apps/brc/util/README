@@ -1,0 +1,13 @@
+LOAD db with streets and infrastructure models
+% generate_2009_annular_streets.py
+% generate_2009_time_streets.py
+% generate_infrastructure.py
+
+EXPORT OSM and load
+% make_osm.py > out.osm
+earthdev % ~/src/osm2pgsql/osm2pgsql out.osm -d openstreetmap
+earthdev % sudo rm -rf /var/lib/mod_tile/Default/*
+
+
+LD_LIBRARY_PATH=/usr/local/lib64/ ./renderd
+
