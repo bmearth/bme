@@ -25,6 +25,19 @@ def index(request, template_name="brc/index.html"):
 	return render_to_response(template_name, {"years": years,}, context_instance=RequestContext(request))
 
 #-------------------------------------------------------------------------------
+#---------- Map ----------
+#-------------------------------------------------------------------------------
+def map(request, year_year):
+	xyear = Year.objects.filter(year=year_year)
+	streets = CircularStreet.objects.filter(year=xyear[0])
+	previous = int(year_year) -1
+	next = int(year_year) + 1
+	return render_to_response('brc/map.html', {'year': xyear[0],
+						'previous' : previous,
+						'next' : next,}, context_instance=RequestContext(request))
+
+
+#-------------------------------------------------------------------------------
 #---------- Year ----------
 #-------------------------------------------------------------------------------
 

@@ -29,7 +29,7 @@
         {% endblock %}
     </head>
     
-    <body>
+    <body onload="{% block onload%}{% endblock %}">
         {% if site_wide_announcements %}
             <div id="site_wide_announcements">
                 <ul>

@@ -266,4 +266,4 @@ logging.basicConfig(
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 
-BME_PRODUCTION=True
+BME_PRODUCTION=False
