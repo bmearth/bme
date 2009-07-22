@@ -35,6 +35,18 @@ def map(request, year_year):
 	return render_to_response('brc/map.html', {'year': xyear[0],
 						'previous' : previous,
 						'next' : next,}, context_instance=RequestContext(request))
+#-------------------------------------------------------------------------------
+#---------- Globe ----------
+#-------------------------------------------------------------------------------
+def globe(request, year_year):
+	xyear = Year.objects.filter(year=year_year)
+	streets = CircularStreet.objects.filter(year=xyear[0])
+	previous = int(year_year) -1
+	next = int(year_year) + 1
+	return render_to_response('brc/globe.html', {'year': xyear[0],
+						'previous' : previous,
+						'next' : next,}, context_instance=RequestContext(request))
+
 
 
 #-------------------------------------------------------------------------------
