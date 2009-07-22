@@ -27,8 +27,10 @@ circular_streets = CircularStreet.objects.filter(year=xyear[0])
 toilets = Infrastructure.objects.filter(year=xyear[0],tags='toilet')
 fence = Infrastructure.objects.filter(year=xyear[0],tags='fence')
 airport = Infrastructure.objects.filter(year=xyear[0],tags='airport')
+runway = Infrastructure.objects.filter(year=xyear[0],tags='runway')
 roads = Infrastructure.objects.filter(year=xyear[0],tags='road')
 camps = Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
+plazas = Infrastructure.objects.filter(year=xyear[0],tags='plaza')
 
 cc_outer_ring = Infrastructure.objects.filter(year=xyear[0],name='Evolution')[0].location_line.convex_hull
 double_wide = Infrastructure.objects.filter(year=xyear[0],tags='camp_null')[0].location_multigeom
@@ -99,6 +101,22 @@ for t in airport:
 	print("</node>")
 	nodeid = nodeid - 1
 
+
+for t in runway:
+	if (t.location_line):
+		waynodes = []
+		for p in t.location_line:
+			waynodes.append( add_node(p[1], p[0]) )
+
+		print("<way id='" + str(wayid) + "' visible='true'>")
+		for n in waynodes:
+			print("<nd ref='" + str(n) + "' />")
+		print("<tag k='aeroway' v='runway'/>")
+		print("<tag k='name' v='" + t.name + "'/>")
+		print("</way>")
+
+		wayid = wayid - 1
+
 for t in roads:
 	if (t.location_line):
 		waynodes = []
@@ -128,5 +146,20 @@ for t in camps:
 		print("</way>")
 
 		wayid = wayid - 1
+			
+for t in plazas:
+	if (t.location_poly):
+		waynodes = []
+		for p in t.location_poly[0]:
+			waynodes.append( add_node(p[1], p[0]) )
+
+		print("<way id='" + str(wayid) + "' visible='true'>")
+		for n in waynodes:
+			print("<nd ref='" + str(n) + "' />")
+		print("<tag k='highway' v='pedestrian'/>")
+		print("<tag k='area' v='yes'/>")
+		print("</way>")
+
+		wayid = wayid - 1			
 			
 print("</osm>")

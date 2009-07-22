@@ -88,6 +88,12 @@ class TrackPointAdmin(BME_OSMAdmin):
 class ThreeDModelAdmin(BME_OSMAdmin):
     list_display = ('art_installation', 'theme_camp', 'vehicle', 'model_url',)
 
+class InfrastructureAdmin(BME_OSMAdmin):
+    list_display = ('name','year','location_point')
+    list_filter = ['year']
+    search_fields = (['name'])
+    list_editable = (['location_point'])
+    
 admin.site.register(Year, YearAdmin)
 admin.site.register(CircularStreet, CircularStreetAdmin)
 admin.site.register(TimeStreet, TimeStreetAdmin)
@@ -97,4 +103,4 @@ admin.site.register(PlayaEvent, PlayaEventAdmin)
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(TrackPoint, TrackPointAdmin)
 admin.site.register(ThreeDModel, ThreeDModelAdmin)
-
+admin.site.register(Infrastructure, InfrastructureAdmin)

@@ -438,19 +438,23 @@ def geocode(year_year, hour, minute, street):
 	if xstreet.count() < 1:
 		return HttpResponse("invalid street")
 
-	radial = ((hour*30)+(minute*0.5))+60
-	if radial >= 360:
-		radial = radial - 360
+	radial = time2radial(hour,minute)
 
 	pnt = xyear[0].location_point
 	
-	pnt2 = getpoint(xyear[0].location_point.y, xyear[0].location_point.x,xstreet[0].distance_from_center,-radial)
+	pnt2 = getpoint(40.769288, -119.220037,xstreet[0].distance_from_center,-radial)
 	return pnt2	
 
 def geocoder(request, year_year, hour, minute, street):
 	pnt = geocode(year_year, hour, minute, street)
 	return HttpResponse(pnt)
 
+def time2radial(hour, minute):
+	radial = ((hour*30)+(minute*0.5))+60 #add 60, because 4:00 is North
+	if radial >= 360:
+		radial = radial - 360
+	return radial
+		
 def neighborhood(request, year_year, hour, minute, street):
 	pnt = geocode(year_year, hour, minute, street)
 	xyear = Year.objects.filter(year=year_year)

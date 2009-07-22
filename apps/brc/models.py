@@ -197,4 +197,16 @@ def event_creation(sender, instance,  **kwargs):
       if notification:
         notification.send([event.creator], "brc_event_creation", {"user": event.creator, "event": event}, on_site=False)
 # models.signals.post_save.connect(event_creation, sender=PlayaEvent)
-      
+ 
+class Infrastructure(models.Model):
+    def __unicode__(self):
+        return self.name
+    year = models.ForeignKey(Year)
+    name = models.CharField(max_length=50)
+    location_point = models.PointField(null=True, blank=True)
+    location_line = models.LineStringField(null=True, blank=True)
+    location_poly = models.PolygonField(null=True, blank=True)
+    location_multigeom = models.GeometryCollectionField(null=True, blank=True)
+    tags = models.CharField(max_length=256)
+    objects = models.GeoManager()
+

@@ -154,6 +154,32 @@ promenade.location_line = linestring
 promenade.tags = 'road'
 promenade.save()
 
+# ENTRANCE ROADS (HARDCODED!)
+entrance_road = Infrastructure.objects.create(year=year)
+entrance_road.name = "entrance"
+entrance_road.location_line = "LINESTRING(-119.239315394275 40.7610286856975,-119.236633185256 40.7621988830906,-119.236354235516 40.762410166535,-119.236161116469 40.7626051968109,-119.235903624409 40.762913993577,-119.235689047681 40.7633203029263,-119.235581759327 40.7636778530985,-119.235581759327 40.7640354013478)"
+entrance_road.tags = 'road'
+entrance_road.save()
+
+entrance_road = Infrastructure.objects.create(year=year)
+entrance_road.name = "entrance"
+entrance_road.location_line = "LINESTRING(-119.236590269932 40.7622151356829,-119.236010912781 40.7622638934485,-119.235302809605 40.7622476408642,-119.23487365616 40.7621826304856,-119.234487418065 40.7621013674241,-119.234079722291 40.761971346318)"
+entrance_road.tags = 'road'
+entrance_road.save()
+
+entrance_road = Infrastructure.objects.create(year=year)
+entrance_road.name = "entrance"
+entrance_road.location_line = "LINESTRING(-119.237985018613 40.7615975342256,-119.23810303581 40.7613862481983,-119.238306883695 40.761256225693,-119.238478545071 40.7611749614988,-119.238671664118 40.7610936972048,-119.238907698507 40.7610327489191,-119.239116910815 40.7610043063667,-119.239326123119 40.7610327489191)"
+entrance_road.tags = 'road'
+entrance_road.save()
+
+entrance_road = Infrastructure.objects.create(year=year)
+entrance_road.name = "entrance"
+entrance_road.location_line = "LINESTRING(-119.235270623067 40.7622313882786,-119.236225489472 40.7625158080043)"
+entrance_road.tags = 'road'
+entrance_road.save()
+
+
 # FENCE 	
 dist_to_fence=7300
 
@@ -230,7 +256,12 @@ airport_road.location_line = ls
 airport_road.tags = 'road'
 airport_road.save()
 
-## RUNWAY
+## RUNWAY (HARDCODED!)
+airport_runway = Infrastructure.objects.create(year=year)
+airport_runway.name = "Runway"
+airport_runway.location_line = "LINESTRING(-119.226762656086 40.747326091884,-119.212171439046 40.7499595497597)"
+airport_runway.tags = 'runway'
+airport_runway.save()
 
 # WALKIN CAMPING
 polygon = "POLYGON(("
@@ -248,3 +279,167 @@ walkin_camping.name = "Walk-in Camping Area"
 walkin_camping.location_poly = polygon
 walkin_camping.tags = 'walkin_camp'
 walkin_camping.save()
+
+# PLAZAS
+## 3:00 plaza
+pt = geocode(year.year, 3, 0, B.name)
+
+angle_start = int(time2radial(2,55))
+angle_end = int(time2radial(3,05))
+polystring = "POLYGON(("
+polystring = polystring + ret_arc(clat,clon,Esplanade.distance_from_center,angle_start,angle_end,1)
+polystring = polystring + "," + str(pt.x) + " " + str(pt.y)
+polystring = polystring + "," + ret_point(clat,clon,Esplanade.distance_from_center,angle_start)
+polystring = polystring + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,125,0,360,1) + "))"
+plaza.tags = 'plaza'
+plaza.save()
+
+## 9:00 plaza
+pt = geocode(year.year, 9, 0, B.name)
+
+angle_start = int(time2radial(8,55))
+angle_end = int(time2radial(9,05))
+polystring = "POLYGON(("
+polystring = polystring + ret_arc(clat,clon,Esplanade.distance_from_center,angle_start,angle_end,1)
+polystring = polystring + "," + str(pt.x) + " " + str(pt.y)
+polystring = polystring + "," + ret_point(clat,clon,Esplanade.distance_from_center,angle_start)
+polystring = polystring + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,125,0,360,1) + "))"
+plaza.tags = 'plaza'
+plaza.save()
+
+## 4:30 plaza
+G = CircularStreet.objects.filter(year=year,name__startswith='G')[0]
+pt = geocode(year.year, 4, 30, G.name)
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+plaza.tags = 'plaza'
+plaza.save()
+
+A = CircularStreet.objects.filter(year=year,name__startswith='A')[0]
+angle_start = int(time2radial(4,25))
+angle_end = int(time2radial(4,35))
+polystring = "POLYGON(("
+polystring = polystring + ret_arc(clat,clon,Esplanade.distance_from_center,angle_start,angle_end,1)
+pt = geocode(year.year, 4, 30, A.name)
+polystring = polystring + "," + str(pt.x) + " " + str(pt.y)
+polystring = polystring + "," + ret_point(clat,clon,Esplanade.distance_from_center,angle_start)
+polystring = polystring + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+## 7:30 plaza
+pt = geocode(year.year, 7, 30, G.name)
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+plaza.tags = 'plaza'
+plaza.save()
+
+A = CircularStreet.objects.filter(year=year,name__startswith='A')[0]
+angle_start = int(time2radial(7,25))
+angle_end = int(time2radial(7,35))
+polystring = "POLYGON(("
+polystring = polystring + ret_arc(clat,clon,Esplanade.distance_from_center,angle_start,angle_end,1)
+pt = geocode(year.year, 7, 30, A.name)
+polystring = polystring + "," + str(pt.x) + " " + str(pt.y)
+polystring = polystring + "," + ret_point(clat,clon,Esplanade.distance_from_center,angle_start)
+polystring = polystring + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+## center camp
+angle_start = int(time2radial(5,30))
+angle_end = int(time2radial(6,30))
+polystring = "POLYGON(("
+polystring = polystring + ret_arc(cc.y,cc.x,dist_outer_ring,angle_start,angle_end,1)
+polystring = polystring + "," + str(cc.x) + " " + str(cc.y)
+polystring = polystring + "," + ret_point(cc.y,cc.x,dist_outer_ring,angle_start)
+polystring = polystring + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+polystring = "POLYGON((" + ret_arc(cc.y,cc.x,dist_inner_ring,0,360,1) + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+## playa
+polystring = "POLYGON((" + ret_arc(clat,clon,dist_inner_ring,0,360,1) + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+pt = geocode(year.year,0,0,'Esplanade')
+polystring = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+# DPW/Fire
+pt = geocode(year.year, 5, 30, L.name)
+angle = int(time2radial(5,30))
+pt2 = getpoint(clat,clon,L.distance_from_center + 550,-angle)
+ls = LineString((pt.x,pt.y),(pt2.x,pt2.y))
+dpw_road = Infrastructure.objects.create(year=year)
+dpw_road.name = ""
+dpw_road.location_line = ls
+dpw_road.tags = 'road'
+dpw_road.save()
+
+polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,250,0,360,1) + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
+
+pt = geocode(year.year, 6, 30, L.name)
+angle = int(time2radial(6,30))
+pt2 = getpoint(clat,clon,L.distance_from_center + 550,-angle)
+ls = LineString((pt.x,pt.y),(pt2.x,pt2.y))
+dpw_road = Infrastructure.objects.create(year=year)
+dpw_road.name = ""
+dpw_road.location_line = ls
+dpw_road.tags = 'road'
+dpw_road.save()
+
+polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,250,0,360,1) + "))"
+plaza = Infrastructure.objects.create(year=year)
+plaza.name = "Plaza"
+plaza.location_poly = polystring
+plaza.tags = 'plaza'
+plaza.save()
