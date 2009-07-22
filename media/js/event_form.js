@@ -1,5 +1,17 @@
+function textCounter(textarea, countdown, maxlimit)
+{
+	left = maxlimit - textarea.value.length
+	if(textarea.value.length >= maxlimit) {
+		textarea.value = textarea.value.substring(0, maxlimit);
+		countdown.text(left + " Characters Available");
+	} else {
+		countdown.text(left + " Characters Available");
+      	}
+}
+
 $(document).ready(function() {
 	$('#repeat-days-row').hide();
+	//textCounter($("#id_print_description"), $("#print_description_countdown"), 150);		
 
 	if($("#existing").val() == "true") {
 		$('#all-day-event-row').hide();
@@ -47,5 +59,13 @@ $(document).ready(function() {
 			$('#end-row').show();
 			$("label[for='id_start_time_0']").text('Start'); 
 		}
+	});
+	
+	$("#id_print_description").keyup(function(){ 
+		textCounter(this, $("#print_description_countdown"), 150);		
+	});
+	
+	$("#id_description").keyup(function(){ 
+		textCounter(this, $("#online_description_countdown"), 2000);		
 	});
 });

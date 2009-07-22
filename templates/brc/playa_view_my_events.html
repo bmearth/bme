@@ -6,7 +6,7 @@
 
 
 <div id="daily_events">
-  <span class="day_top_sub_header">Events for  {{ request.user.username }}
+  <span class="day_top_sub_header"><center>Events Submitted by  {{ request.user.username }}</center></span>
 </div>
 
   {% if approved_events %}
@@ -16,11 +16,6 @@
       {% for e in approved_events %}
         <li>
           <a href="{% url playa_event_view year.year e.id %}">{{ e.title }}</a>
-          {%if not e.all_day %}
-            <span class="event-times">
-              ({{ o.start_time|date:"P" }} - {{ o.end_time|date:"P" }})
-            </span>
-          {% endif %}
         </li>
       {% endfor %}
     </ol>

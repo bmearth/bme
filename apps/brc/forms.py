@@ -260,6 +260,7 @@ class PlayaEventOccurrenceForm(forms.ModelForm):
 	end_time=forms.DateTimeField(label='End', widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
 
 	def clean(self):
+		'''
 		cleaned_data = self.cleaned_data
 		start=cleaned_data.get('start_time')
 		end = cleaned_data.get('end_time')
@@ -271,7 +272,8 @@ class PlayaEventOccurrenceForm(forms.ModelForm):
     
 		# Always return the full collection of cleaned data.
 		return cleaned_data
-    
+		'''
+		return self.cleaned_data
 	def save(self, event, occurrence_id):
 		if(occurrence_id is not None):
 			if(event.playaevent.all_day):
@@ -287,3 +289,5 @@ class PlayaEventOccurrenceForm(forms.ModelForm):
 		else:
 			# Add new Occurrence
 			event.add_occurrences(self.cleaned_data['start_time'], self.cleaned_data['end_time'])
+	class Meta:
+		model = Occurrence 

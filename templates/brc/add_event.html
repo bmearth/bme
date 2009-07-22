@@ -21,7 +21,14 @@
 	{% if field.errors %}
 		<tr><td colspan=2>{{ field.errors }}</td></tr>	
 	{% endif %}
-	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:<br/><span class='event_form_help'>{{ field.help_text }}</span></td><td> {{ field }}</td></tr>
+	<tr id='{{ field.label|slugify }}-row'><td>{{ field.label_tag }}:<br/><span class='event_form_help'>{{ field.help_text }}</span></td><td> {{ field }}
+	{% ifequal field.label "Print Description" %}
+		<br/><span id="print_description_countdown">150 Characters Available</span>
+	{% endifequal %}
+	{% ifequal field.label "Online Description" %}
+		<br/><span id="online_description_countdown">2000 Characters Available</span>
+	{% endifequal %}
+	</td></tr>
     {% endfor %}
 </table>
 {% if form.instance.id %}

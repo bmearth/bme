@@ -15,9 +15,11 @@
 	{% endifnotequal %}
 {% else %}
   {% ifnotequal playa_event.moderation 'A' %}
-    {% ifnotequal user playa_event.creator %}
+	{% ifnotequal user playa_event.creator %}
 		  <h2>Event not available</h2>
-		{% endifnotequal %}
+	{% else %}
+    		{% include 'brc/playa_event_display.html' %}
+	{% endifnotequal %}
   {% else %}
     {% include 'brc/playa_event_display.html' %}
 	{% endifnotequal %}
