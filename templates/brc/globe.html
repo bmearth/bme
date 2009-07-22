@@ -3,7 +3,7 @@
 {% block extra_head_base %}
 <style type="text/css">
   #body { width: 100%; height:100%; padding: 0px 0px 0px 0px;}
-  #map { width: 100%; width:100%;}
+  #footer { margin: 0px; padding: 0px; height:0px; width:0px;}
 </style>
     <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="http://code.google.com/p/ext-js-google-earth-api/source/browse/trunk/Ext.ux.GEarthPanel-1.2.css" />
@@ -48,10 +48,13 @@
             var viewport = new Ext.Panel({
                 layout: 'border',
                 renderTo: 'map',
-		height:1000,
-		autoWidth: true,
-                //items: [ controlPanel, earthPanel]
-		items: [earthPanel]
+		items: [earthPanel],
+		monitorResize: true,
+		doLayout: function() {
+			var header_height = $("#tabhead").height()
+        		var nav_height = $("#subnav").height();
+			this.setSize($(window).width(),$(window).height()-(header_height+nav_height+5));
+		}
             });
 
             // Build control panel
@@ -68,22 +71,15 @@
                 controlPanel.doLayout();
 		//earthPanel.findLocation("Black Rock City, NV");
             });
-        });
 	
-	function resizeMap() {
-        	var header_height = $("#tabhead").height()
-        	var nav_height = $("#subnav").height();
+	var header_height = $("#tabhead").height()
+	var nav_height = $("#subnav").height();
 
-        	map_height = (($(window).height() - header_height) - nav_height);
-
-        	$("html").height(map_height + "px");
-        	$("body").height(map_height + "px");
-        	$("#map").height(map_height + "px");
-        	$("#map").width($(window.width()) + "px");
-	}
-	function handleResize() {
-        	resizeMap();
-	}
+	map_height = ($(window).height() - (header_height+nav_height+5));
+	
+	$("html").height(map_height + "px"); 
+	$("body").height(map_height + "px"); 
+        });
     </script>
 {% endblock %}
 {% block head_title %}{{ year.year }} - Globe{% endblock %}
@@ -93,9 +89,4 @@
 <div id="eastPanel"></div>
 </div>
 {% endblock %}
-{% block extra_body %}
-    <script type="text/javascript">
-        window.onload = handleResize;
-        window.onresize = handleResize;
-    </script>
-{% endblock %}
+{% block footer %}{% endblock %}

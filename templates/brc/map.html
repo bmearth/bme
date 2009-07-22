@@ -4,6 +4,7 @@
 <style type="text/css">
   #body { width: 100%;  padding: 0px 0px 0px 0px;}
   #map { width: 100%;}
+  #footer { margin: 0px; padding: 0px; height:0px; width:0px;}
 </style>
     <script src="http://openlayers.org/api/OpenLayers.js"></script>
 <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
@@ -40,9 +41,8 @@ function resizeMap() {
 	var header_height = $("#tabhead").height()
 	var nav_height = $("#subnav").height();
 
-	map_height = (($(window).height() - header_height) - nav_height);
+	map_height = ($(window).height() - (header_height + nav_height + 5));
 	
-	$("html").height(map_height + "px"); 
 	$("body").height(map_height + "px"); 
 	$("#map").height(map_height + "px"); 
 
@@ -67,3 +67,4 @@ function handleResize() {
   	window.onresize = handleResize;
     </script>
 {% endblock %}
+{% block footer %}{% endblock %}
