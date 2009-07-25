@@ -22,6 +22,19 @@ class AnonymousArtInstallationHandler(BaseHandler):
 	model = ArtInstallation 
 	fields = art_fields
 	
+	def read(self, request, year_year=None, art_id=None):
+		base = ArtInstallation.objects.filter()
+		if(year_year):
+		        year = Year.objects.get(year=year_year)
+			if(art_id):
+				art = ArtInstallation.objects.filter(year=year,id=art_id)
+			else:
+				art = ArtInstallation.objects.filter(year=year)
+			return art
+		else:
+			return base.all()
+		
+	
 class ArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
 	model = ArtInstallation 

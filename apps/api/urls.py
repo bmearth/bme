@@ -14,12 +14,13 @@ cstreet_handler = Resource(CircularStreetHandler, authentication=auth)
 tstreet_handler = Resource(TimeStreetHandler, authentication=auth)
 
 urlpatterns = patterns('',
-   url(r'^user/', user_handler),
-   url(r'^year/', year_handler),
-   url(r'^(?P<year_year>\d{4})/camp/', camp_handler),
-   url(r'^(?P<year_year>\d{4})/art/', art_handler),
+   #url(r'^user/', user_handler),
+   #url(r'^year/', year_handler),
+   #url(r'^(?P<year_year>\d{4})/camp/', camp_handler),
+   #url(r'^(?P<year_year>\d{4})/art/(?P<art_id>\d+)/$', art_handler),
+   #url(r'^(?P<year_year>\d{4})/art/', art_handler),
    url(r'^(?P<year_year>\d{4})/event/(?P<playa_event_id>\d+)/$', event_handler),
    url(r'^(?P<year_year>\d{4})/event/', event_handler),
-   url(r'^(?P<year_year>\d{4})/cstreet/', cstreet_handler),
-   url(r'^(?P<year_year>\d{4})/tstreet/', tstreet_handler),
+   #url(r'^(?P<year_year>\d{4})/cstreet/', cstreet_handler),
+   #url(r'^(?P<year_year>\d{4})/tstreet/', tstreet_handler),
 )
