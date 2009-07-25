@@ -16,10 +16,11 @@
         google.load("earth", "1");
         google.load("maps", "2.xx");
 
+	var earthPanel;
         Ext.onReady(function(){
 
             // Create Google Earth panel
-            var earthPanel = new Ext.ux.GEarthPanel({
+            earthPanel = new Ext.ux.GEarthPanel({
                  region: 'center',
                 contentEl: 'eastPanel',
                 margins: '0 0 0 0',
@@ -61,7 +62,7 @@
             earthPanel.on('earthLoaded', function(){
 
                 // Display KMLs
-                earthPanel.fetchKml('http://bmanearth.burningman.com/data/2008/brc08_NetworkLink.kml');
+                earthPanel.fetchKml('http://207.7.135.230/apache2-default/2009.kml');
 
                 // Add panels
                 //controlPanel.add(earthPanel.getKmlPanel());
@@ -69,7 +70,9 @@
                 controlPanel.add(earthPanel.getLayersPanel());
                 controlPanel.add(earthPanel.getOptionsPanel());
                 controlPanel.doLayout();
-		//earthPanel.findLocation("Black Rock City, NV");
+		var lookAt = earthPanel.earth.createLookAt('');
+		lookAt.set(40.769288,-119.220037,0,earthPanel.earth.ALTITUDE_RELATIVE_TO_GROUND,98.02124892444139,83.07748459712441,151.1785928292709);
+		earthPanel.earth.getView().setAbstractView(lookAt);	
             });
 	
 	var header_height = $("#tabhead").height()

@@ -411,7 +411,7 @@ def delete_occurrence(request,
 			object_id = occurrence.event.id,
 			post_delete_redirect = next,
 			template_name = "brc/delete_event.html",
-			extra_context = dict(next=next, msg="This is the only occurrence of this event, the entire event will be deleted. Are you Sure?"),
+			extra_context = dict(next=next, msg="This is the only occurrence of this event. By deleting it, you will delete the entire event. Are you sure you want to do this??"),
 			login_required = login_required
 		)
 	else:

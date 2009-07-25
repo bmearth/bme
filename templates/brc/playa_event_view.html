@@ -3,9 +3,7 @@
 {% load i18n %}
 {% block head_title %} {{ year.year }} Event - {{ playa_event.title }} {% endblock %}
 {% block body %}
-{{ playa_event.year.year }}<br />
-
-<a href='/brc/{{ playa_event.year.year }}/playa_events/'>Back to {{ playa_event.year.year }} Playa Events</a><br />
+<h4><a href='/brc/{{ playa_event.year.year }}/playa_events/'>&larr;&nbsp;Back to {{ playa_event.year.year }} Playa Events</a></h4>
 
 {% if not playa_event.list_online %}
 	{% ifnotequal user playa_event.creator %}

@@ -48,6 +48,7 @@ td {
     margin: 50px auto;
     padding: 10px;
     font-size: 11px;
+    line-height: 16px;
     text-align: center;
     clear: both;
     width: 800px;
@@ -128,6 +129,10 @@ h3 {
 }
 #tabhead .login a:hover {
     color: #ffdb60; /* login bar link hover colour */
+}
+
+#my_events {
+	margin: 0 auto;
 }
 
 #daily_events {
