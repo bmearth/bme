@@ -113,7 +113,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "messages.context_processors.inbox",
     "friends_app.context_processors.invitations",
     "misc.context_processors.combined_inbox_count",
-    "brc.context_processors.bme_production"
+
+    "brc.context_processors.bme_production",
+
+    "points.context_processors.ol_media",
+    "points.context_processors.GAK",
 )
 
 COMBINED_INBOX_COUNT_SOURCES = (
@@ -182,6 +186,9 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 	'django.contrib.databrowse',
 #	'haystack',
+
+    'olwidget',
+    'points',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -267,3 +274,4 @@ logging.basicConfig(
 )
 
 BME_PRODUCTION=False
+
