@@ -20,3 +20,6 @@ local_settings.py
 .settings/org.eclipse.core.resources.prefs
 *.egg
 *.egg-info
+
+.git
+

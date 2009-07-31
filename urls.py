@@ -79,11 +79,13 @@ urlpatterns = patterns('',
     (r'^playaevent/', include('swingtime.urls')),
     (r'^locations/', include('locations.urls')),
     (r'^brc/', include('brc.urls')),
-    (r'^api/0.1/', include('api.urls')), 
+    (r'^api/0.1/', include('api.urls')),
     (r'^feeds/tweets/(.*)/$', 'django.contrib.syndication.views.feed', tweets_feed_dict),
     (r'^feeds/posts/(.*)/$', 'django.contrib.syndication.views.feed', blogs_feed_dict),
     (r'^feeds/bookmarks/(.*)/?$', 'django.contrib.syndication.views.feed', bookmarks_feed_dict),
 #	(r'^search/', include('haystack.urls')),
+
+    (r'^points/', include('points.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together
