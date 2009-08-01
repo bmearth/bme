@@ -1,4 +1,6 @@
-import os,sys,csv, codecs, cStringIO
+import os,sys,csv, codecs, cStringIO, time
+
+from time import strptime
 
 sys.path.append('/home/bme/src/pinax/apps')
 sys.path.append('/home/bme/src')
@@ -7,10 +9,10 @@ sys.path.append('/home/bme/src/bme/apps')
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
 from brc.models import *
+from brc.views import *
 
 curr_year='2009'
 xyear = Year.objects.filter(year=curr_year)
-print xyear[0]
 
 class UTF8Recoder:
     """
@@ -43,13 +45,27 @@ class UnicodeReader:
     def __iter__(self):
         return self
 
-reader = UnicodeReader(open("2009_theme_camps.csv", "rb"))
+reader = UnicodeReader(open("2009_art_installations.csv", "rb"))
 count = 0
+bad_count = 0
+print xyear[0].location_point
 for row in reader:
 	try:
-		tc = ThemeCamp.objects.get(bm_fm_id=row[0])
-		tc.location_string=row[2]
-		tc.save()
+		art = ArtInstallation.objects.get(bm_fm_id=row[0])
+		if(row[3] and row[4]):
+			art.time_address = row[3]
+			art.distance = row[4]
+			xtime = strptime(row[3], "%H:%M")
+			point = geocode2(xyear[0].year, xtime.tm_hour, xtime.tm_min, int(row[4]))
+			art.location_point = point
+			art.save()
+		elif(row[2]):
+			art.location_string = row[2]
+			art.save()	
+		count += 1
+	except AttributeError, msg:
+		print msg
 	except:
-		print row
-		print "Theme Camp Not Found"
+		print sys.exc_info()[0]
+		bad_count += 1
+		pass
