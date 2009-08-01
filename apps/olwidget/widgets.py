@@ -148,8 +148,9 @@ class MapDisplay(OLWidget):
         if not map_options.has_key('editable'):
             map_options['editable'] = False
 
-        if (self.fields and len(self.fields) > 1) or \
-                (fields[0].geom_type.upper() == 'GEOMETRYCOLLECTION'):
+        if (self.fields and len(self.fields) > 1):
+            map_options['is_collection'] = True
+        if fields and (fields[0].geom_type.upper() == 'GEOMETRYCOLLECTION'):
             map_options['is_collection'] = True
 
         super(MapDisplay, self).__init__(map_options=map_options)

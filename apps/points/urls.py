@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 
 )
 
+'''
 from settings import INSTALLED_APPS
 
 if 'piston' in INSTALLED_APPS:
@@ -37,3 +38,4 @@ if 'piston' in INSTALLED_APPS:
             url(r'^api/(?P<id>\d+)/$', point_resource),
 
     )
+'''
