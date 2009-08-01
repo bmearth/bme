@@ -30,15 +30,17 @@ class CircularStreetAdmin(BME_OSMAdmin):
     list_editable = ('street_line',)
 
 class ThemeCampAdmin(BME_OSMAdmin):
-    list_display = ('name', 'year', 'circular_street', 'time_address', 'hometown')
+    list_display = ('name', 'year', 'bm_fm_id', 'location_string', 'circular_street', 'time_address', 'hometown', 'description')
     list_filter = ['year', 'circular_street', 'time_address']
     ordering = ('name',)
-    search_fields = ('name','description')
+    search_fields = ('name','description','bm_fm_id')
+    list_per_page = 50
 
 class ArtInstallationAdmin(BME_OSMAdmin):
-    list_display = ('name','year', 'location_point')
+    list_display = ('name','year', 'bm_fm_id', 'time_address', 'distance', 'location_string', 'location_point')
     list_filter = ['year']
-    search_fields = ('name','description')
+    search_fields = ('name','description', 'bm_fm_id')
+    list_per_page = 50
 
 class VehicleAdmin(BME_OSMAdmin):
     list_display = ('name', 'year', 'type','last_point')
