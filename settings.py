@@ -276,8 +276,8 @@ logging.basicConfig(
 BME_PRODUCTION=False
 
 # For bme.burningman.com
-#GOOGLE_API_KEY =\
-#        'ABQIAAAABH87p-yQOJj-sh06NusQiRQLpPod3aNACjAAjaNKf9qxH3IW9RQD3Xdlk03aDvbqDqgbZKEnmbv2Kg'
+GOOGLE_API_KEY =\
+        'ABQIAAAABH87p-yQOJj-sh06NusQiRQLpPod3aNACjAAjaNKf9qxH3IW9RQD3Xdlk03aDvbqDqgbZKEnmbv2Kg'
 
 # For 127.0.0.1:8000
 #GOOGLE_API_KEY =\
