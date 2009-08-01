@@ -2,9 +2,10 @@ import os, sys
 import psycopg2
 from pysqlite2 import dbapi2 as sqlite
 
-sys.path.append('/home/bme/src/pinax/apps')
-sys.path.append('/home/bme/src')
-sys.path.append('/home/bme/src/bme/apps')
+sys.path.append('/home/ortelius/projects/mobitag/src/pinax/apps')
+sys.path.append('/home/ortelius/projects/mobitag/src')
+sys.path.append('/home/ortelius/projects/bme')
+sys.path.append('/home/ortelius/projects/bme/bme/apps')
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
 from brc.models import *
@@ -20,7 +21,7 @@ except:
 	cursor.execute("CREATE TABLE IF NOT EXISTS 'theme_camp' ('pk' INTEGER NOT NULL, 'name' TEXT, 'year' INTEGER, 'description' TEXT, 'url' TEXT, 'contact_email' TEXT, 'hometown' TEXT, 'circular_street' INTEGER, 'time_address' TEXT, 'latitude' FLOAT, 'longitude' FLOAT, 'image_url' TEXT)")
 
 
-camps = ThemeCamp.objects.filter(year=4)
+camps = ThemeCamp.objects.filter(year=4).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name')
 
 for camp in camps:
 	try:
@@ -35,7 +36,7 @@ try:
 except:
 	cursor.execute("CREATE TABLE IF NOT EXISTS 'art_install' ('pk' INTEGER PRIMARY KEY  NOT NULL , 'year' INTEGER, 'name' TEXT, 'slug' TEXT, 'artist' TEXT, 'description' TEXT, 'url' TEXT, 'contact_email' TEXT, 'circular_street' INTEGER, 'time_address' TEXT, 'latitude' FLOAT, 'longitude' FLOAT, 'image_url' TEXT)")
 
-art_installs = ArtInstallation.objects.filter(year=4)
+art_installs = ArtInstallation.objects.filter(year=4).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name')
 
 for art in art_installs:
 	try:
