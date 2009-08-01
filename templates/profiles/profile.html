@@ -24,11 +24,12 @@
     </div>
     
     <div class="left_panel">
-        
+        {% comment %}
+        {% endcomment %}
         <div id="css_id" style="float:right; margin:1em; width:400px; height:300px;">
             {% show_ol_map other_user %}
         </div>
-        
+
         <div id="profile_avatar">
             <div>{% avatar other_user 80 %}</div>
             {% if is_me %}
