@@ -2,9 +2,9 @@ import os,sys,csv, codecs, cStringIO, time
 
 from time import strptime
 
-sys.path.append('/home/bme/src/pinax/apps')
-sys.path.append('/home/bme/src')
-sys.path.append('/home/bme/src/bme/apps')
+sys.path.append('../../../../pinax/apps')
+sys.path.append('../../../../../src')
+sys.path.append('../../../../../src/bme/apps')
 
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
