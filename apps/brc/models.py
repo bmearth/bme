@@ -102,7 +102,7 @@ class ArtInstallation(models.Model):
         return self.year.year + ":" + self.name
     year = models.ForeignKey(Year)
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     artist = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
