@@ -1,7 +1,6 @@
 {% extends "brc/base.html" %}
 {% block head_title %} {{ year.year }} - Art Installations{% endblock %}
 {% block body %}
-<img src='http://www.burningman.com/sections/installations/installations_section.gif'><br/>
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/art_installations/'><< {{ previous }}</a>
 {% endifnotequal %}

@@ -36,22 +36,20 @@
             <tr>
               {% if not BME_PRODUCTION %}
                 <td class="tab rtab_brc"><div><a href="{% url brc.views.index %}">{% trans "BRC" %}</a></div></td>
-                <td class="tab rtab_blogs"><div><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></div></td> 
-                <td class="tab rtab_projects"><div><a href="{% url project_list %}">{% trans "Projects" %}</a></div></td> 
-                <td class="tab rtab_tribes"><div><a href="{% url tribe_list %}">{% trans "Groups" %}</a></div></td> 
+                <!--<td class="tab rtab_blogs"><div><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></div></td> -->
+                <!--<td class="tab rtab_projects"><div><a href="{% url project_list %}">{% trans "Projects" %}</a></div></td> -->
+                <!--<td class="tab rtab_tribes"><div><a href="{% url tribe_list %}">{% trans "Groups" %}</a></div></td> -->
                 <td class="tab rtab_tweets"><div><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></div></td> 
-                <td class="tab rtab_bookmarks"><div><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></div></td> 
+                <!--<td class="tab rtab_bookmarks"><div><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></div></td>--> 
                 <td class="tab rtab_profile"><div><a href="{% url profile_detail user %}">{% trans "Profile" %}</a></div></td>
-                
-                <td class="tab rtab_photos"><div><a href="{% url photos %}">{% trans "Photos" %}</a></div></td>
-                <td class="tab rtab_regionals"><div><a href="{% url regional_list %}">{% trans "Regionals" %}</a></div></td>
+                <!--<td class="tab rtab_photos"><div><a href="{% url photos %}">{% trans "Photos" %}</a></div></td>-->
+                <!--<td class="tab rtab_regionals"><div><a href="{% url regional_list %}">{% trans "Regionals" %}</a></div></td>-->
                 {% comment %}<td class="tab rtab_calendar"><div><a href="{% url schedule %}">{% trans "Calendar" %}</a></div></td>{% endcomment %}
                 {% else %}
                 <td class="tab rtab_brc"><div><a href="{% url playa_events_by_day 2009 1 %}">{% trans "Playa Events" %}</a></div></td>
               {% endif %}
               {% if not BME_PRODUCTION %}
-	       <td class="tab rtab_search"><div><a href="/search">{% trans "Search" %}</a></div></td>
-
+	       <!--<td class="tab rtab_search"><div><a href="/search">{% trans "Search" %}</a></div></td>-->
 	      <td class="tab rtab_inbox"><div><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></div></td>
 	            {% endif %}
               </tr>
