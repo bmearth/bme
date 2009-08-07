@@ -81,30 +81,21 @@
         }
     }, 
     {
+        "pk": 119, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "The Burning Man Earth Project does a daily aerial hi-res shot of BRC each day at 8-9am. Do something large and cool that will show up on the image. It will need to be at least 20' to show up on the image.\r\nThe images will be a permanent part of the Burning Man official archive, and the Friday or Saturday image will become a part of the Google Earth database.\r\nA high quality print of BRC2008 is available from the Burning Man marketplace.", 
+            "title": "BME flyover"
+        }
+    }, 
+    {
         "pk": 101, 
         "model": "swingtime.event", 
         "fields": {
             "event_type": 1, 
             "description": "Coffee Time", 
             "title": "Coffee Time"
-        }
-    }, 
-    {
-        "pk": 88, 
-        "model": "swingtime.event", 
-        "fields": {
-            "event_type": 17, 
-            "description": "Web description", 
-            "title": "Coffee Time Hijinks Ham Steaks"
-        }
-    }, 
-    {
-        "pk": 41, 
-        "model": "swingtime.event", 
-        "fields": {
-            "event_type": 1, 
-            "description": "Contact improv jams are a great way to explore your free movement style, and interact with other dancers. This is not a class but a freestyle jam. If you would like to learn more about contact, we will have two daily classes in the fundamentals of contact improv at our camp (Camp Contact) at 1 pm and 3:30 pm.", 
-            "title": "Contact Jam"
         }
     }, 
     {
@@ -144,7 +135,7 @@
         }
     }, 
     {
-        "pk": 108, 
+        "pk": 114, 
         "model": "swingtime.event", 
         "fields": {
             "event_type": 1, 
@@ -153,12 +144,12 @@
         }
     }, 
     {
-        "pk": 111, 
+        "pk": 115, 
         "model": "swingtime.event", 
         "fields": {
-            "event_type": 12, 
-            "description": "Test All Day", 
-            "title": "Test All Day"
+            "event_type": 1, 
+            "description": "Test", 
+            "title": "Test"
         }
     }, 
     {
@@ -171,7 +162,7 @@
         }
     }, 
     {
-        "pk": 110, 
+        "pk": 113, 
         "model": "swingtime.event", 
         "fields": {
             "event_type": 1, 
@@ -180,12 +171,21 @@
         }
     }, 
     {
-        "pk": 109, 
+        "pk": 117, 
         "model": "swingtime.event", 
         "fields": {
             "event_type": 1, 
-            "description": "Testing Check Location", 
-            "title": "Testing Check Location"
+            "description": "Testing", 
+            "title": "Testing"
+        }
+    }, 
+    {
+        "pk": 116, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 1, 
+            "description": "Testing Again", 
+            "title": "Testing Again"
         }
     }, 
     {
@@ -207,6 +207,15 @@
         }
     }, 
     {
+        "pk": 118, 
+        "model": "swingtime.event", 
+        "fields": {
+            "event_type": 10, 
+            "description": "this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far, and take that corner too fast, well then no vampire bar for you! you only get tecate this is the typing that happens here and then if you go to far,", 
+            "title": "erlhuefouwhefuheheiuhiweuhrweiurhewiurhiewurhiwehr"
+        }
+    }, 
+    {
         "pk": 84, 
         "model": "swingtime.event", 
         "fields": {
@@ -216,21 +225,39 @@
         }
     }, 
     {
-        "pk": 135, 
+        "pk": 144, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-08-31 00:00:00", 
             "end_time": "2009-08-31 00:00:00", 
-            "event": 108
+            "event": 114
         }
     }, 
     {
-        "pk": 137, 
+        "pk": 142, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-08-31 00:00:00", 
-            "end_time": "2009-08-31 00:00:00", 
-            "event": 110
+            "end_time": "2009-08-31 00:30:00", 
+            "event": 101
+        }
+    }, 
+    {
+        "pk": 143, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 00:30:00", 
+            "event": 113
+        }
+    }, 
+    {
+        "pk": 145, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 00:30:00", 
+            "event": 115
         }
     }, 
     {
@@ -243,12 +270,39 @@
         }
     }, 
     {
+        "pk": 147, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 01:30:00", 
+            "event": 117
+        }
+    }, 
+    {
         "pk": 86, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-08-31 00:00:00", 
             "end_time": "2009-08-31 02:00:00", 
             "event": 84
+        }
+    }, 
+    {
+        "pk": 146, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 04:30:00", 
+            "event": 116
+        }
+    }, 
+    {
+        "pk": 148, 
+        "model": "swingtime.occurrence", 
+        "fields": {
+            "start_time": "2009-08-31 00:00:00", 
+            "end_time": "2009-08-31 23:59:00", 
+            "event": 118
         }
     }, 
     {
@@ -261,12 +315,12 @@
         }
     }, 
     {
-        "pk": 40, 
+        "pk": 150, 
         "model": "swingtime.occurrence", 
         "fields": {
-            "start_time": "2009-08-31 10:00:00", 
-            "end_time": "2009-08-31 11:00:00", 
-            "event": 41
+            "start_time": "2009-08-31 08:00:00", 
+            "end_time": "2009-08-31 09:00:00", 
+            "event": 119
         }
     }, 
     {
@@ -288,21 +342,12 @@
         }
     }, 
     {
-        "pk": 112, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-01 00:00:00", 
-            "end_time": "2009-09-01 23:59:00", 
-            "event": 99
-        }
-    }, 
-    {
-        "pk": 89, 
+        "pk": 151, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-09-01 08:00:00", 
-            "end_time": "2009-09-01 10:00:00", 
-            "event": 88
+            "end_time": "2009-09-01 09:00:00", 
+            "event": 119
         }
     }, 
     {
@@ -324,21 +369,12 @@
         }
     }, 
     {
-        "pk": 136, 
+        "pk": 152, 
         "model": "swingtime.occurrence", 
         "fields": {
-            "start_time": "2009-09-02 00:00:00", 
-            "end_time": "2009-08-31 23:59:00", 
-            "event": 109
-        }
-    }, 
-    {
-        "pk": 113, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-02 00:00:00", 
-            "end_time": "2009-09-02 23:59:00", 
-            "event": 99
+            "start_time": "2009-09-02 08:00:00", 
+            "end_time": "2009-09-02 09:00:00", 
+            "event": 119
         }
     }, 
     {
@@ -369,15 +405,6 @@
         }
     }, 
     {
-        "pk": 114, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-03 00:00:00", 
-            "end_time": "2009-09-03 23:59:00", 
-            "event": 99
-        }
-    }, 
-    {
         "pk": 121, 
         "model": "swingtime.occurrence", 
         "fields": {
@@ -387,12 +414,12 @@
         }
     }, 
     {
-        "pk": 90, 
+        "pk": 153, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-09-03 08:00:00", 
-            "end_time": "2009-09-03 10:00:00", 
-            "event": 88
+            "end_time": "2009-09-03 09:00:00", 
+            "event": 119
         }
     }, 
     {
@@ -423,21 +450,21 @@
         }
     }, 
     {
-        "pk": 115, 
+        "pk": 149, 
         "model": "swingtime.occurrence", 
         "fields": {
-            "start_time": "2009-09-04 00:00:00", 
-            "end_time": "2009-09-04 23:59:00", 
-            "event": 99
+            "start_time": "2009-09-04 08:00:00", 
+            "end_time": "2009-08-31 10:00:00", 
+            "event": 100
         }
     }, 
     {
-        "pk": 138, 
+        "pk": 154, 
         "model": "swingtime.occurrence", 
         "fields": {
-            "start_time": "2009-09-04 00:00:00", 
-            "end_time": "2009-09-04 23:59:00", 
-            "event": 111
+            "start_time": "2009-09-04 08:00:00", 
+            "end_time": "2009-09-04 09:00:00", 
+            "event": 119
         }
     }, 
     {
@@ -468,15 +495,6 @@
         }
     }, 
     {
-        "pk": 116, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-05 00:00:00", 
-            "end_time": "2009-09-05 23:59:00", 
-            "event": 99
-        }
-    }, 
-    {
         "pk": 107, 
         "model": "swingtime.occurrence", 
         "fields": {
@@ -495,30 +513,21 @@
         }
     }, 
     {
-        "pk": 91, 
+        "pk": 155, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-09-05 08:00:00", 
-            "end_time": "2009-09-05 10:00:00", 
-            "event": 88
+            "end_time": "2009-09-05 09:00:00", 
+            "event": 119
         }
     }, 
     {
-        "pk": 117, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-06 00:00:00", 
-            "end_time": "2009-09-06 23:59:00", 
-            "event": 99
-        }
-    }, 
-    {
-        "pk": 124, 
+        "pk": 156, 
         "model": "swingtime.occurrence", 
         "fields": {
             "start_time": "2009-09-06 08:00:00", 
             "end_time": "2009-09-06 09:00:00", 
-            "event": 101
+            "event": 119
         }
     }, 
     {
@@ -528,15 +537,6 @@
             "start_time": "2009-09-06 10:00:00", 
             "end_time": "2009-09-06 16:00:00", 
             "event": 102
-        }
-    }, 
-    {
-        "pk": 118, 
-        "model": "swingtime.occurrence", 
-        "fields": {
-            "start_time": "2009-09-07 00:00:00", 
-            "end_time": "2009-09-07 23:59:00", 
-            "event": 99
         }
     }
 ]
