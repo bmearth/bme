@@ -10,7 +10,6 @@ from brc.models import *
 
 curr_year='2009'
 xyear = Year.objects.filter(year=curr_year)
-print xyear[0]
 
 class UTF8Recoder:
     """
@@ -43,13 +42,15 @@ class UnicodeReader:
     def __iter__(self):
         return self
 
-reader = UnicodeReader(open("2009_theme_camps.csv", "rb"))
+reader = UnicodeReader(open("BMEarth2009_Placement.csv", "rb"))
 count = 0
 for row in reader:
 	try:
 		tc = ThemeCamp.objects.get(bm_fm_id=row[0])
-		tc.location_string=row[2]
+		tc.name = row[2]
+		tc.description = row[3]
+		tc.location_string = row[4]
 		tc.save()
+		print tc
 	except:
-		print row
-		print "Theme Camp Not Found"
+		print sys.exc_info() 

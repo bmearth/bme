@@ -45,13 +45,21 @@ class UnicodeReader:
     def __iter__(self):
         return self
 
-reader = UnicodeReader(open("2009_art_installations.csv", "rb"))
+reader = UnicodeReader(open("BMEarth2009_ArtPreEvent.csv", "rb"))
 count = 0
 bad_count = 0
-print xyear[0].location_point
 for row in reader:
 	try:
 		art = ArtInstallation.objects.get(bm_fm_id=row[0])
+		print row[4]	
+		art.name = row[2]
+		art.description = row[3]
+		art.location_string = row[4]
+		art.artist = row[5]
+		art.contact_email = row[8]
+		#art.save()
+		
+		'''
 		if(row[3] and row[4]):
 			art.time_address = row[3]
 			art.distance = row[4]
@@ -61,11 +69,12 @@ for row in reader:
 			art.save()
 		elif(row[2]):
 			art.location_string = row[2]
-			art.save()	
+			art.save()
+		'''
 		count += 1
 	except AttributeError, msg:
 		print msg
 	except:
-		print sys.exc_info()[0]
+		print sys.exc_info()
 		bad_count += 1
 		pass

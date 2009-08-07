@@ -38,6 +38,19 @@ for x in qs:
 
 	FILE.writelines("</Placemark>")
 
+qs = ArtInstallation.objects.filter(year=xyear[0]).kml()
+
+for x in qs:
+	if(x.kml):
+		print x
+		FILE.writelines("<Placemark>")
+		FILE.writelines("<description>" + str(unicode(x.name)) + "</description>")
+		FILE.writelines("<name>" + str(unicode(x.name)) + "</name>")
+
+		FILE.writelines(x.kml)
+
+		FILE.writelines("</Placemark>")
+
 FILE.writelines("</Document>")
 FILE.writelines("</kml>")
 FILE.close()
