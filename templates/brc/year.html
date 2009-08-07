@@ -38,14 +38,20 @@
 {% endblock %}
 {% block head_title %}{{ year.year }} {% endblock %}
 {% block body %}
+{% comment %}
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/'><< {{ previous }}</a>
 {% endifnotequal %}
-<font size=+3><b>{{ year.year }}</b></font>
+{% endcomment %}
+
+<font size=+3><b>Black Rock City {{ year.year }}</b></font>
+
+{% comment %}
 {% ifnotequal next 2010 %}
 <a href='/brc/{{ next }}/'> {{ next }}>></a>
 {% endifnotequal %}
 <br />
+{% endcomment %}
 <ul>
 <li><b>Location:</b> {{ year.location }}</li>
 <li><b>Theme:</b> {{ year.theme }}</li>

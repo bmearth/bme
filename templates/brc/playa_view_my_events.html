@@ -5,8 +5,8 @@
 <h2>View My Events</h2>
 
 
-<div id="daily_events">
-  <span class="day_top_sub_header"><center>Events Submitted by  {{ request.user.username }}</center></span>
+<div id="my_events">
+  <span class="day_top_sub_header">Events submitted by {{ request.user.username }}</span>
 </div>
 
   {% if approved_events %}
@@ -23,7 +23,7 @@
   {% endif %}
 
   {% if unmoderated_events %}
-  <h4 class='day_sub_header'>Events in the moderation queue</h4>
+  <h4 class='day_sub_header'>Events in the Moderation Queue</h4>
   <div class='timed_listing'>
     <ul>
       {% for e in unmoderated_events %}

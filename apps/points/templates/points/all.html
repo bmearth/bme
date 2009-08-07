@@ -1,0 +1,24 @@
+{% extends 'points/base.html' %}
+
+{% block extra_head %}
+{{map.media}}
+
+{% comment %}
+<script>
+    $(function() {
+        var NASAwms = new OpenLayers.Layer.WMS( "NASA WMS",
+            "http://wms.jpl.nasa.gov/wms.cgi?", 
+                    {layers: 'BMNG',format: 'image/png'},
+                    {isBaseLayer: true});
+
+            map.map.addLayer(NASAwms);
+            map.map.zoomToMaxExtent();
+    });
+</script>
+{% endcomment %}
+
+{% endblock %}
+
+{% block body %}
+{{map}}
+{% endblock %}

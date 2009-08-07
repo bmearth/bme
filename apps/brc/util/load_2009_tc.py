@@ -1,8 +1,8 @@
 import os,sys,csv, codecs, cStringIO
 
-sys.path.append('/home/bme/src/pinax/apps')
-sys.path.append('/home/bme/src')
-sys.path.append('/home/bme/src/bme/apps')
+sys.path.append('../../../../pinax/apps')
+sys.path.append('../../../../../src')
+sys.path.append('../../../../../src/bme/apps')
 
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
@@ -10,7 +10,6 @@ from brc.models import *
 
 curr_year='2009'
 xyear = Year.objects.filter(year=curr_year)
-print xyear[0]
 
 class UTF8Recoder:
     """
@@ -43,12 +42,15 @@ class UnicodeReader:
     def __iter__(self):
         return self
 
-reader = UnicodeReader(open("whwhwh2009Names.csv", "rb"))
+reader = UnicodeReader(open("BMEarth2009_Placement.csv", "rb"))
 count = 0
 for row in reader:
-	tc = ThemeCamp(year=xyear[0], name=row[0], bm_fm_id=row[1])
-	print tc
-	if(count > 0): #Skip First Line
-		print
+	try:
+		tc = ThemeCamp.objects.get(bm_fm_id=row[0])
+		tc.name = row[2]
+		tc.description = row[3]
+		tc.location_string = row[4]
 		tc.save()
-	count+=1
+		print tc
+	except:
+		print sys.exc_info() 

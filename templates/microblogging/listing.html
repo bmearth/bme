@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load oembed_tags %}
+{% load pagination_tags %}
+{% load avatar_tags %}
+
+{% autopaginate tweets %}
+
+{% if tweets %}
+    {% for tweet in tweets %}
+        <div class="tweet" id="t{{ tweet.id }}" valign='top'>
+	<table border='0'><tr><td>
+            {% if prefix_sender %}<a href="{% url profile_detail tweet.sender %}">{% avatar tweet.sender 40 %}</a>{% endif %}
+	</td><td valign='top'>
+            {% if prefix_sender %}<a href="{% url profile_detail tweet.sender %}"><b>{{ tweet.sender }}</b></a>{% endif %}
+            {{ tweet.html|safe|oembed|urlize }}
+            <span class="timesince">{% blocktrans with tweet.sent|timesince as tweet_age %}{{ tweet_age }} ago{% endblocktrans %}</span>
+            <a class="reply" href="{% url tweets_you_follow %}?reply={{ tweet.sender }}">{% trans "reply" %}</a>
+	</td></tr></table>
+         </div>
+    {% endfor %}
+{% else %}
+    {% if are_mine %}
+        {% url tweets_you_follow as tweets_url %}
+        <p>{% blocktrans %}You haven't posted any <a href="{{ tweets_url }}">tweets</a> yet.{% endblocktrans %}</p>
+    {% else %}
+        <p>{% blocktrans %}There are currently no tweets to be listed.{% endblocktrans %}</p>
+    {% endif %}
+{% endif %}
+
+{% paginate %}

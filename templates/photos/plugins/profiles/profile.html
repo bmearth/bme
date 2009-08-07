@@ -2,6 +2,7 @@
 {% load tagging_tags %}
 {% load threadedcommentstags %}
 
+{% comment %}
 <h2>{% trans "Photos" %}</h2>
 
     {% if owner.added_photos.all %}
@@ -15,4 +16,4 @@
     {% else %}
        {% trans "No photos uploaded yet." %}
     {% endif %}
-
+{% endcomment %}

@@ -3,7 +3,7 @@
 {% block extra_head_base %}
 <style type="text/css">
   #body { width: 100%; height:100%; padding: 0px 0px 0px 0px;}
-  #map { width: 100%; width:100%;}
+  #footer { margin: 0px; padding: 0px; height:0px; width:0px;}
 </style>
     <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="http://code.google.com/p/ext-js-google-earth-api/source/browse/trunk/Ext.ux.GEarthPanel-1.2.css" />
@@ -16,10 +16,11 @@
         google.load("earth", "1");
         google.load("maps", "2.xx");
 
+	var earthPanel;
         Ext.onReady(function(){
 
             // Create Google Earth panel
-            var earthPanel = new Ext.ux.GEarthPanel({
+            earthPanel = new Ext.ux.GEarthPanel({
                  region: 'center',
                 contentEl: 'eastPanel',
                 margins: '0 0 0 0',
@@ -48,17 +49,20 @@
             var viewport = new Ext.Panel({
                 layout: 'border',
                 renderTo: 'map',
-		height:1000,
-		autoWidth: true,
-                //items: [ controlPanel, earthPanel]
-		items: [earthPanel]
+		items: [earthPanel],
+		monitorResize: true,
+		doLayout: function() {
+			var header_height = $("#tabhead").height()
+        		var nav_height = $("#subnav").height();
+			this.setSize($(window).width(),$(window).height()-(header_height+nav_height+8));
+		}
             });
 
             // Build control panel
             earthPanel.on('earthLoaded', function(){
 
                 // Display KMLs
-                earthPanel.fetchKml('http://bmanearth.burningman.com/data/2008/brc08_NetworkLink.kml');
+                earthPanel.fetchKml('http://207.7.135.230/apache2-default/2009.kml');
 
                 // Add panels
                 //controlPanel.add(earthPanel.getKmlPanel());
@@ -66,24 +70,19 @@
                 controlPanel.add(earthPanel.getLayersPanel());
                 controlPanel.add(earthPanel.getOptionsPanel());
                 controlPanel.doLayout();
-		//earthPanel.findLocation("Black Rock City, NV");
+		var lookAt = earthPanel.earth.createLookAt('');
+		lookAt.set(40.769288,-119.220037,0,earthPanel.earth.ALTITUDE_RELATIVE_TO_GROUND,98.02124892444139,83.07748459712441,151.1785928292709);
+		earthPanel.earth.getView().setAbstractView(lookAt);	
             });
-        });
 	
-	function resizeMap() {
-        	var header_height = $("#tabhead").height()
-        	var nav_height = $("#subnav").height();
+	var header_height = $("#tabhead").height()
+	var nav_height = $("#subnav").height();
 
-        	map_height = (($(window).height() - header_height) - nav_height);
-
-        	$("html").height(map_height + "px");
-        	$("body").height(map_height + "px");
-        	$("#map").height(map_height + "px");
-        	$("#map").width($(window.width()) + "px");
-	}
-	function handleResize() {
-        	resizeMap();
-	}
+	map_height = ($(window).height() - (header_height+nav_height)-10);
+	
+	$("html").height(map_height + "px"); 
+	$("body").height(map_height + "px"); 
+        });
     </script>
 {% endblock %}
 {% block head_title %}{{ year.year }} - Globe{% endblock %}
@@ -93,9 +92,4 @@
 <div id="eastPanel"></div>
 </div>
 {% endblock %}
-{% block extra_body %}
-    <script type="text/javascript">
-        window.onload = handleResize;
-        window.onresize = handleResize;
-    </script>
-{% endblock %}
+{% block footer %}{% endblock %}

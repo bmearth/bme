@@ -1,6 +1,7 @@
 {% extends "brc/base.html" %}
 {% block head_title %} {{ year.year }} - Mutant Vehicles{% endblock %}
 {% block body %}
+{% comment %}
 {% ifnotequal previous 2005 %}
 <a href='/brc/{{ previous }}/art_cars/'><< {{ previous }}</a>
 {% endifnotequal %}
@@ -8,7 +9,8 @@
 {% ifnotequal next 2010 %}
 <a href='/brc/{{ next }}/art_cars/'> {{ next }}>></a>
 {% endifnotequal %}
-<h2>Art Cars</h2>
+{% endcomment %}
+<h2>2009 Mutant Vehicles</h2>
 <ul>
 {% for art_car in art_cars %}
 <li><a href='/brc/{{ year.year }}/art_car/{{art_car.id }}/'>{{ art_car.name }}</a></li>

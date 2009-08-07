@@ -11,11 +11,9 @@
   </a>
   &nbsp;
   {% endif %}
-  Edit or delete your event: <a href="{% url playa_event_edit playa_event.year.year playa_event.id %}">
+  <b>Edit or delete your event:</b> <a href="{% url playa_event_edit playa_event.year.year playa_event.id %}">
     <img border="0" src="{{ MEDIA_URL }}img/pencil.png" alt="{% trans "Change" %}"/>
-  </a>
-  &nbsp;
-  <a href="{% url playa_event_delete playa_event.year.year playa_event.id %}">
+  </a>&nbsp;<a href="{% url playa_event_delete playa_event.year.year playa_event.id %}">
     <img border="0" src="{{ MEDIA_URL }}img/delete.png" alt="{% trans "Delete" %}"/>
   </a>
 </div>
@@ -28,7 +26,7 @@
 
  {% if playa_event.occurrence_set.count %}
      <tr>
-       <td valign="top" width="170"><b>Date/Time(s): </b>
+       <td valign="top" width="170"><b>Date/Time(s):</b>
 {% if user.is_authenticated %}
 {% ifequal user playa_event.creator %}
   	<a href="{% url playa_occurrence_add playa_event.year.year playa_event.id %}">
