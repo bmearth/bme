@@ -92,33 +92,32 @@ for i in range(0,2):
 
 # DOUBLEWIDES
 ## Extinct .. 8/8:30, 5/7, 3:30/4
-D = CircularStreet.objects.filter(year=year,name__startswith='D')[0].name
 E = CircularStreet.objects.filter(year=year,name__startswith='E').exclude(name__iexact='Esplanade').exclude(name__iexact='Evolution')[0].name
 L = CircularStreet.objects.filter(year=year,name__startswith='L')[0]
 geom_collection = "GEOMETRYCOLLECTION("
 
 geom_collection = geom_collection + "POLYGON(("
-geom_collection = geom_collection + ret_street_point(year,8,0,D) + ","
-geom_collection = geom_collection + ret_street_point(year,8,30,D) + ","
+geom_collection = geom_collection + ret_street_point(year,8,0,D.name) + ","
+geom_collection = geom_collection + ret_street_point(year,8,30,D.name) + ","
 geom_collection = geom_collection + ret_street_point(year,8,30,L.name) + ","
 geom_collection = geom_collection + ret_street_point(year,8,0,L.name) + ","
-geom_collection = geom_collection + ret_street_point(year,8,0,D)
+geom_collection = geom_collection + ret_street_point(year,8,0,D.name)
 geom_collection = geom_collection + ")),"
 
 geom_collection = geom_collection + "POLYGON(("
-geom_collection = geom_collection + ret_street_point(year,5,0,D) + ","
-geom_collection = geom_collection + ret_street_point(year,7,0,D) + ","
+geom_collection = geom_collection + ret_street_point(year,5,0,D.name) + ","
+geom_collection = geom_collection + ret_street_point(year,7,0,D.name) + ","
 geom_collection = geom_collection + ret_street_point(year,7,0,L.name) + ","
 geom_collection = geom_collection + ret_street_point(year,5,0,L.name) + ","
-geom_collection = geom_collection + ret_street_point(year,5,0,D)
+geom_collection = geom_collection + ret_street_point(year,5,0,D.name)
 geom_collection = geom_collection + ")),"
 
 geom_collection = geom_collection + "POLYGON(("
-geom_collection = geom_collection + ret_street_point(year,3,30,D) + ","
-geom_collection = geom_collection + ret_street_point(year,4,0,D) + ","
+geom_collection = geom_collection + ret_street_point(year,3,30,D.name) + ","
+geom_collection = geom_collection + ret_street_point(year,4,0,D.name) + ","
 geom_collection = geom_collection + ret_street_point(year,4,0,L.name) + ","
 geom_collection = geom_collection + ret_street_point(year,3,30,L.name) + ","
-geom_collection = geom_collection + ret_street_point(year,3,30,D)
+geom_collection = geom_collection + ret_street_point(year,3,30,D.name)
 geom_collection = geom_collection + "))"
 
 geom_collection = geom_collection + ")"
@@ -154,7 +153,7 @@ promenade.location_line = linestring
 promenade.tags = 'road'
 promenade.save()
 
-# ENTRANCE ROADS (HARDCODED!)
+# ENTRANCE ROADS (HARDCODED! -- CONTACT GATE CREW FOR UPDATE)
 entrance_road = Infrastructure.objects.create(year=year)
 entrance_road.name = "entrance"
 entrance_road.location_line = "LINESTRING(-119.239315394275 40.7610286856975,-119.236633185256 40.7621988830906,-119.236354235516 40.762410166535,-119.236161116469 40.7626051968109,-119.235903624409 40.762913993577,-119.235689047681 40.7633203029263,-119.235581759327 40.7636778530985,-119.235581759327 40.7640354013478)"
@@ -219,24 +218,24 @@ def create_potty(year,street1,street2,time):
 	potty.save()
 	
 C = CircularStreet.objects.filter(year=year,name__startswith='C')[0].name
-D = CircularStreet.objects.filter(year=year,name__startswith='D')[0].name
+D = CircularStreet.objects.filter(year=year,name__startswith='D')[0]
 E = CircularStreet.objects.filter(year=year,name__startswith='E').exclude(name__iexact='Esplanade').exclude(name__iexact='Evolution')[0].name
-G = CircularStreet.objects.filter(year=year,name__startswith='G')[0].name
+G = CircularStreet.objects.filter(year=year,name__startswith='G')[0]
 H = CircularStreet.objects.filter(year=year,name__startswith='H')[0].name
 I = CircularStreet.objects.filter(year=year,name__startswith='I')[0].name
 
 ## C/D potties and H/I potties
 for x in Numeric.arange(2.5,10,0.5):
   if x not in [3,6,9]:
-		create_potty(year,C,D,x)
+		create_potty(year,C,D.name,x)
   if x not in [6]:
 		create_potty(year,H,I,x)
   if x in [3,9]:
-		create_potty(year,D,E,x)
+		create_potty(year,D.name,E,x)
   if x in [6]:
-		create_potty(year,G,H,x)
+		create_potty(year,G.name,H,x)
     
-# AIRPORT
+# AIRPORT (ONSITE DETERMINED)!
 radial = time2radial(4,35)
 tmp = getpoint(clat,clon,dist_to_fence,-radial)
 ls = LineString((clon,clat),(tmp.x,tmp.y))
@@ -281,6 +280,9 @@ walkin_camping.tags = 'walkin_camp'
 walkin_camping.save()
 
 # PLAZAS
+large_plaza_radius = 125
+small_plaza_radius = 100
+
 ## 3:00 plaza
 pt = geocode(year.year, 3, 0, B.name)
 
@@ -299,7 +301,7 @@ plaza.save()
 
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,125,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,large_plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
@@ -321,7 +323,7 @@ plaza.save()
 
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,125,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,large_plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
@@ -330,7 +332,7 @@ G = CircularStreet.objects.filter(year=year,name__startswith='G')[0]
 pt = geocode(year.year, 4, 30, G.name)
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,small_plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
@@ -353,7 +355,7 @@ plaza.save()
 pt = geocode(year.year, 7, 30, G.name)
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,small_plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
@@ -394,15 +396,17 @@ plaza.tags = 'plaza'
 plaza.save()
 
 ## playa
-polystring = "POLYGON((" + ret_arc(clat,clon,dist_inner_ring,0,360,1) + "))"
+fire_circle_radius = 300
+polystring = "POLYGON((" + ret_arc(clat,clon,fire_circle_radius,0,360,1) + "))"
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
 plaza.location_poly = polystring
 plaza.tags = 'plaza'
 plaza.save()
 
+temple_radius = 100 #determined ONSITE
 pt = geocode(year.year,0,0,'Esplanade')
-polystring = "POLYGON((" + ret_arc(pt.y,pt.x,100,0,360,1) + "))"
+polystring = "POLYGON((" + ret_arc(pt.y,pt.x,temple_radius,0,360,1) + "))"
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
 plaza.location_poly = polystring
@@ -410,6 +414,8 @@ plaza.tags = 'plaza'
 plaza.save()
 
 # DPW/Fire
+dpw_radius = 200 #determined ONSITE
+
 pt = geocode(year.year, 5, 30, L.name)
 angle = int(time2radial(5,30))
 pt2 = getpoint(clat,clon,L.distance_from_center + 550,-angle)
@@ -420,7 +426,7 @@ dpw_road.location_line = ls
 dpw_road.tags = 'road'
 dpw_road.save()
 
-polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,250,0,360,1) + "))"
+polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,dpw_radius,0,360,1) + "))"
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
 plaza.location_poly = polystring
@@ -437,9 +443,32 @@ dpw_road.location_line = ls
 dpw_road.tags = 'road'
 dpw_road.save()
 
-polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,250,0,360,1) + "))"
+polystring = "POLYGON((" + ret_arc(pt2.y,pt2.x,dpw_radius,0,360,1) + "))"
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
 plaza.location_poly = polystring
 plaza.tags = 'plaza'
 plaza.save()
+
+# Fire barrells
+fire_barrell_offset = 50
+for x in range(2,10):
+	fire = Infrastructure.objects.create(year=year)
+	fire.name = "Fire Barrell"
+	fire.location_point =	"POINT(" + ret_point(clat,clon,Esplanade.distance_from_center-fire_barrell_offset,time2radial(x,30)) + ")"
+	fire.tags = 'firebarrell'
+	fire.save()
+
+J = CircularStreet.objects.filter(year=year,name__startswith='J')[0]
+for x in (A,D,G,J):
+	fire = Infrastructure.objects.create(year=year)
+	fire.name = "Fire Barrell"
+	fire.location_point =	"POINT(" + ret_point(clat,clon,x.distance_from_center,time2radial(1,57)) + ")"
+	fire.tags = 'firebarrell'
+	fire.save()
+	
+	fire = Infrastructure.objects.create(year=year)
+	fire.name = "Fire Barrell"
+	fire.location_point =	"POINT(" + ret_point(clat,clon,x.distance_from_center,time2radial(10,03)) + ")"
+	fire.tags = 'firebarrell'
+	fire.save()

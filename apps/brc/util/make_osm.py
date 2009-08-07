@@ -31,6 +31,8 @@ runway = Infrastructure.objects.filter(year=xyear[0],tags='runway')
 roads = Infrastructure.objects.filter(year=xyear[0],tags='road')
 camps = Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
 plazas = Infrastructure.objects.filter(year=xyear[0],tags='plaza')
+fires = Infrastructure.objects.filter(year=xyear[0],tags='firebarrell')
+art =  ArtInstallation.objects.filter(year=xyear[0])
 
 cc_outer_ring = Infrastructure.objects.filter(year=xyear[0],name='Evolution')[0].location_line.convex_hull
 double_wide = Infrastructure.objects.filter(year=xyear[0],tags='camp_null')[0].location_multigeom
@@ -49,6 +51,9 @@ def add_street(t):
 	u = t.street_line.difference(cc_outer_ring)
 	if (t.name[0] == 'E'):
 		u = u.difference(double_wide)
+	if (t.name == "06:30" or t.name == 
+"05:30"):
+		u = u[1]		
 	if (u.geom_type == "LineString"):
 		ls = [u]
 	else:
@@ -161,5 +166,18 @@ for t in plazas:
 		print("</way>")
 
 		wayid = wayid - 1			
-			
+
+for t in fires:
+	print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+	print("<tag k='amenity' v='recycling'/>")
+	print("</node>")
+	nodeid = nodeid - 1		
+
+for t in art:
+	print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+	print("<tag k='tourism' v='museum'/>")
+	print("<tag k='name' v='" + t.name + "'/>")
+	print("</node>")
+	nodeid = nodeid - 1
+				
 print("</osm>")
