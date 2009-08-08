@@ -12,9 +12,7 @@
 {% block extra_head %}
 {{block.super}}
 {% include 'points/jqueryui_add_form.html' %}
-
-{% show_ol_media other_user %}
-
+{% show_latest_point_ol_media other_user %}
 {% endblock %}
 
 {% block body %}
@@ -27,7 +25,7 @@
         {% comment %}
         {% endcomment %}
         <div id="css_id" style="float:right; margin:1em; width:400px; height:300px;">
-            {% show_ol_map other_user %}
+            {% show_latest_point_ol other_user %}
         </div>
 
         <div id="profile_avatar">

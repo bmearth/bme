@@ -254,6 +254,16 @@ PISTON_EMAIL_ERRORS = True
 # following URL: https://developer.yahoo.com/wsregapp/
 # YAHOO_MAPS_API_KEY = ''
 
+# For bme.burningman.com
+GOOGLE_API_KEY =\
+        'ABQIAAAABH87p-yQOJj-sh06NusQiRQLpPod3aNACjAAjaNKf9qxH3IW9RQD3Xdlk03aDvbqDqgbZKEnmbv2Kg'
+
+# For 127.0.0.1:8000, put the following in you local_settings.py for dev.
+#GOOGLE_API_KEY =\
+#        'ABQIAAAABH87p-yQOJj-sh06NusQiRTpH3CbXHjuCVmaTc5MkkU4wO1RRhTdrjDBgVDitkd2sidQwpIj12NE2w'
+
+
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:
@@ -275,11 +285,4 @@ logging.basicConfig(
 
 BME_PRODUCTION=False
 
-# For bme.burningman.com
-GOOGLE_API_KEY =\
-        'ABQIAAAABH87p-yQOJj-sh06NusQiRQLpPod3aNACjAAjaNKf9qxH3IW9RQD3Xdlk03aDvbqDqgbZKEnmbv2Kg'
-
-# For 127.0.0.1:8000
-#GOOGLE_API_KEY =\
-#        'ABQIAAAABH87p-yQOJj-sh06NusQiRTpH3CbXHjuCVmaTc5MkkU4wO1RRhTdrjDBgVDitkd2sidQwpIj12NE2w'
 

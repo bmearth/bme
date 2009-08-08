@@ -69,7 +69,7 @@ def show_ol_map(model_instance):
 
     map = MapDisplay( fields=[p.point for p in points],
             map_options = {
-                    'map_style':{'width':'240px', 'height':'160px',},
+                    'map_style':{'width':'360px', 'height':'240px',},
                     'layers': ['osm.mapnik','google.hybrid'],
             }
     )
@@ -98,8 +98,9 @@ def show_latest_point_ol(model_instance):
 
     map = MapDisplay( fields=[ point.point,],
             map_options = {
-                    'map_style':{'width':'240px', 'height':'160px',},
-                    'layers': ['osm.mapnik','google.hybrid'],
+                    'map_style':{'width':'360px', 'height':'240px',},
+                    'layers': ['osm.mapnik'],
+                    'zoom': point.zoom,
             }
     )
 
@@ -107,7 +108,7 @@ def show_latest_point_ol(model_instance):
 
 @register.inclusion_tag('points/show_ol_media.html')
 def show_latest_point_ol_media(model_instance):
-    r = show_ol_map(model_instance)
+    r = show_latest_point_ol(model_instance)
     return r
 
 

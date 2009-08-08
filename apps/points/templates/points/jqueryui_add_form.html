@@ -21,16 +21,22 @@
                         hiddenLink.show();
                         $('img.loading').hide(); 
                         map = new olwidget.Map("id_point", {
-                            "layers": [ "osm.mapnik","google.hybrid",], 
+                            "layers": ['osm.mapnik'], 
                             "name": "point",
                             "default_zoom":1,
+                            "defaultLat": 40.769288,
+                            "defaultLon": -119.220037,
                         });
-                        
-                        var jpl_wms = new OpenLayers.Layer.WMS( "NASA Global Mosaic",
-                            "http://t1.hypercube.telascience.org/cgi-bin/landsat7",
-                            {layers: "landsat7"});
 
-                        map.map.addLayer(jpl_wms);
+                        map.map.addControl(new OpenLayers.Control.LayerSwitcher());
+                        var lat=40.78625;
+                        var lon=-119.20648;
+                        var zoom=14;
+                        
+                        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
+                        map.map.setCenter (lonLat, zoom);
+                        var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+                        map.map.addLayer(playaLayer);
 
                         $('form#edit-point').submit( function() {
                             $('input#id_zoom').val(map.map.getZoom());
@@ -46,7 +52,7 @@
         });
     });
 </script>
+<link href="{{MEDIA_URL}}olwidget/css/olwidget.css" rel="stylesheet"></link>
+<link href="{{MEDIA_URL}}points/css/points.css" rel="stylesheet"></link> 
+<link href="{{MEDIA_URL}}points/css/jq-ui.css" rel="stylesheet"></link> 
 
-
-
-{{points_form_media}}
