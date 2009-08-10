@@ -626,11 +626,7 @@ def csv_all_day_repeating(request, year_year):
 
 def geocode2(year_year, hour, minute, distance):
 	xyear = Year.objects.filter(year=year_year)
-	hour = int(hour)
-	minute = int(minute)
-	radial = ((hour*30)+(minute*0.5))+45
-	if radial >= 360:
-		radial = radial - 360
+	radial = time2radial(hour,minute)
 	
 	pnt = xyear[0].location_point
 	
@@ -641,12 +637,7 @@ def geocode2(year_year, hour, minute, distance):
 def geocode(year_year, hour, minute, street):
 	hour = int(hour)
 	minute = int(minute)
-	#if minute == 0:
-	#	minute = 58
-	#	hour = hour -1
-	#else:
-	#	minute = minute - 2 # Magnetic Declination??
-	
+
 	if(hour > 12):
 		return HttpResponse("invalid time")
 	elif(hour < 0):
@@ -674,6 +665,8 @@ def geocoder(request, year_year, hour, minute, street):
 	return HttpResponse(pnt)
 
 def time2radial(hour, minute):
+	hour = int(hour)
+	minute = int(minute)
 	radial = ((hour*30)+(minute*0.5))+60 #add 60, because 4:00 is North
 	if radial >= 360:
 		radial = radial - 360
