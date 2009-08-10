@@ -1,1 +1,17 @@
 {{map.media}}
+
+<script>
+
+$(function() {
+    map.map.addControl(new OpenLayers.Control.LayerSwitcher());
+    var lat={{point.point.tuple.0}};
+    var lon={{point.point.tuple.1}};
+    var zoom={{point.zoom}};
+
+    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
+
+    map.map.setCenter (lonLat, zoom);
+
+});
+</script>
+
