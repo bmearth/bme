@@ -98,7 +98,8 @@
                         {% if previous_invitations_to %}
                             <p>{% trans "Friendship request sent." %}</p>
                         {% else %}
-                            <h2>{% trans "Add As Friend" %}</h2>
+<div style="clear:both;"></div>
+                            <h3>{% trans "Add As Friend" %}</h3>
                             <form class="uniForm" method="POST" action="">
                                 <fieldset class="inlineLabels">  
                                     {{ invite_form|as_uni_form }}
@@ -114,7 +115,7 @@
                 {% endif %} {# is_friend #}
                 
             {% endif %} {# is me #}
-           <DIV STYLE="CLEAR:BOTH;"></DIV> 
+
             {% plugin_point "profiles.profile" user=other_user owner=other_user viewer=user %}
             
         {% else %} {# not user.is_authenticated #}
