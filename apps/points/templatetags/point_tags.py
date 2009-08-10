@@ -95,14 +95,25 @@ def show_latest_point_ol(model_instance):
 
     if Point.objects.filter(content_type = ct, object_id=obj_id):
         point = Point.objects.filter(content_type = ct, object_id=obj_id)[0]
+    else:
+        point = None
 
-    map = MapDisplay( fields=[ point.point,],
+    if point:
+        map = MapDisplay( fields=[ point.point,],
             map_options = {
                     'map_style':{'width':'360px', 'height':'240px',},
                     'layers': ['osm.mapnik'],
                     'zoom': point.zoom,
             }
-    )
+        )
+    else:
+        map = MapDisplay(
+            map_options = {
+                    'map_style':{'width':'360px', 'height':'240px',},
+                    'layers': ['osm.mapnik'],
+                    'zoom': point.zoom,
+            }
+        )
 
     return locals()
 
