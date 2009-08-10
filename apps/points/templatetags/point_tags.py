@@ -111,7 +111,7 @@ def show_latest_point_ol(model_instance):
             map_options = {
                     'map_style':{'width':'360px', 'height':'240px',},
                     'layers': ['osm.mapnik'],
-                    'zoom': point.zoom,
+                    'zoom': 14,
             }
         )
 
