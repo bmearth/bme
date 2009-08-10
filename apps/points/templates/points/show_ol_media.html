@@ -3,6 +3,7 @@
 <script>
 
 $(function() {
+    {% if point %}
     map.map.addControl(new OpenLayers.Control.LayerSwitcher());
     var lat={{point.point.tuple.0}};
     var lon={{point.point.tuple.1}};
@@ -11,6 +12,17 @@ $(function() {
     var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
 
     map.map.setCenter (lonLat, zoom);
+
+    {% else %}
+    map.map.addControl(new OpenLayers.Control.LayerSwitcher());
+    var lat=40.78625;
+    var lon=-119.20648;
+    var zoom=14;
+
+    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
+
+    map.map.setCenter (lonLat, zoom);
+    {% endif %}
 
 });
 </script>
