@@ -78,6 +78,19 @@ class AnonymousThemeCampHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = ThemeCamp 
 	fields = camp_fields
+	
+	def read(self, request, year_year=None, camp_id=None):
+		base = ThemeCamp.objects.filter()
+		if(year_year):
+		        year = Year.objects.get(year=year_year)
+			if(camp_id):
+				camp = ThemeCamp.objects.filter(year=year,id=camp_id)
+			else:
+				camp = ThemeCamp.objects.filter(year=year)
+			return camp
+		else:
+			return base.all()
+		
 
 class ThemeCampHandler(BaseHandler):
 	allow_methods = ('GET',)
