@@ -37,6 +37,10 @@ def map(request, year_year):
 	return render_to_response('brc/map.html', {'year': xyear[0],
 						'previous' : previous,
 						'next' : next,}, context_instance=RequestContext(request))
+def mobile_map(request, year_year):
+	return render_to_response('brc/mobile_map.html', context_instance=RequestContext(request))
+
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #---------- Globe ----------
 #-------------------------------------------------------------------------------

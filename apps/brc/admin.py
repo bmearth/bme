@@ -30,7 +30,7 @@ class CircularStreetAdmin(BME_OSMAdmin):
     list_editable = ('street_line',)
 
 class ThemeCampAdmin(BME_OSMAdmin):
-    list_display = ('name', 'year', 'bm_fm_id', 'location_string', 'hometown', 'url', 'contact_email')
+    list_display = ('name', 'year', 'bm_fm_id', 'location_string', 'circular_street', 'time_address', 'hometown', 'url', 'contact_email')
     list_filter = ['year', 'circular_street', 'time_address']
     ordering = ('name',)
     search_fields = ('name','description','bm_fm_id')
