@@ -45,8 +45,9 @@ for camp in theme_camps:
 	try:
 		if(camp.location_string and camp.location_point == None):
 			if(x.match(camp.location_string)):
-				print camp, camp.location_string
-				pass	
+				parts = camp.location_string.split(' ')
+				cstreet_string = parts[0].strip()
+				tstreet_string = parts[2].strip()
 			elif(a.match(camp.location_string)):
 				parts = camp.location_string.partition(' & ')
 				cstreet_string = parts[0].strip()
@@ -56,8 +57,9 @@ for camp in theme_camps:
 				cstreet_string = parts[2].strip()
 				tstreet_string = parts[0].strip()
 			elif(c.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+				parts = camp.location_string.partition(' ')
+				cstreet_string = "Esplanade"
+				tstreet_string = parts[0].strip()
 			elif(d.match(camp.location_string)):
 				parts = camp.location_string.partition(' Plaza at ')
 				plaza_string = parts[0].strip()
@@ -67,24 +69,30 @@ for camp in theme_camps:
 				plaza_string = parts[0].strip()
 				tstreet_string = parts[2].strip()
 			elif(f.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+                                parts = camp.location_string.partition(' at ')
+                                cstreet_string = parts[0].strip()
+                                tstreet_string = parts[2].strip()
 			elif(g.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+                                parts = camp.location_string.partition(' & ')
+                                cstreet_string = parts[0].strip()
+                                tstreet_string = parts[2].strip()
 			elif(h.match(camp.location_string)):
 				parts = camp.location_string.partition(' at ')
-				cstreet_string = parts[2].strip()
-				tstreet_string = parts[0].strip()
+				cstreet_string = parts[0].strip()
+				tstreet_string = parts[2].strip()
 			elif(i.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+				parts = camp.location_string.partition(' and ')
+				cstreet_string = parts[0].strip()
+				tstreet_string = parts[2].strip()
 			elif(j.match(camp.location_string)):
 				camp_name = camp.location_string.replace('within ', '')
 				camp_name = camp_name.replace('_', '')
 			elif(k.match(camp.location_string)):
 				camp_name = camp.location_string.replace('Within ', '')
 				camp_name = camp_name.replace('_', '')
+			elif(camp.location_string == "Center Camp" or camp.location_string == "Center Camp Portal"):
+				cstreet_string = "Center Camp"
+				tstreet_string = "12:00"
 			else:
 				print camp, camp.location_string
 				pass
@@ -97,8 +105,8 @@ for camp in theme_camps:
 				angle = time2radial(hour, minute)
 				
 				plaza_parts = str(plaza_string).split(':')
-				plaza_hour = time_parts[0]
-				plaza_minutes= time_parts[1]
+				plaza_hour = plaza_parts[0]
+				plaza_minutes= plaza_parts[1]
 				(pt,plaza_radius) = plaza(year,plaza_hour,plaza_minutes)
 				point = getpoint(pt.y,pt.x,plaza_radius,-angle)
 				camp.location_point = point
@@ -118,7 +126,7 @@ for camp in theme_camps:
 				time_parts = str(camp.time_address).split(':')
 				hour = time_parts[0]
 				minutes = time_parts[1]
-				angle = time2radial(hour, minutse)
+				angle = time2radial(hour, minutes)
 				point = getpoint(cc.y,cc.x,dist_inner_ring,-angle)
 				camp.location_point = point
 				camp.save()			
