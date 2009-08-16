@@ -1,6 +1,5 @@
 import sys,os
 import math
-import Numeric
 from django.contrib.gis.geos import *
 
 sys.path.append('../../../../bme/src/pinax/apps')
@@ -214,7 +213,8 @@ H = CircularStreet.objects.filter(year=year,name__startswith='H')[0].name
 I = CircularStreet.objects.filter(year=year,name__startswith='I')[0].name
 
 ## C/D potties and H/I potties
-for x in Numeric.arange(2.5,10,0.5):
+for y in range(5,20):
+  x = float(y)/2
   if x not in [3,6,9]:
 		create_potty(year,C,D.name,x)
   if x not in [6]:

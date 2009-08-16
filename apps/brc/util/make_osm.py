@@ -3,9 +3,6 @@ import sys,os
 sys.path.append('/home/bme/src/pinax/apps')
 sys.path.append('/home/bme/src')
 sys.path.append('/home/bme/src/bme/apps')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src/bme/src/pinax/apps')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src/bme/apps')
 
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
@@ -174,10 +171,12 @@ for t in fires:
 	nodeid = nodeid - 1		
 
 for t in art:
-	print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
-	print("<tag k='tourism' v='museum'/>")
-	print("<tag k='name' v='" + t.name + "'/>")
-	print("</node>")
-	nodeid = nodeid - 1
+  if (t.location_point):
+  	name = t.name.replace("'","&apos;")
+		print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+		print("<tag k='tourism' v='museum'/>")
+		print("<tag k='name' v='" + name + "'/>")
+		print("</node>")
+		nodeid = nodeid - 1
 				
 print("</osm>")
