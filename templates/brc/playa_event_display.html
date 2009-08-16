@@ -82,13 +82,13 @@
 <tr>
 {% if playa_event.hosted_by_camp %}
 <td><b>Hosted by Camp:</b></td>
-<td>{{ playa_event.hosted_by_camp.name }}</td>
+<td><a href='/brc/{{ playa_event.year.year }}/themecamp/{{playa_event.hosted_by_camp.id }}/'>{{ playa_event.hosted_by_camp.name }}</a></td>
 </tr>
 {% endif %}
 {% if playa_event.located_at_art %}
 <tr>
 <td><b>Located at Art:</b></td>
-<td>{{ playa_event.located_at_art.name }}</td>
+<td><a href='/brc/{{ playa_event.year.year }}/art_installation/{{playa_event.located_at_art.id }}/'>{{ playa_event.located_at_art.name }}</a></td>
 </tr>
 {% endif %}
 {% if playa_event.other_location %}

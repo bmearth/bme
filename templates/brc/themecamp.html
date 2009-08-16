@@ -7,15 +7,22 @@
 <br/>
 <h1>{{ theme_camp.name }}</h1>
 {% if theme_camp.image %} <img src='/media/{{ theme_camp.image }}'><br />{% endif %}
+{% if theme_camp.location_string %} <b>Location: </b><a href=''>{{ theme_camp.location_string }}</a><br/>{% endif %}
 {% if theme_camp.url %} <b>URL: </b><a href='{{ theme_camp.url }}' target="_top">{{ theme_camp.url }}</a><br/>{% endif %}
 {% if theme_camp.contact_email %}<b>Contact Email: </b><a href='mailto:{{ theme_camp.contact_email }}'>{{ theme_camp.contact_email }}</a><br />{% endif %}
 {% if theme_camp.hometown %}<b>Hometown: </b>{{ theme_camp.hometown }}<br/>{% endif %}
 <br/>
-{% if theme_camp.description %}{{ theme_camp.description }} <br /><br />{% endif %}
+{% if theme_camp.description %}{{ theme_camp.description }} <br />{% endif %}
+{% if events %}
+<br/><b>Events At this Camp:</b><br/>
+{% for event in events %}
+<ul>
+<li><a href="{% url playa_event_view year.year event.id %}">{{ event.title }}</a></li>
+</ul>
+{% endfor %}
+{% endif %}
 <h3>Comments on This Camp:</h3>
 {% comments theme_camp %}
-<!--
 <a href='/brc/{{ year.year }}/{{ theme_camp.time_address|time:"h:i" }}/{{theme_camp.circular_street.name|lower|slugify }}/'>{{ theme_camp.time_address|time:"h:i" }} & {{ theme_camp.circular_street.name }}</a><br/>
--->
 {% endblock %}
 
