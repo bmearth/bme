@@ -76,8 +76,9 @@ def year_info(request, year_year):
 def art_installation_id(request, year_year, art_installation_id):
 	xyear = Year.objects.filter(year=year_year)
 	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
+	events = PlayaEvent.objects.filter(located_at_art=xArtInstallation)
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
-							'art_installation': xArtInstallation,}, context_instance=RequestContext(request))
+							'art_installation': xArtInstallation,'events': events}, context_instance=RequestContext(request))
 
 def art_installation_name(request, year_year, art_installation_name):
 	xyear = Year.objects.filter(year=year_year)
@@ -111,16 +112,18 @@ def themecamps(request, year_year):
 	
 def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
-	xThemeCamp = ThemeCamp.objects.get(id=theme_camp_id)
+	camp = ThemeCamp.objects.get(id=theme_camp_id)
+	events = PlayaEvent.objects.filter(hosted_by_camp=camp)
 	return render_to_response('brc/themecamp.html', {'year': year,
-							'theme_camp': xThemeCamp,}, context_instance=RequestContext(request))
+							'theme_camp': camp, 'events': events,}, context_instance=RequestContext(request))
 
 def themecampname(request, year_year, theme_camp_name):
 	xyear = Year.objects.filter(year=year_year)
 	ThemeCamp_name = ThemeCamp_name.replace('-',' ')
-	xThemeCamp =ThemeCamp.objects.filter(year=xyear[0],name__iexact=theme_camp_name)
+	camp =ThemeCamp.objects.filter(year=xyear[0],name__iexact=theme_camp_name)[0]
+	events = PlayaEvents.objects.filter(hosted_by_camp=camp)
 	return render_to_response('brc/themecamp.html', {'year': xyear[0],
-							'theme_camp': xThemeCamp[0],}, context_instance=RequestContext(request))
+							'theme_camp': camp,'events':events}, context_instance=RequestContext(request))
 
 #-------------------------------------------------------------------------------
 #---------- ArtCars ----------
@@ -669,7 +672,8 @@ def centercamp(year):
 def plaza(year,hour,minute):
 	large_plaza_radius = 125
 	small_plaza_radius = 100
-
+	hour = int(hour)
+	minute = int(minute)
 	if (minute == 0):
 		## 3:00 plaza
 		B = CircularStreet.objects.filter(year=year,name__startswith='B')[0]
