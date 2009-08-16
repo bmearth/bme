@@ -17,6 +17,8 @@ from brc.views import *
 curr_year='2009'
 year = Year.objects.get(year=curr_year)
 
+(cc,dist_inner_ring,dist_outer_ring) = centercamp(year)
+
 theme_camps = ThemeCamp.objects.filter(year=year)
 
 x = re.compile('[a-zA-Z]{0,100} & \d{1,2}:\d{1,2} Portal')
@@ -36,6 +38,7 @@ for camp in theme_camps:
 	if(camp.location_string != None and camp.location_string.strip() == ""):
 		camp.location_string = None
 		camp.save()
+	plaza_string = None	
 	cstreet_string = None
 	tstreet_string = None
 	camp_name = None
@@ -43,7 +46,7 @@ for camp in theme_camps:
 		if(camp.location_string and camp.location_point == None):
 			if(x.match(camp.location_string)):
 				print camp, camp.location_string
-				pass
+				pass	
 			elif(a.match(camp.location_string)):
 				parts = camp.location_string.partition(' & ')
 				cstreet_string = parts[0].strip()
@@ -56,11 +59,13 @@ for camp in theme_camps:
 				print camp, camp.location_string
 				pass
 			elif(d.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+				parts = camp.location_string.partition(' Plaza at ')
+				plaza_string = parts[0].strip()
+				tstreet_string = parts[2].strip()
 			elif(e.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+				parts = camp.location_string.partition(' plaza at ')
+				plaza_string = parts[0].strip()
+				tstreet_string = parts[2].strip()
 			elif(f.match(camp.location_string)):
 				print camp, camp.location_string
 				pass
@@ -68,8 +73,9 @@ for camp in theme_camps:
 				print camp, camp.location_string
 				pass
 			elif(h.match(camp.location_string)):
-				print camp, camp.location_string
-				pass
+				parts = camp.location_string.partition(' at ')
+				cstreet_string = parts[2].strip()
+				tstreet_string = parts[0].strip()
 			elif(i.match(camp.location_string)):
 				print camp, camp.location_string
 				pass
@@ -83,7 +89,40 @@ for camp in theme_camps:
 				print camp, camp.location_string
 				pass
 
-			if(cstreet_string and tstreet_string):
+			if(plaza_string and tstreet_string):
+				camp.time_address = tstreet_string.strip()
+				time_parts = str(camp.time_address).split(':')
+				hour = time_parts[0]
+				minute = time_parts[1]
+				angle = time2radial(hour, minute)
+				
+				plaza_parts = str(plaza_string).split(':')
+				plaza_hour = time_parts[0]
+				plaza_minutes= time_parts[1]
+				(pt,plaza_radius) = plaza(year,plaza_hour,plaza_minutes)
+				point = getpoint(pt.y,pt.x,plaza_radius,-angle)
+				camp.location_point = point
+				camp.save()
+				
+			elif(cstreet_string == "Evolution" and tstreet_string):
+				camp.time_address = tstreet_string.strip()
+				time_parts = str(camp.time_address).split(':')
+				hour = time_parts[0]
+				minutes = time_parts[1]
+				angle = time2radial(hour, minutes)
+				point = getpoint(cc.y,cc.x,dist_outer_ring,-angle)
+				camp.location_point = point
+				camp.save()
+			elif(cstreet_string == "Center Camp" and tstreet_string):
+				camp.time_address = tstreet_string.strip()
+				time_parts = str(camp.time_address).split(':')
+				hour = time_parts[0]
+				minutes = time_parts[1]
+				angle = time2radial(hour, minutse)
+				point = getpoint(cc.y,cc.x,dist_inner_ring,-angle)
+				camp.location_point = point
+				camp.save()			
+			elif(cstreet_string and tstreet_string):
 				camp.time_address = tstreet_string.strip()
 				cstreet = CircularStreet.objects.get(year=year, name=cstreet_string.strip())
 				camp.circular_street = cstreet;
