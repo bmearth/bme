@@ -639,18 +639,6 @@ def geocode2(year_year, hour, minute, distance):
 
 
 def geocode(year_year, hour, minute, street):
-	hour = int(hour)
-	minute = int(minute)
-
-	if(hour > 12):
-		return HttpResponse("invalid time")
-	elif(hour < 0):
-		return HttpResponse("invalid time")
-	if(minute > 59):
-		return HttpResponse("invalid time")
-	elif(minute < 0):
-		return HttpResponse("invalid time")
-	
 	xyear = Year.objects.filter(year=year_year)
 	street = street.replace('-',' ')
 	xstreet = CircularStreet.objects.filter(year=xyear[0],name__iexact=street)
@@ -668,10 +656,45 @@ def geocoder(request, year_year, hour, minute, street):
 	pnt = geocode(year_year, hour, minute, street)
 	return HttpResponse(pnt)
 
+def centercamp(year):
+	dist_to_center_centercamp = 2450
+	radial = time2radial(6,0)
+	cc = getpoint(year.location_point.y,year.location_point.x,dist_to_center_centercamp,-radial)
+	B = CircularStreet.objects.filter(year=year,name__startswith='B')[0]
+	D = CircularStreet.objects.filter(year=year,name__startswith='D')[0]
+	dist_inner_ring = abs(dist_to_center_centercamp - B.distance_from_center) #300 
+	dist_outer_ring = abs(dist_to_center_centercamp - D.distance_from_center) #610' outside (725' radius to the center of the outer circle road) ??!!
+	return [cc,dist_inner_ring,dist_outer_ring]
+
+def plaza(year,hour,minute):
+	large_plaza_radius = 125
+	small_plaza_radius = 100
+
+	if (minute == 0):
+		## 3:00 plaza
+		B = CircularStreet.objects.filter(year=year,name__startswith='B')[0]
+		pt = geocode(year.year, hour, minute, B.name)
+		return [pt,large_plaza_radius]
+	elif (minute == 30):
+		G = CircularStreet.objects.filter(year=year,name__startswith='G')[0]
+		pt = geocode(year.year, hour, minute, G.name)
+		return [pt,small_plaza_radius]
+		
+#2009 4:00 in North
 def time2radial(hour, minute):
 	hour = int(hour)
 	minute = int(minute)
-	radial = ((hour*30)+(minute*0.5))+60 #add 60, because 4:00 is North
+	if(hour > 12):
+		return HttpResponse("invalid time")
+	elif(hour < 0):
+		return HttpResponse("invalid time")
+	if(minute > 59):
+		return HttpResponse("invalid time")
+	elif(minute < 0):
+		return HttpResponse("invalid time")
+		
+	radial = ((hour*30)+(minute*0.5)) + 60 #add 60, because 4:00 is North
+
 	if radial >= 360:
 		radial = radial - 360
 	return radial

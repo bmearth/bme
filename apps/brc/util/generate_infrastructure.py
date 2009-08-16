@@ -1,16 +1,11 @@
 import sys,os
-#import urllib2
-#import re
 import math
 import Numeric
 from django.contrib.gis.geos import *
 
-#sys.path.append('/home/bme/src/pinax/apps')
-#sys.path.append('/home/bme/src')
-#sys.path.append('/home/bme/src/bme/apps')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src/bme/src/pinax/apps')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src')
-sys.path.append('/home/mikel/Projects/bmearth/2009/bmedev/src/bme/apps')
+sys.path.append('../../../../bme/src/pinax/apps')
+sys.path.append('../../../..')
+sys.path.append('../../../../bme/apps')
 
 os.environ['DJANGO_SETTINGS_MODULE'] ='bme.settings'
 
@@ -38,15 +33,7 @@ def ret_arc(lat,lon,dist,angle_start,angle_end,interval):
 	return linestring
 
 # CENTER CAMP
-dist_to_center_centercamp = 2450
-	
-radial = time2radial(6,0)
-cc = getpoint(clat,clon,dist_to_center_centercamp,-radial)
-B = CircularStreet.objects.filter(year=year,name__startswith='B')[0]
-D = CircularStreet.objects.filter(year=year,name__startswith='D')[0]
-six = TimeStreet.objects.filter(year=year,name="06:00")[0]
-dist_inner_ring = dist_to_center_centercamp - B.distance_from_center #300 
-dist_outer_ring = dist_to_center_centercamp - D.distance_from_center #610' outside (725' radius to the center of the outer circle road) ??!!
+(cc,dist_inner_ring,dist_outer_ring) = centercamp(year)
 
 ## INNER RING
 linestring = "LINESTRING(" + ret_arc(cc.y,cc.x,dist_inner_ring,0,360,1) + ")"
@@ -65,6 +52,8 @@ outer_ring.tags = 'road'
 outer_ring.save()
 
 ## 6 o'clock spur
+B = CircularStreet.objects.filter(year=year,name__startswith='B')[0]
+D = CircularStreet.objects.filter(year=year,name__startswith='D')[0]
 pt1 = six.street_line.intersection(B.street_line)
 pt2 = six.street_line.intersection(D.street_line)
 linestring = "LINESTRING("
@@ -280,11 +269,9 @@ walkin_camping.tags = 'walkin_camp'
 walkin_camping.save()
 
 # PLAZAS
-large_plaza_radius = 125
-small_plaza_radius = 100
 
 ## 3:00 plaza
-pt = geocode(year.year, 3, 0, B.name)
+(pt,plaza_radius) = plaza(year,3,0)
 
 angle_start = int(time2radial(2,55))
 angle_end = int(time2radial(3,05))
@@ -301,12 +288,12 @@ plaza.save()
 
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,large_plaza_radius,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
 ## 9:00 plaza
-pt = geocode(year.year, 9, 0, B.name)
+(pt,plaza_radius) = plaza(year,9,0)
 
 angle_start = int(time2radial(8,55))
 angle_end = int(time2radial(9,05))
@@ -323,16 +310,15 @@ plaza.save()
 
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,large_plaza_radius,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
 ## 4:30 plaza
-G = CircularStreet.objects.filter(year=year,name__startswith='G')[0]
-pt = geocode(year.year, 4, 30, G.name)
+(pt,plaza_radius) = plaza(year,4,30)
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,small_plaza_radius,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
@@ -341,7 +327,7 @@ angle_start = int(time2radial(4,25))
 angle_end = int(time2radial(4,35))
 polystring = "POLYGON(("
 polystring = polystring + ret_arc(clat,clon,Esplanade.distance_from_center,angle_start,angle_end,1)
-pt = geocode(year.year, 4, 30, A.name)
+pt = geocode(yea.year, 4, 30, A.name)
 polystring = polystring + "," + str(pt.x) + " " + str(pt.y)
 polystring = polystring + "," + ret_point(clat,clon,Esplanade.distance_from_center,angle_start)
 polystring = polystring + "))"
@@ -352,10 +338,10 @@ plaza.tags = 'plaza'
 plaza.save()
 
 ## 7:30 plaza
-pt = geocode(year.year, 7, 30, G.name)
+(pt,plaza_radius) = plaza(year,7,30)
 plaza = Infrastructure.objects.create(year=year)
 plaza.name = "Plaza"
-plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,small_plaza_radius,0,360,1) + "))"
+plaza.location_poly = "POLYGON((" + ret_arc(pt.y,pt.x,plaza_radius,0,360,1) + "))"
 plaza.tags = 'plaza'
 plaza.save()
 
