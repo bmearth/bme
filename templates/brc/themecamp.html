@@ -23,6 +23,5 @@
 {% endif %}
 <h3>Comments on This Camp:</h3>
 {% comments theme_camp %}
-<a href='/brc/{{ year.year }}/{{ theme_camp.time_address|time:"h:i" }}/{{theme_camp.circular_street.name|lower|slugify }}/'>{{ theme_camp.time_address|time:"h:i" }} & {{ theme_camp.circular_street.name }}</a><br/>
 {% endblock %}
 
