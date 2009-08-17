@@ -21,7 +21,7 @@
                     open: function() { 
                         hiddenLink.show();
                         $('img.loading').hide(); 
-                        map = new olwidget.Map("id_point", {
+                        mapW = new olwidget.Map("id_point", {
                             "layers": ['osm.mapnik'], 
                             "name": "point",
                             "default_zoom":1,
@@ -29,18 +29,23 @@
                             "defaultLon": -119.220037,
                         });
 
-                        map.map.addControl(new OpenLayers.Control.LayerSwitcher());
-                        var lat=40.78625;
-                        var lon=-119.20648;
+                        var lat=40.76919;
+                        var lon=-119.22030;
+
+
                         var zoom=14;
                         
-                        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
-                        map.map.setCenter (lonLat, zoom);
+                        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), mapW.map.getProjectionObject());
+                        mapW.map.setCenter (lonLat, zoom);
                         var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
-                        map.map.addLayer(playaLayer);
+                        mapW.map.addLayer(playaLayer);
+                        mapW.map.layers[0].destroy();
+                        mapW.map.removeControl(mapW.map.controls[12])
+
+                        $('div.olControlModifyFeatureItemInactive, div.olControlClearFeaturesItemInactive').hide();
 
                         $('form#edit-point').submit( function() {
-                            $('input#id_zoom').val(map.map.getZoom());
+                            $('input#id_zoom').val(mapW.map.getZoom());
                         });
 
                     },

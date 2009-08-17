@@ -4,7 +4,6 @@
 
 $(function() {
     {% if point %}
-    map.map.addControl(new OpenLayers.Control.LayerSwitcher());
     var lat={{point.point.tuple.0}};
     var lon={{point.point.tuple.1}};
     var zoom={{point.zoom}};
@@ -12,16 +11,27 @@ $(function() {
     var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
 
     map.map.setCenter (lonLat, zoom);
+    var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+    map.map.addLayer(playaLayer);
+    map.map.layers[0].destroy();
+    map.map.removeControl(map.map.controls[3]);
+    map.map.removeControl(map.map.controls[5]);
 
     {% else %}
-    map.map.addControl(new OpenLayers.Control.LayerSwitcher());
-    var lat=40.78625;
-    var lon=-119.20648;
-    var zoom=14;
+    var lat=40.76919;
+    var lon=-119.22030;
+    var zoom=13;
 
     var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.map.getProjectionObject());
 
     map.map.setCenter (lonLat, zoom);
+    var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+    map.map.addLayer(playaLayer);
+    map.map.layers[0].destroy();
+    map.map.removeControl(map.map.controls[3]);
+    map.map.removeControl(map.map.controls[5]);
+
+
     {% endif %}
 
 });

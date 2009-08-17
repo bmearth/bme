@@ -15,6 +15,7 @@
 {% show_latest_point_ol_media other_user %}
 {% endblock %}
 
+
 {% block body %}
     
     <div class="right_panel">
@@ -51,7 +52,7 @@
             </p>
             
             {% if is_me %}
-            {% add_point_link other_user %}
+            {% add_change_link other_user %}
                 <div class="form-toggle">
                 <p><span id="edit-profile-toggle">{% trans "Edit profile" %}</span></p>
                 
