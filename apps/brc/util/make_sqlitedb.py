@@ -26,15 +26,25 @@ camps = ThemeCamp.objects.filter(year=4).extra(select={'lower_name': 'lower(name
 count = 0
 for camp in camps:
 	try:
+		if(camp.circular_street):
+			cstreet = camp.circular_street.id
+		else:
+			cstreet = None
+		if(camp.location_point):
+			lon = camp.location_point.x
+			lat = camp.location_point.y
+		else:
+			lon = None
+			lat = None
+
 		sql = 'INSERT INTO theme_camp (pk, name, year,  description, url, contact_email, hometown, location, circular_street, time_address, latitude, longitude, image_url) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)' 
-		cursor.execute(sql,(count, camp.name, int(camp.year.year), camp.description, camp.url, camp.contact_email, camp.hometown, camp.location_string, camp.circular_street, camp.time_address, 1.0, 1.0, str(camp.image)))
+		cursor.execute(sql,(count, camp.name, int(camp.year.year), camp.description, camp.url, camp.contact_email, camp.hometown, camp.location_string, cstreet, str(camp.time_address), lat, lon, str(camp.image)))
 		connection.commit()
 		count += 1
 	except sqlite.OperationalError, msg:
 		print msg
 	except:
-		print sys.exc_info()[0]
-
+		print sys.exc_info()
 try:
 	cursor.execute('delete from art_install')
 except:
@@ -45,8 +55,14 @@ art_installs = ArtInstallation.objects.filter(year=4).extra(select={'lower_name'
 count = 0
 for art in art_installs:
 	try:
-		sql = 'INSERT INTO art_install (pk, year, name, slug, artist, description, url, contact_email, image_url) VALUES (?,?, ?, ?, ?, ?,?, ?, ?)' 
-		cursor.execute(sql,(count, int(art.year.year), art.name, art.slug, art.artist, art.description, art.url, art.contact_email, str(art.image)))
+		if(art.location_point):
+			lon = art.location_point.x
+			lat = art.location_point.y
+		else:
+			lon = None
+			lat = None
+		sql = 'INSERT INTO art_install (pk, year, name, slug, artist, description, url, contact_email, image_url, latitude, longitude) VALUES (?,?, ?, ?, ?, ?,?, ?, ?, ?, ?)' 
+		cursor.execute(sql,(count, int(art.year.year), art.name, art.slug, art.artist, art.description, art.url, art.contact_email, str(art.image), lat, lon))
 		connection.commit()
 		count += 1
 	except:
