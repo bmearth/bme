@@ -76,7 +76,7 @@ def year_info(request, year_year):
 def art_installation_id(request, year_year, art_installation_id):
 	xyear = Year.objects.filter(year=year_year)
 	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
-	events = PlayaEvent.objects.filter(located_at_art=xArtInstallation)
+	events = PlayaEvent.objects.filter(located_at_art=xArtInstallation, moderation='A')
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
 							'art_installation': xArtInstallation,'events': events}, context_instance=RequestContext(request))
 
@@ -113,7 +113,7 @@ def themecamps(request, year_year):
 def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
 	camp = ThemeCamp.objects.get(id=theme_camp_id)
-	events = PlayaEvent.objects.filter(hosted_by_camp=camp)
+	events = PlayaEvent.objects.filter(hosted_by_camp=camp, moderation='A')
 	return render_to_response('brc/themecamp.html', {'year': year,
 							'theme_camp': camp, 'events': events,}, context_instance=RequestContext(request))
 
