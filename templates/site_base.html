@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/site_tabs.css" />
     {% block extra_head %}{% endblock %}
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/skylar.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/listings.css" />
+
 {% endblock %}
 
 {% block login %}
@@ -35,6 +37,7 @@
         <table>
             <tr>
               {% if not BME_PRODUCTION %}
+                <td class="tab rtab_listings"><div><a href="{% url listings_all %}">{% trans "Rides" %}</a></div></td>
                 <td class="tab rtab_brc"><div><a href="{% url year_info 2009 %}">{% trans "BRC" %}</a></div></td>
                 <!--<td class="tab rtab_blogs"><div><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></div></td> -->
                 <!--<td class="tab rtab_projects"><div><a href="{% url project_list %}">{% trans "Projects" %}</a></div></td> -->

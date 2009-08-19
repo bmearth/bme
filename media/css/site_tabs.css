@@ -35,7 +35,8 @@
 #bookmarks_tab .rtab_bookmarks a,
 #wiki_tab .rtab_wiki a,
 #inbox_tab .rtab_inbox a,
-#locations_tab .rtab_locations a
+#locations_tab .rtab_locations a,
+#listings_tab .rtab_listings a
 {
 	 color: #000 !important; /* selected tab text colour */
 }
@@ -53,7 +54,8 @@
 #bookmarks_tab .rtab_bookmarks div,
 #wiki_tab .rtab_wiki div,
 #inbox_tab .rtab_inbox div,
-#locations_tab .rtab_locations div
+#locations_tab .rtab_locations div,
+#listngs_tab .rtab_listings div
 {
     margin: 0;
 	/* background-color: #DEF !important;  selected tab colour */

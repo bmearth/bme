@@ -189,6 +189,7 @@ INSTALLED_APPS = (
 
     'olwidget',
     'points',
+    'listings',
 )
 
 ABSOLUTE_URL_OVERRIDES = {

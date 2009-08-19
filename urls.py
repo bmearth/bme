@@ -86,6 +86,7 @@ urlpatterns = patterns('',
 #	(r'^search/', include('haystack.urls')),
 
     (r'^points/', include('points.urls')),
+    (r'^listings/', include('listings.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together
