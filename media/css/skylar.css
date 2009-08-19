@@ -6,6 +6,7 @@
     width:80%;
     min-width:800px;
     overflow:hidden;
+
 }
 
 div.left_panel {
@@ -26,4 +27,8 @@ div.friends .details {
     text-align:center;
     width:60px;
     margin:0 auto;
+}
+
+.uniForm fieldset {
+    width:90%;
 }
