@@ -4,10 +4,23 @@
 {% load pagination_tags %}
 {% load avatar_tags %}
 {% load humanize %}
+{% load uni_form %}
 
 {% block head_title %}{% blocktrans %}All Profiles{% endblocktrans %}{% endblock %}
 
 {% block body %}
+<div style="float:right;">
+    <form class="uniForm" id="search" method="POST" enctype="multipart/form-data" 
+            action="{% url profile_list %}">
+        <fieldset class="inlineLabels">
+            {{search_form|as_uni_form}}
+           <div class="form_block">
+                <input style="display:inline;" type="submit" value="Submit" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+
     <h1>{% trans "Profiles" %}</h1>
     
     {% autopaginate users %}
