@@ -1,0 +1,61 @@
+{% extends 'checkins/base.html' %}
+
+{% block extra_head %}
+<script src="http://openlayers.org/api/OpenLayers.js"></script>
+<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+
+<script type="text/javascript">
+
+    var markers, map, base_layer, kml, popup, feature;
+    function init(){
+        map = new OpenLayers.Map ("map", {
+            controls:[
+                new OpenLayers.Control.Navigation(),
+                new OpenLayers.Control.PanZoomBar(),
+                new OpenLayers.Control.Attribution()
+            ],
+            maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+            maxResolution: 156543.0399,
+            numZoomLevels: 19,
+            units: 'm',
+            projection: new OpenLayers.Projection("EPSG:900913"),
+            displayProjection: new OpenLayers.Projection("EPSG:4326")
+        });
+        //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+        //map.addLayers([layerMapnik]);
+        var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+        map.addLayer(newLayer);
+
+        map.addControl(new OpenLayers.Control.LayerSwitcher());
+        var lat=40.769288;
+        var lon=-119.220037;
+        var zoom=14;
+
+        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+        map.setCenter (lonLat, zoom);
+        var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+        {% for o in object_list %}
+        var feature = new OpenLayers.Feature.Vector(
+            new OpenLayers.Geometry.Point({{o.point.tuple.0}}, {{o.point.tuple.1}}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+            {some:'data'},
+            {externalGraphic: '{{MEDIA_URL}}img/marker.png', graphicHeight: 21, graphicWidth: 16}
+        );
+
+        vectorLayer.addFeatures(feature);
+        {% endfor %}
+        map.addLayer(vectorLayer);
+
+    } 
+
+    $(function() {
+        init();
+    })
+</script>
+{% endblock %}
+
+{% block body %}
+{% for o in object_list %}
+{{o}}
+{% endfor %}
+<div style="width:100%; height:600px;" id="map"></div>
+{% endblock %}

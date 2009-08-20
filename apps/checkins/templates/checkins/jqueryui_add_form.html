@@ -1,0 +1,64 @@
+
+
+<script>
+    //FIXME this.parentNode is null when closing the dialog
+    $(function() {
+        $('a.add-point').live('click', function(ev) {
+            var hiddenLink = $(this).hide();
+            $(this).next('img.loading').show();
+            ev.stopPropagation();
+            ev.preventDefault();
+            var href = $(this).attr("href");
+            var dia = $('<div/>');
+
+            dia.load( href + " #edit-point", null, function(){
+                var title = "Add point";
+                dia.dialog({
+                    width:650, height:525, maxHeight:1200, dialogClass:'dialog', position:['right','bottom'], 
+                    show:'slide', hide: 'slide', title:title, draggable:false, resizeable:false, 
+                    zIndex:10000,
+
+                    open: function() { 
+                        hiddenLink.show();
+                        $('img.loading').hide(); 
+                        mapW = new olwidget.Map("id_point", {
+                            "layers": ['osm.mapnik'], 
+                            "name": "point",
+                            "default_zoom":1,
+                            "defaultLat": 40.769288,
+                            "defaultLon": -119.220037,
+                        });
+
+                        var lat=40.76919;
+                        var lon=-119.22030;
+
+
+                        var zoom=14;
+                        
+                        var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), mapW.map.getProjectionObject());
+                        mapW.map.setCenter (lonLat, zoom);
+                        var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+                        mapW.map.addLayer(playaLayer);
+                        mapW.map.layers[0].destroy();
+                        mapW.map.removeControl(mapW.map.controls[12])
+
+                        $('div.olControlModifyFeatureItemInactive, div.olControlClearFeaturesItemInactive').hide();
+
+                        $('form#edit-point').submit( function() {
+                            $('input#id_zoom').val(mapW.map.getZoom());
+                        });
+
+                    },
+                    beforeclose: function() { 
+                        dia.empty();
+                        dia.remove();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<link href="{{MEDIA_URL}}olwidget/css/olwidget.css" rel="stylesheet"></link>
+<link href="{{MEDIA_URL}}points/css/points.css" rel="stylesheet"></link> 
+<link href="{{MEDIA_URL}}points/css/jq-ui.css" rel="stylesheet"></link> 
+

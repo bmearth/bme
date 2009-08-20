@@ -4,7 +4,12 @@ from django.db import connection
 from django.contrib.auth.models import User
 from swingtime.models import Event
 from datetime import datetime, timedelta
-	
+
+from django.core.urlresolvers import reverse
+
+from checkins.models import CheckIn
+from django.contrib.contenttypes import generic
+
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 else:
@@ -85,11 +90,21 @@ class ThemeCamp(models.Model):
     location_poly = models.PolygonField(null=True, blank=True)
     circular_street = models.ForeignKey(CircularStreet, null=True, blank=True)
     time_address = models.TimeField(null=True, blank=True)
-    participants = models.ManyToManyField(User, null=True, blank=True)  
+    participants = models.ManyToManyField(User, null=True, blank=True)
     bm_fm_id = models.IntegerField(null=True,blank=True)
     objects = models.GeoManager()
+
+    checkins = generic.GenericRelation(CheckIn)
+
     class Meta:
         ordering = ('year','name',)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('brc.views.themecampid', (), {
+            'theme_camp_id':self.id,
+            'year_year':self.year.year,
+        })
 
     def save(self):
         if self.location_poly:

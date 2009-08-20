@@ -87,6 +87,7 @@ urlpatterns = patterns('',
 
     (r'^points/', include('points.urls')),
     (r'^listings/', include('listings.urls')),
+    (r'^checkins/', include('checkins.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together
