@@ -19,9 +19,11 @@
 {% if theme_camp.contact_email %}<b>Contact Email: </b><a href='mailto:{{ theme_camp.contact_email }}'>{{ theme_camp.contact_email }}</a><br />{% endif %}
 {% if theme_camp.hometown %}<b>Hometown: </b>{{ theme_camp.hometown }}<br/>{% endif %}
 
+{% comment %}
 {% if request.user.is_authenticated %}
 {% add_checkin_for_instance theme_camp request.user %}
 {% endif %}
+{% endcomment %}
 
 <br/>
 {% if theme_camp.description %}{{ theme_camp.description }} <br />{% endif %}
