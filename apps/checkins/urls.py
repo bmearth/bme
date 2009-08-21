@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^for/(?P<username>[-\w]+)/$', view='checkins.views.for_user',
             name='checkins_for_user'),
 
-    url(r'^checkins/friends/of/(?P<username>[-\w]+)/$',
+    url(r'^friends/of/(?P<username>[-\w]+)/$',
             view='checkins.views.friends',
             name='checkins_friends'),
 

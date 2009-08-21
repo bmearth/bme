@@ -1,8 +1,8 @@
 import datetime
 
 from django.http import HttpResponseRedirect, HttpResponse,\
-        HttpResponseNotFound
-from django.shortcuts import render_to_response
+        HttpResponseNotFound, Http404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
@@ -13,77 +13,34 @@ from django.views.generic.list_detail import object_list
 from checkins.models import CheckIn
 from olwidget.widgets import MapDisplay
 
-
 #from vectorformats.Formats import Django, GeoJSON
 from django.core import serializers
 
+from django.contrib.auth.models import User
 
+
+@login_required
 def list(request, app_label=None, model_name=None, id=None, ):
-    ''' List all points (ALL, all for model instance, or all for table)
+    ''' List checkins for object
 
-    I wanted to overload a view for fun so as to be more dry but all of this
-    logic might be wetter still FIXME?
     '''
 
-    # FIXME, I think this could be DRYed out a bit; experimental overloading of the
-    # view might not be the coolest thing.
-    if not id and not model_name and not app_label:
-        points = Point.objects.all()
-        map = MapDisplay( fields=[p.point for p in points],
-                map_options = {
-                    'map_style':{'width':'100%', 'height':'550px',},
-                }
-        )
-        context = { 'map':map, }
-        return render_to_response('points/all.html', context,\
-                context_instance=RequestContext(request))
+    try:
+        ct = ContentType.objects.get(app_label=app_label, model= model_name)
+        obj = ct.get_object_for_this_type(id=id)
 
-    elif id and model_name and app_label:
-        try:
-            ct = ContentType.objects.get(\
-                    app_label = app_label,
-                    model = model_name)
-            obj = ct.get_object_for_this_type( id=id )
+    except:
+        raise Http404
 
-        except:
-            return HttpResponseRedirect(reverse('points_list'))
+    checkins = CheckIn.objects.filter(content_type = ct, object_id = obj.id)
+
+    return object_list( request,
+            queryset = checkins,
+            template_name = 'checkins/checkins_text_list.html',
+    )
 
 
-        points = Point.objects.filter( content_type=ct, object_id=id )
-        map = MapDisplay( fields=[p.point for p in points],
-                map_options = {
-                    'map_style':{'width':'100%', 'height':'550px',},
-                }
-        )
-
-        context = {'points':points, 'object':obj, 'content_type':ct, 'map':map, }
-        return render_to_response('points/all.html', context,\
-                context_instance=RequestContext(request))
-
-    elif app_label and model_name and not id:
-        try:
-            ct = ContentType.objects.get(\
-                    app_label = app_label,
-                    model = model_name)
-
-        except:
-            return HttpResponseRedirect(reverse('points_list'))
-
-        points = Point.objects.filter(content_type = ct)
-        map = MapDisplay( fields=[p.point for p in points],
-                map_options = {
-                    'map_style':{'width':'100%', 'height':'550px',},
-                }
-        )
-        context = {'points':points, 'content_type':ct, 'map':map,}
-
-        return render_to_response('points/all.html', context,\
-                context_instance=RequestContext(request))
-
-    else:
-        return HttpResponseNotFound()
-
-
+@login_required
 def detail(request, id):
     ''' Responds with the point and related object information
 
@@ -203,12 +160,27 @@ def add(request, app_label, model_name, id):
         return render_to_response('add_checkin_solo.html', locals(),
                 context_instance = RequestContext(request))
 
-def friends(request):
-    pass
+@login_required
+def friends(request, username):
+   user = get_object_or_404( User, username=username)
+   friends = user.friends.all()
 
-def for_user(request):
-    pass
+   checkins = CheckIn.objects.filter(owner__in=friends)
 
+   return object_list(request,
+           queryset=checkins,
+    )
+
+@login_required
+def for_user(request, username):
+    user = get_object_or_404(User, username=username)
+    checkins = CheckIn.objects.filter(owner=user)
+
+    return object_list(request,
+            queryset=checkins,
+    )
+
+@login_required
 def all(request):
     checkins = CheckIn.objects.filter(
             datetime__gte=datetime.datetime.now() -

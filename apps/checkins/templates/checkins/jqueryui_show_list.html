@@ -1,0 +1,49 @@
+
+
+<script>
+    //FIXME this.parentNode is null when closing the dialog
+    $(function() {
+        $('a.see-checkins').live('click', function(ev) {
+            var hiddenLink = $(this).hide();
+            $(this).next('img.loading').show();
+            ev.stopPropagation();
+            ev.preventDefault();
+            var href = $(this).attr("href");
+            var dia = $('<div/>');
+
+            dia.load( href + " #checkins-list", null, function(){
+                var title = "CheckIns";
+                dia.dialog({
+                    width:650, height:525, maxHeight:1200, dialogClass:'dialog', position:['right','bottom'], 
+                    show:'slide', hide: 'slide', title:title, draggable:true, resizeable:true, 
+                    zIndex:10000,
+
+                    open: function() { 
+                        hiddenLink.show();
+                        $('img.loading').hide(); 
+
+                    },
+                    beforeclose: function() { 
+                        dia.empty();
+                        dia.remove();
+                    }
+                });
+            });
+        });
+    });
+</script>
+<link href="{{MEDIA_URL}}points/css/jq-ui.css" rel="stylesheet"></link> 
+
+<style>
+    .ui-dialog .ui-dialog-title {
+        margin:0.1em auto 0.2em auto;
+        text-align:center;
+    }
+    div.ui-dialog-titlebar {
+        text-align:center;
+    }
+    div.dialog a, div.dialog a:visited, div.dialog a:hover {
+        color: #CD4515;
+    }
+</style>
+

@@ -36,20 +36,29 @@ def add_checkin_for_instance(model_instance, user):
 
     return locals()
 
+@register.inclusion_tag('checkins/link.html')
+def link_to_checkins_for(model_instance, css_class=''):
+    ''' link to see the checkins for the object
 
-
-
-@register.inclusion_tag('points/link.html')
-def add_point_link(model_instance, css_class="add-point"):
-    '''Inclusion tag to rendering simple link to the point form page
-
-    arguments: model_instance, css_class
-    {% add_point_link model_instance css_class %}
+    {% link_to_checkins_for myModelInstance 'css_class' %}
     '''
     app_label = model_instance._meta.app_label
     model_name = model_instance._meta.module_name
 
     return locals()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @register.inclusion_tag('points/add_change_link.html')
 def add_change_link(model_instance, css_class="add-point"):

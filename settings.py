@@ -118,6 +118,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     "points.context_processors.ol_media",
     "points.context_processors.GAK",
+    "checkins.context_processors.ALLOW_CHECKINS",
 )
 
 COMBINED_INBOX_COUNT_SOURCES = (
@@ -263,7 +264,7 @@ GOOGLE_API_KEY =\
 #GOOGLE_API_KEY =\
 #        'ABQIAAAABH87p-yQOJj-sh06NusQiRTpH3CbXHjuCVmaTc5MkkU4wO1RRhTdrjDBgVDitkd2sidQwpIj12NE2w'
 
-
+ALLOW_CHECKINS = True
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

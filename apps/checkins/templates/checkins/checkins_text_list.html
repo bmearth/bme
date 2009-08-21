@@ -1,0 +1,17 @@
+{% extends 'checkins/base.html' %}
+
+{% load avatar_tags %}
+
+{% block body %}
+
+<div id="checkins-list">
+{% for o in object_list %}
+<div class="checkins-item"
+<div class="avatar">{% avatar o.owner 40 %}</div>
+<a href="{{o.owner.get_absolute_url}}">{{o.owner}}</a> checked into {{o.content_object}}
+on {{o.datetime|date:'l \a\t P'}}
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

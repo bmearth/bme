@@ -1,9 +1,14 @@
+{% comment %}
 
-<a href="{% url points_add app_label=app_label model_name=model_name id=model_instance.id %}"
-  {% if css_class %}
-    class="{{css_class}} add-point"    
-  {% endif %}
-  >Tag your Location &raquo;
+
+{% link_to_checkins_for myModelInstance 'css_class' %}
+
+{% endcomment %}
+
+
+<a href="{% url checkins_list app_label=app_label model_name=model_name id=model_instance.id %}"
+    class="{{css_class}} see-checkins"    
+    >See checkins for {{model_instance}}&raquo;
 </a>
 <img style="display:none;" class='loading' src='/media/points/img/ajax-loader.gif'>
 </img>

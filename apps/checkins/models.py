@@ -2,9 +2,6 @@ from django.contrib.gis.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-#from olwidget.widgets import MapDisplay
-
-
 class CheckIn(models.Model):
     ''' a geographic point that can be added to any model instance
 
