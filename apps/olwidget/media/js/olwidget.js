@@ -64,7 +64,11 @@ var olwidget = {
         },
         osmarender: function() {
             return new OpenLayers.Layer.OSM.Osmarender('OpenStreetMap (Osmarender)');
-        }
+        },
+	bme: function() {
+	    return new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+	}
+
     },
     google: {
         streets: function() {
