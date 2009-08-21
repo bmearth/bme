@@ -5,7 +5,9 @@
 {% block head_title %} {{ year.year }} - {{ theme_camp.name }} {% endblock %}
 {% block extra_head_base %}
 {{ map.media }}
+{% comment %}
 {% include 'checkins/jqueryui_show_list.html' %}
+{% endcomment %}
 {% endblock %}
 {% block body %}
 <a href='/brc/{{ theme_camp.year.year }}'>{{ theme_camp.year.year }}</a><br />
