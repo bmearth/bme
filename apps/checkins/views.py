@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse,\
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
 
@@ -34,9 +35,25 @@ def list(request, app_label=None, model_name=None, id=None, ):
 
     checkins = CheckIn.objects.filter(content_type = ct, object_id = obj.id)
 
+    paginator = Paginator(checkins, 1)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
     return object_list( request,
             queryset = checkins,
             template_name = 'checkins/checkins_text_list.html',
+            paginate_by=1,
+            extra_context=locals(),
     )
 
 
