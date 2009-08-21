@@ -107,6 +107,10 @@
     {{ module }}.map.addLayer(newLayer);
     {{ module }}.layers.base = {% block base_layer %}new OpenLayers.Layer.WMS( "{{ wms_name }}", "{{ wms_url }}", {layers: '{{ wms_layer }}'} );{% endblock %}
     {{ module }}.map.addLayer({{ module }}.layers.base);
+
+    var campsLayer = new OpenLayers.Layer.WMS("2009 Camps", "http://strabo.pictearth.com/cgi-bin/mapserv?map=/data/projects/burningman09/brc2009.map", {layers: "BRC_2009"});
+    {{ module }}.map.addLayer(campsLayer);
+
     {% block extra_layers %}{% endblock %}
     {% if is_linestring %}OpenLayers.Feature.Vector.style["default"]["strokeWidth"] = 3; // Default too thin for linestrings. {% endif %}
     {{ module }}.layers.vector = new OpenLayers.Layer.Vector(" {{ field_name }}");
