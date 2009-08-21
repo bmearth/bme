@@ -56,7 +56,6 @@ def list(request, app_label=None, model_name=None, id=None, ):
             extra_context=locals(),
     )
 
-
 @login_required
 def detail(request, id):
     ''' Responds with the point and related object information
