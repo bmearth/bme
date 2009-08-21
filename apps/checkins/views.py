@@ -35,7 +35,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
 
     checkins = CheckIn.objects.filter(content_type = ct, object_id = obj.id)
 
-    paginator = Paginator(checkins, 1)
+    paginator = Paginator(checkins, 2)
 
     try:
         page = int(request.GET.get('page', '1'))
@@ -52,7 +52,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
     return object_list( request,
             queryset = checkins,
             template_name = 'checkins/checkins_text_list.html',
-            paginate_by=1,
+            paginate_by=2,
             extra_context=locals(),
     )
 
