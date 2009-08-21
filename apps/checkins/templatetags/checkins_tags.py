@@ -22,13 +22,13 @@ def add_checkin_for_instance(model_instance, user):
             content_type=ct,
             object_id = obj_id,
             owner=user,
-            datetime__gte=datetime.datetime.now()-datetime.timedelta(minutes=15)
+            datetime__gte=datetime.datetime.now()-datetime.timedelta(seconds=2)
     )
 
     if not c:
         c = CheckIn.objects.filter(
             owner=user,
-            datetime__gte=datetime.datetime.now()-datetime.timedelta(seconds=30)
+            datetime__gte=datetime.datetime.now()-datetime.timedelta(seconds=2)
         )
 
     app_label = model_instance._meta.app_label
@@ -60,6 +60,14 @@ def latest_checkins_for_instance(model_instance, num=5):
     checkins = CheckIn.objects.filter(
             content_type = ct, object_id = model_instance.id
     )[:num]
+
+    if CheckIn.objects.filter(
+            content_type = ct,
+            object_id = model_instance.id).count() > num:
+        more = True
+
+    app_label = model_instance._meta.app_label
+    model_name = model_instance._meta.module_name
 
     return locals()
 

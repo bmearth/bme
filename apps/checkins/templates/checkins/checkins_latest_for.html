@@ -10,3 +10,11 @@ on {{o.datetime|date:'l \a\t P'}}
 {% endfor %}
 </div>
 
+{% if more %}
+<a href="{% url checkins_list app_label=app_label model_name=model_name id=model_instance.id %}"
+    class="{{css_class}} see-checkins"    
+    >CheckOut all the CheckIns {{model_instance}}&raquo;
+</a>
+<img style="display:none;" class='loading' src='/media/points/img/ajax-loader.gif'>
+</img>
+{% endif %}
