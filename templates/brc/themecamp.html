@@ -3,6 +3,9 @@
 {% load checkins_tags %}
 
 {% block head_title %} {{ year.year }} - {{ theme_camp.name }} {% endblock %}
+{% block extra_head_base %}
+{{ map.media }}
+{% endblock %}
 {% block body %}
 <a href='/brc/{{ theme_camp.year.year }}'>{{ theme_camp.year.year }}</a><br />
 <a href='/brc/{{ theme_camp.year.year }}/themecamps/'>Back to {{ theme_camp.year.year }} Theme Camps</a><br />
@@ -20,8 +23,40 @@
 
 <br/>
 {% if theme_camp.description %}{{ theme_camp.description }} <br />{% endif %}
+{% comment %}
+{{ map }}
+{% endcomment %}
+
+<h3>Photos</h3>
+<!-- Start of Flickr Badge -->
+<style type="text/css">
+#flickr_badge_source_txt {padding:0; font: 11px Arial, Helvetica, Sans serif; color:#666666;}
+#flickr_badge_icon {display:block !important; margin:0 !important; border: 1px solid rgb(0, 0, 0) !important;}
+#flickr_icon_td {padding:0 5px 0 0 !important;}
+.flickr_badge_image {text-align:center !important;}
+.flickr_badge_image img {border: 1px solid black !important;}
+#flickr_www {display:block; text-align:left; padding:0 10px 0 10px !important; font: 11px Arial, Helvetica, Sans serif !important; color:#3993ff !important;}
+#flickr_badge_uber_wrapper a:hover,
+#flickr_badge_uber_wrapper a:link,
+#flickr_badge_uber_wrapper a:active,
+#flickr_badge_uber_wrapper a:visited {text-decoration:none !important; background:inherit !important;color:#3993ff;}
+#flickr_badge_wrapper {background-color:#ffffff;border: solid 1px #000000}
+#flickr_badge_source {padding:0 !important; font: 11px Arial, Helvetica, Sans serif !important; color:#666666 !important;}
+</style>
+<table id="flickr_badge_uber_wrapper" cellpadding="0" cellspacing="10" border="0"><table cellpadding="0" cellspacing="10" border="0" id="flickr_badge_wrapper">
+<tr>
+<script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?show_name=1&count=10&display=latest&size=s&layout=h&source=all_tag&tag=burningman%3Acamp%3D{{ theme_camp.id }}&user=15662856%40N00"></script>
+<td id="flickr_badge_source" valign="center" align="center">
+<table cellpadding="0" cellspacing="0" border="0"><tr>
+</tr></table>
+</td></tr></table>
+<tr>
+<td id="flickr_badge_source_txt"><small>To add photos, tag your photo with <b>burningman:camp={{ theme_camp.id }}</b> on <a href="http://www.flickr.com/photos/tags/burningman:camp={{ theme_camp.id }}/">on Flickr</a>. <a href="http://code.flickr.com/blog/2009/07/06/extraextraextra/">more on machine tags</a></small></td>
+</td></tr></table>
+<!-- End of Flickr Badge -->
+
 {% if events %}
-<br/><b>Events At this Camp:</b><br/>
+<h3>Events At this Camp:</h3>
 {% for event in events %}
 <ul>
 <li><a href="{% url playa_event_view year.year event.id %}">{{ event.title }}</a></li>
