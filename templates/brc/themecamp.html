@@ -15,25 +15,15 @@
 <br/>
 <h1>{{ theme_camp.name }}</h1>
 {% if theme_camp.image %} <img src='/media/{{ theme_camp.image }}'><br />{% endif %}
-{% comment %}
-{% if theme_camp.location_string %} <b>Location: </b><a href=''>{{ theme_camp.location_string }}</a><br/>{% endif %}
-{% endcomment %}
 {% if theme_camp.url %} <b>URL: </b><a href='{{ theme_camp.url }}' target="_top">{{ theme_camp.url }}</a><br/>{% endif %}
 {% if theme_camp.contact_email %}<b>Contact Email: </b><a href='mailto:{{ theme_camp.contact_email }}'>{{ theme_camp.contact_email }}</a><br />{% endif %}
 {% if theme_camp.hometown %}<b>Hometown: </b>{{ theme_camp.hometown }}<br/>{% endif %}
-
-{% if request.user.is_authenticated and ALLOW_CHECKINS %}
-<div id="themecamp-checkins">
-{% add_checkin_for_instance theme_camp request.user %}
-{% latest_checkins_for_instance theme_camp %}
-</div>
-{% endif %}
-
 <br/>
 {% if theme_camp.description %}{{ theme_camp.description }} <br />{% endif %}
-{% comment %}
+
+<h3>Location</h3>
+{% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>{% endif %}
 {{ map }}
-{% endcomment %}
 
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->
@@ -71,6 +61,16 @@
 </ul>
 {% endfor %}
 {% endif %}
+<h3>Checkins</h3>
+<div id="themecamp-checkins">
+{% if request.user.is_authenticated and ALLOW_CHECKINS %}
+{% add_checkin_for_instance theme_camp request.user %}
+{% endif %}
+{% latest_checkins_for_instance theme_camp %}
+{% link_to_checkins_for theme_camp %}
+</div>
+
+<br/>
 <h3>Comments on This Camp:</h3>
 {% comments theme_camp %}
 {% endblock %}
