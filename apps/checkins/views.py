@@ -19,6 +19,8 @@ from django.core import serializers
 
 from django.contrib.auth.models import User
 
+from friends.models import friend_set_for
+
 
 @login_required
 def list(request, app_label=None, model_name=None, id=None, ):
@@ -179,7 +181,7 @@ def add(request, app_label, model_name, id):
 @login_required
 def friends(request, username):
    user = get_object_or_404( User, username=username)
-   friends = user.friends.all()
+   friends = friend_set_for(user)
 
    checkins = CheckIn.objects.filter(owner__in=friends)
 
