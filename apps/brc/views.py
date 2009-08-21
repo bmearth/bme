@@ -14,6 +14,7 @@ from django.db.models import Count
 from swingtime.models import Event, Occurrence
 from swingtime import utils, forms
 from swingtime.views import *
+from olwidget.widgets import MapDisplay
 from brc.models import *
 from brc import forms as brcforms
 
@@ -77,8 +78,12 @@ def art_installation_id(request, year_year, art_installation_id):
 	xyear = Year.objects.filter(year=year_year)
 	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
 	events = PlayaEvent.objects.filter(located_at_art=xArtInstallation, moderation='A')
+	if xArtInstallation.location_point:
+		map = MapDisplay(map_options={'default_lat': xArtInstallation.location_point.y, 'default_lon': xArtInstallation.location_point.x, 'default_zoom': 17, 'layers': ['osm.bme'], 'map_style':{'width':'400px','height':'400px'}})
+	else:
+		map = ''
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
-							'art_installation': xArtInstallation,'events': events}, context_instance=RequestContext(request))
+							'art_installation': xArtInstallation,'events': events,'map':map}, context_instance=RequestContext(request))
 
 def art_installation_name(request, year_year, art_installation_name):
 	xyear = Year.objects.filter(year=year_year)
@@ -114,8 +119,12 @@ def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
 	camp = ThemeCamp.objects.get(id=theme_camp_id)
 	events = PlayaEvent.objects.filter(hosted_by_camp=camp, moderation='A')
+	if camp.location_point:
+		map = MapDisplay(map_options={'default_lat': camp.location_point.y, 'default_lon': camp.location_point.x, 'default_zoom': 17, 'layers': ['osm.bme'], 'map_style':{'width':'400px','height':'400px'}})
+	else:
+		map = ''
 	return render_to_response('brc/themecamp.html', {'year': year,
-							'theme_camp': camp, 'events': events,}, context_instance=RequestContext(request))
+							'theme_camp': camp, 'events': events, 'map':map}, context_instance=RequestContext(request))
 
 def themecampname(request, year_year, theme_camp_name):
 	xyear = Year.objects.filter(year=year_year)

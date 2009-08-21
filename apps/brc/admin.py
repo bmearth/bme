@@ -4,8 +4,8 @@ from django.contrib.gis import admin
 from brc.models import *
 
 class BME_OSMAdmin(admin.OSMGeoAdmin):
-    wms_url = 'http://earthdev.burningman.com/cgi-bin/mapserv?map=/home/ortelius/brc2008.map'
-    wms_layer = 'brc2008'
+    wms_url = 'http://strabo.pictearth.com/cgi-bin/mapserv?map=/data/projects/burningman09/brc2009.map'
+    wms_layer = 'BRC_2009'
     wms_name = 'Theme Camp Map'
     default_lat = 4980570.4837072379887104
     default_lon = -13269816.5229190997779369
@@ -30,7 +30,7 @@ class CircularStreetAdmin(BME_OSMAdmin):
     list_editable = ('street_line',)
 
 class ThemeCampAdmin(BME_OSMAdmin):
-    list_display = ('name', 'year', 'bm_fm_id', 'location_string', 'circular_street', 'time_address', 'location_point')
+    list_display = ('name', 'year', 'bm_fm_id', 'location_string', 'location_point', 'location_poly')
     list_filter = ['year', 'circular_street', 'time_address']
     ordering = ('name',)
     search_fields = ('name','description','bm_fm_id')
