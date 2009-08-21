@@ -48,9 +48,20 @@ def link_to_checkins_for(model_instance, css_class=''):
     return locals()
 
 
+@register.inclusion_tag('checkins/checkins_latest_for.html')
+def latest_checkins_for_instance(model_instance, num=5):
+    ''' Show the latest checkins for your model
 
+    {% latest_checkins_for_instance theme_camp %}
+    '''
 
+    ct = ContentType.objects.get_for_model(model_instance)
 
+    checkins = CheckIn.objects.filter(
+            content_type = ct, object_id = model_instance.id
+    )[:num]
+
+    return locals()
 
 
 
