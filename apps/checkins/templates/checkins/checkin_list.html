@@ -10,7 +10,8 @@
 
     function onPopupClose(evt) {
         // 'this' is the popup.
-        selectControl.unselect(this.feature);
+        this.hide();
+        this.destroy();
     }
     function onFeatureSelect(evt) {
         feature = evt.feature;
