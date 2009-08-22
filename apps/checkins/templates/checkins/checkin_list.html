@@ -1,5 +1,7 @@
 {% extends 'checkins/base.html' %}
 
+{% load avatar_tags %}
+
 {% block extra_head %}
 <script src="http://openlayers.org/api/OpenLayers.js"></script>
 <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
@@ -39,7 +41,7 @@
         var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point({{o.point.tuple.0}}, {{o.point.tuple.1}}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
             {some:'data'},
-            {externalGraphic: '{{MEDIA_URL}}img/marker.png', graphicHeight: 21, graphicWidth: 16}
+            {externalGraphic: '{% avatar_url o.owner %}', graphicHeight: 21, graphicWidth: 16}
         );
 
         vectorLayer.addFeatures(feature);
