@@ -16,6 +16,7 @@ tstreet_handler = Resource(TimeStreetHandler, authentication=auth)
 urlpatterns = patterns('',
    url(r'^user/', user_handler),
    url(r'^year/', year_handler),
+   url(r'^(?P<year_year>\d{4})/camp/(?P<camp_id>\d+)/$', camp_handler),
    url(r'^(?P<year_year>\d{4})/camp/', camp_handler),
    url(r'^(?P<year_year>\d{4})/art/(?P<art_id>\d+)/$', art_handler),
    url(r'^(?P<year_year>\d{4})/art/', art_handler),

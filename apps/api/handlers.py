@@ -10,8 +10,8 @@ JSONEmitter.unregister('json')
 Emitter.register('json', GeoJSONEmitter, content_type='text/javascript; charset=utf-8')
 
 art_fields = ('id', 'name', ('year', ('id','year')), 'slug', 'artist', 'description', 'url', 'contact_email', 'location_point', 'location_poly', 'circular_street', 'time_address')
-event_fields = ('id', 'title','description', 'print_description', ('year', ('id','year')), 'slug', 'event_type', 'hosted_by_camp', 'located_at_art', 'other_location', 'check_location', 'url', 'contact_email', 'location_point', 'location_track', 'all_day', ('occurrence_set', ('start_time', 'end_time')))
-camp_fields = ('id', ('year', ('id','year')), 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'location_point', 'location_poly', 'url', 'contact_email') 
+event_fields = ('id', 'title','description', 'print_description', ('year', ('id','year')), 'slug', 'event_type', ('hosted_by_camp', ('id','name')), ('located_at_art', ('id','name')), 'other_location', 'check_location', 'url', 'location_point', 'location_track', 'all_day', ('occurrence_set', ('start_time', 'end_time')))
+camp_fields = ('id', ('year', ('id','year')), 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'url', 'contact_email') 
 cstreet_fields = ('id', ('year', ('id','year')), 'name', 'order', 'width', 'distance_from_center', 'street_line')
 tstreet_fields = ('id', ('year', ('id','year')), 'hour', 'minute', 'name', 'width', 'street_line')
 year_fields = ('id', 'location', 'location_point', 'participants', 'theme')
@@ -102,6 +102,15 @@ class AnonymousCircularStreetHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = CircularStreet 
 	fields = cstreet_fields
+	def read(self, request, year_year=None):
+		base = CircularStreet.objects.filter()
+		if(year_year):
+		        year = Year.objects.get(year=year_year)
+			cstreet = CircularStreet.objects.filter(year=year)
+			return cstreet
+		else:
+			return base.all()
+		
 
 class CircularStreetHandler(BaseHandler):
 	allow_methods = ('GET',)
@@ -113,6 +122,15 @@ class AnonymousTimeStreetHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
 	model = TimeStreet
 	fields = tstreet_fields
+	def read(self, request, year_year=None):
+		base = TimeStreet.objects.filter()
+		if(year_year):
+		        year = Year.objects.get(year=year_year)
+			tstreet = TimeStreet.objects.filter(year=year)
+			return tstreet
+		else:
+			return base.all()
+		
 
 class TimeStreetHandler(BaseHandler):
 	allow_methods = ('GET',)

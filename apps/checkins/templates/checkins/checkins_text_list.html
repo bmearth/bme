@@ -1,0 +1,32 @@
+{% extends 'checkins/base.html' %}
+
+{% load avatar_tags %}
+
+{% block body %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current" style="margin-right:0.5em">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+<div id="checkins-list">
+{% for o in object_list %}
+<div class="checkins-item"
+<div class="avatar">{% avatar o.owner 40 %}</div>
+<a href="{{o.owner.get_absolute_url}}">{{o.owner}}</a> checked into {{o.content_object}}
+on {{o.datetime|date:'l \a\t P'}}
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

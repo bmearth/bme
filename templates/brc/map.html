@@ -6,7 +6,9 @@
   #map { width: 100%;}
   #footer { margin: 0px; padding: 0px; height:0px; width:0px;}
 </style>
+<link rel="stylesheet" href="/media/css/scalebar.css" type="text/css" />
     <script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script src="/media/js/ScaleBar.js"></script>
 <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
     <script type="text/javascript">
         var markers, map, base_layer, kml, popup, feature;
@@ -15,6 +17,7 @@
                 controls:[
                     new OpenLayers.Control.Navigation(),
                     new OpenLayers.Control.PanZoomBar(),
+                    new OpenLayers.Control.ScaleBar({minWidth:75,maxWidth:150, displaySystem: "english"}),
                     new OpenLayers.Control.Attribution()],
                 maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
                 maxResolution: 156543.0399,
@@ -56,7 +59,11 @@ function handleResize() {
 {% endblock %}
 {% block head_title %}{{ year.year }} - Map{% endblock %}
 {% block body %}
-<div id='map'></div>
+<div id='map'>
+<div id="arrow" style="position: absolute; left:55px; bottom: 55px; z-index:1000;">
+    <img src="/media/img/north.png" />
+  </div>
+</div>
 {% endblock %}
 {% block extra_body %}
     <script type="text/javascript">

@@ -150,7 +150,10 @@ def change(request, id):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(point.get_absolute_url())
+            try:
+                return HttpResponseRedirect(point.content_object.get_absolute_url())
+            except:
+                return HttpResponseRedirect(point.get_absolute_url())
 
     elif point.owner == request.user:
         form = PointForm( instance=point)
