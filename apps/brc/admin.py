@@ -12,7 +12,7 @@ class BME_OSMAdmin(admin.OSMGeoAdmin):
     default_zoom = 13
     display_srid = 4326
     list_per_page = 20
-    openlayers_url = 'http://www.openlayers.org/api/2.8/OpenLayers.js'
+    openlayers_url = '/media/js/openlayers/OpenLayers.js'
 
 class YearAdmin(admin.OSMGeoAdmin):
     list_display = ('year','location')
