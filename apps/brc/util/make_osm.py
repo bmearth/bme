@@ -23,6 +23,8 @@ time_streets = TimeStreet.objects.filter(year=xyear[0])
 circular_streets = CircularStreet.objects.filter(year=xyear[0])
 toilets = Infrastructure.objects.filter(year=xyear[0],tags='toilet')
 fence = Infrastructure.objects.filter(year=xyear[0],tags='fence')
+closure = Infrastructure.objects.filter(year=xyear[0],tags='closure')
+gate = Infrastructure.objects.filter(year=xyear[0],tags='gate')
 airport = Infrastructure.objects.filter(year=xyear[0],tags='airport')
 runway = Infrastructure.objects.filter(year=xyear[0],tags='runway')
 roads = Infrastructure.objects.filter(year=xyear[0],tags='road')
@@ -82,6 +84,20 @@ for t in toilets:
 	print("</node>")
 	nodeid = nodeid - 1
 
+for t in closure:
+	startnode = nodeid
+	for p in t.location_polygon:
+		print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(p[1]) + "' lon='" + str(p[0]) + "' />")
+		nodeid = nodeid - 1
+
+	print("<way id='" + str(wayid) + "' visible='true'>")
+	for z in range(startnode, nodeid, -1):
+		print("<nd ref='" + str(z) + "' />")
+	print("<tag k='boundary' v='administrative'/>")
+	print("<tag k='admin_level' v='7'/>")
+	print("</way>")
+	wayid = wayid - 1
+
 for t in fence:
 	startnode = nodeid
 	for p in t.location_line:
@@ -97,6 +113,12 @@ for t in fence:
 	print("</way>")
 	wayid = wayid - 1
 
+for t in gate:
+	print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+	print("<tag k='barrier' v='gate'/>")
+	print("</node>")
+	nodeid = nodeid - 1
+		
 for t in airport:
 	print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
 	print("<tag k='aeroway' v='aerodrome'/>")
