@@ -49,7 +49,7 @@ def add_node(lat,lon):
 def add_street(t):
 	global wayid
 	u = t.street_line.difference(cc_outer_ring)
-	if (t.name[0] == 'E'):
+	if (t.name[0] == 'E') or (t.name[0] == 'B'):
 		u = u.difference(double_wide)
 	if (t.name == "06:30" or t.name == 
 "05:30"):
