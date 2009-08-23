@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.gis.measure import D
 
 from django.views.generic.list_detail import object_list
 
@@ -208,5 +209,22 @@ def all(request):
 
     return object_list(request,
             queryset= checkins,
+            extra_context = locals()
+    )
+
+def nearby(request):
+
+    try:
+        latest = CheckIn.objects.filter(owner = request.user,
+                point__isnull=False)[0]
+    except:
+        return HttpResponseRedirect(reverse('checkins_all'))
+
+    nearby = CheckIn.objects.filter(
+            point__distance_lte=( latest.point, D(m=1000) )
+    ).exclude(owner=request.user)
+
+    return object_list(request,
+            queryset=nearby,
             extra_context = locals()
     )

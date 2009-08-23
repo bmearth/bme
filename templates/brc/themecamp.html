@@ -64,15 +64,14 @@
 {% endfor %}
 {% endif %}
 
-{% comment %}
 <h3>Checkins</h3>
 <div id="themecamp-checkins">
 {% if request.user.is_authenticated and ALLOW_CHECKINS %}
 {% add_checkin_for_instance theme_camp request.user %}
-{% endif %}
 {% latest_checkins_for_instance theme_camp %}
+{% endif %}
 </div>
-{% endcomment %}
+
 <br/>
 <h3>Comments on This Camp:</h3>
 {% comments theme_camp %}
