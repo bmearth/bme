@@ -3,10 +3,43 @@
 {% load avatar_tags %}
 
 {% block extra_head %}
-<script src="http://openlayers.org/api/OpenLayers.js"></script>
-<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<script src="/media/js/openlayers/OpenLayers.js"></script>
+<script src="/media/js/openlayers/OpenStreetMap.js"></script>
 
 <script type="text/javascript">
+
+    function onPopupClose(evt) {
+        // 'this' is the popup.
+        this.hide();
+        this.destroy();
+    }
+    function onFeatureSelect(evt) {
+        feature = evt.feature;
+        popup = new OpenLayers.Popup.FramedCloud("featurePopup",
+                             feature.geometry.getBounds().getCenterLonLat(),
+                             new OpenLayers.Size(100,100),
+                             "<h2>"+"<a href='"+feature.attributes.objUrl+"'>"+
+                                feature.attributes.content_object + "</a></h2>" +
+                             "<p>"+feature.attributes.descr+"</p>"+
+                             feature.attributes.time+
+                             "<p><a href='"+feature.attributes.ownerUrl+"'>"+feature.attributes.owner+"</a></p>",
+                             null, true, onPopupClose);
+        feature.popup = popup;
+        popup.feature = feature;
+        map.addPopup(popup);
+    }
+    function onFeatureUnselect(evt) {
+        feature = evt.feature;
+        if (feature.popup) {
+            popup.feature = null;
+            map.removePopup(feature.popup);
+            feature.popup.destroy();
+            feature.popup = null;
+        }
+    }
+ 
+
+
 
     var markers, map, base_layer, kml, popup, feature;
     function init(){
@@ -40,7 +73,8 @@
         {% if o.point %}
         var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point({{o.point.tuple.0}}, {{o.point.tuple.1}}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-            {some:'data'},
+            {owner:'{{o.owner}}', ownerUrl:'{{o.owner.get_absolute_url}}', content_object:'{{o.content_object}}', descr:'{{o.content_object.description|truncatewords:20}}',
+             objUrl:'{{o.content_object.get_absolute_url}}', time:"{{o.datetime|date:'l \a\t P'}}" },
             {externalGraphic: '{% avatar_url o.owner %}', graphicHeight: 21, graphicWidth: 16}
         );
 
@@ -48,6 +82,15 @@
         {% endif %}
         {% endfor %}
         map.addLayer(vectorLayer);
+
+        vectorLayer.events.on({
+            'featureselected': onFeatureSelect,
+            'featureunselected': onFeatureUnselect
+        });
+
+        var control = new OpenLayers.Control.SelectFeature(vectorLayer);
+        map.addControl(control);
+        control.activate();
 
     } 
 
