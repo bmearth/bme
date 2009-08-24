@@ -123,5 +123,23 @@
 {% endblock %}
 
 {% block body %}
+{% if page.has_previous or page.has_next %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current" style="margin-right:0.5em">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
 <div style="width:100%; height:600px;" id="map"></div>
 {% endblock %}

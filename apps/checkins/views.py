@@ -38,7 +38,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
 
     checkins = CheckIn.objects.filter(content_type = ct, object_id = obj.id)
 
-    paginator = Paginator(checkins, 2)
+    paginator = Paginator(checkins, 25)
 
     try:
         page = int(request.GET.get('page', '1'))
@@ -55,7 +55,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
     return object_list( request,
             queryset = checkins,
             template_name = 'checkins/checkins_text_list.html',
-            paginate_by=2,
+            paginate_by=25,
             extra_context=locals(),
     )
 
@@ -181,22 +181,55 @@ def add(request, app_label, model_name, id):
 
 @login_required
 def friends(request, username):
-   user = get_object_or_404( User, username=username)
-   friends = friend_set_for(user)
+    user = get_object_or_404( User, username=username)
+    friends = friend_set_for(user)
 
-   checkins = CheckIn.objects.filter(owner__in=friends)
+    checkins = CheckIn.objects.filter(owner__in=friends)
 
-   return object_list(request,
-           queryset=checkins,
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
+
 
 @login_required
 def for_user(request, username):
     user = get_object_or_404(User, username=username)
     checkins = CheckIn.objects.filter(owner=user)
 
-    return object_list(request,
-            queryset=checkins,
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
 
 @login_required
@@ -207,11 +240,27 @@ def all(request):
             point__isnull=False
     )
 
-    return object_list(request,
-            queryset= checkins,
-            extra_context = locals()
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
 
+@login_required
 def nearby(request):
 
     try:
@@ -224,7 +273,23 @@ def nearby(request):
             point__distance_lte=( latest.point, D(m=1000) )
     ).exclude(owner=request.user)
 
-    return object_list(request,
-            queryset=nearby,
-            extra_context = locals()
+    paginator = Paginator(nearby, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = nearby,
+            paginate_by=25,
+            extra_context=locals(),
     )
+
