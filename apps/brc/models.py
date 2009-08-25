@@ -196,7 +196,12 @@ class PlayaEvent(Event):
   moderation =  models.CharField(max_length=1, choices=MODERATION_CHOICES, default='U')
   objects = models.GeoManager()
 
-
+  @models.permalink
+  def get_absolute_url(self):
+      return ('brc.views.playa_event_view', (), {
+          'playa_event_id':self.id,
+          'year_year':self.year.year,
+      })
 
   def event_moderation(sender, instance,  **kwargs):
     if isinstance(instance, PlayaEvent):
@@ -209,13 +214,13 @@ class PlayaEvent(Event):
         
 #  models.signals.pre_save.connect(event_creation, sender=PlayaEvent)
 
-def event_creation(sender, instance,  **kwargs):
-  if isinstance(instance, PlayaEvent):
-    event = instance
+  def event_creation(sender, instance,  **kwargs):
+    if isinstance(instance, PlayaEvent):
+      event = instance
     
-    if kwargs['created']:
-      if notification:
-        notification.send([event.creator], "brc_event_creation", {"user": event.creator, "event": event}, on_site=False)
+      if kwargs['created']:
+        if notification:
+          notification.send([event.creator], "brc_event_creation", {"user": event.creator, "event": event}, on_site=False)
 # models.signals.post_save.connect(event_creation, sender=PlayaEvent)
  
 class Infrastructure(models.Model):
