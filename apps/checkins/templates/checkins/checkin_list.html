@@ -1,10 +1,45 @@
 {% extends 'checkins/base.html' %}
 
+{% load avatar_tags %}
+
 {% block extra_head %}
 <script src="http://openlayers.org/api/OpenLayers.js"></script>
 <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
 
 <script type="text/javascript">
+
+    function onPopupClose(evt) {
+        // 'this' is the popup.
+        this.hide();
+        this.destroy();
+    }
+    function onFeatureSelect(evt) {
+        feature = evt.feature;
+        popup = new OpenLayers.Popup.FramedCloud("featurePopup",
+                             feature.geometry.getBounds().getCenterLonLat(),
+                             new OpenLayers.Size(100,100),
+                             "<h2>"+"<a href='"+feature.attributes.objUrl+"'>"+
+                                feature.attributes.content_object + "</a></h2>" +
+                             "<p>"+feature.attributes.descr+"</p>"+
+                             feature.attributes.time+
+                             "<p><a href='"+feature.attributes.ownerUrl+"'>"+feature.attributes.owner+"</a></p>",
+                             null, true, onPopupClose);
+        feature.popup = popup;
+        popup.feature = feature;
+        map.addPopup(popup);
+    }
+    function onFeatureUnselect(evt) {
+        feature = evt.feature;
+        if (feature.popup) {
+            popup.feature = null;
+            map.removePopup(feature.popup);
+            feature.popup.destroy();
+            feature.popup = null;
+        }
+    }
+ 
+
+
 
     var markers, map, base_layer, kml, popup, feature;
     function init(){
@@ -27,25 +62,57 @@
         map.addLayer(newLayer);
 
         map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+        {% if nearby %}
+        var zoom=16;
+        var lat={{latest.point.tuple.1}};
+        var lon={{latest.point.tuple.0}};
+        {% else %}
         var lat=40.769288;
         var lon=-119.220037;
         var zoom=14;
+        {% endif %}
 
         var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
         map.setCenter (lonLat, zoom);
         var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+
+
+        {% if latest %}
+
+        var feature = new OpenLayers.Feature.Vector(
+            new OpenLayers.Geometry.Point({{latest.point.tuple.0}}, {{latest.point.tuple.1}}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+                {owner:'{{latest.owner}}', ownerUrl:'{{latest.owner.get_absolute_url}}', content_object:'{{latest.content_object}}', descr:'{{latest.content_object.description|truncatewords:27}}',
+                 objUrl:'{{latest.content_object.get_absolute_url}}', time:"{{latest.datetime|date:'l \a\t P'}}" },
+            {externalGraphic: '/media/img/marker.png', graphicHeight: 20, graphicWidth: 20}
+        );
+        vectorLayer.addFeatures(feature);
+        {% endif %}
+
+
         {% for o in object_list %}
         {% if o.point %}
         var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point({{o.point.tuple.0}}, {{o.point.tuple.1}}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-            {some:'data'},
-            {externalGraphic: '{{MEDIA_URL}}img/marker.png', graphicHeight: 21, graphicWidth: 16}
+            {owner:'{{o.owner}}', ownerUrl:'{{o.owner.get_absolute_url}}', content_object:'{{o.content_object}}', descr:'{{o.content_object.description|truncatewords:27}}',
+             objUrl:'{{o.content_object.get_absolute_url}}', time:"{{o.datetime|date:'l \a\t P'}}" },
+            {externalGraphic: '{% avatar_url o.owner %}', graphicHeight: 20, graphicWidth: 20}
         );
 
         vectorLayer.addFeatures(feature);
         {% endif %}
         {% endfor %}
+
         map.addLayer(vectorLayer);
+
+        vectorLayer.events.on({
+            'featureselected': onFeatureSelect,
+            'featureunselected': onFeatureUnselect
+        });
+
+        var control = new OpenLayers.Control.SelectFeature(vectorLayer);
+        map.addControl(control);
+        control.activate();
 
     } 
 
@@ -56,5 +123,23 @@
 {% endblock %}
 
 {% block body %}
+{% if page.has_previous or page.has_next %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current" style="margin-right:0.5em">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
 <div style="width:100%; height:600px;" id="map"></div>
 {% endblock %}

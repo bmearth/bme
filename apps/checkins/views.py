@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.gis.measure import D
 
 from django.views.generic.list_detail import object_list
 
@@ -18,6 +19,8 @@ from olwidget.widgets import MapDisplay
 from django.core import serializers
 
 from django.contrib.auth.models import User
+
+from friends.models import friend_set_for
 
 
 @login_required
@@ -35,7 +38,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
 
     checkins = CheckIn.objects.filter(content_type = ct, object_id = obj.id)
 
-    paginator = Paginator(checkins, 2)
+    paginator = Paginator(checkins, 25)
 
     try:
         page = int(request.GET.get('page', '1'))
@@ -52,7 +55,7 @@ def list(request, app_label=None, model_name=None, id=None, ):
     return object_list( request,
             queryset = checkins,
             template_name = 'checkins/checkins_text_list.html',
-            paginate_by=2,
+            paginate_by=25,
             extra_context=locals(),
     )
 
@@ -178,22 +181,55 @@ def add(request, app_label, model_name, id):
 
 @login_required
 def friends(request, username):
-   user = get_object_or_404( User, username=username)
-   friends = user.friends.all()
+    user = get_object_or_404( User, username=username)
+    friends = friend_set_for(user)
 
-   checkins = CheckIn.objects.filter(owner__in=friends)
+    checkins = CheckIn.objects.filter(owner__in=friends)
 
-   return object_list(request,
-           queryset=checkins,
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
+
 
 @login_required
 def for_user(request, username):
     user = get_object_or_404(User, username=username)
     checkins = CheckIn.objects.filter(owner=user)
 
-    return object_list(request,
-            queryset=checkins,
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
 
 @login_required
@@ -204,7 +240,56 @@ def all(request):
             point__isnull=False
     )
 
-    return object_list(request,
-            queryset= checkins,
-            extra_context = locals()
+    paginator = Paginator(checkins, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = checkins,
+            paginate_by=25,
+            extra_context=locals(),
     )
+
+@login_required
+def nearby(request):
+
+    try:
+        latest = CheckIn.objects.filter(owner = request.user,
+                point__isnull=False)[0]
+    except:
+        return HttpResponseRedirect(reverse('checkins_all'))
+
+    nearby = CheckIn.objects.filter(
+            point__distance_lte=( latest.point, D(m=1000) )
+    ).exclude(owner=request.user)
+
+    paginator = Paginator(nearby, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+
+    return object_list( request,
+            queryset = nearby,
+            paginate_by=25,
+            extra_context=locals(),
+    )
+

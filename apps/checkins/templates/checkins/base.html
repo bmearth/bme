@@ -8,6 +8,7 @@
     {% if user.is_authenticated %}
       {% if not BME_PRODUCTION %}
         <ul>
+            <li><a href="{% url checkins_nearby %} ">{% trans "Nearby Checkins" %}</a></li>
             <li><a href="{% url checkins_for_user request.user %} ">{% trans "Your Checkins" %}</a></li>
             <li><a href="{% url checkins_friends request.user %} ">{% trans "Friends Checkins" %}</a></li>
         </ul>
