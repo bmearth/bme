@@ -22,4 +22,4 @@ local_settings.py
 *.egg-info
 
 .git
-
+.DS_Store

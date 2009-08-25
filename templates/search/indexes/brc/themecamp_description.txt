@@ -1,0 +1,5 @@
+{{ object.title }}
+{{ object.id }}
+{{ object.description }}
+
+{{ object.body }}
