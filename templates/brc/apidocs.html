@@ -2,5 +2,41 @@
 {% block head_title %}API Documentation{% endblock %}
 
 {% block body %}
-<h2>API Documentation</h2>
+<h1>API Documentation</h1>
+
+<h2>API Overview</h2>
+The API currently supports two formats, XML and JSON. By default it
+will return JSON. If you wish to consume XML, pass the API the keypair
+format=xml
+
+<h2>Methods</h2>
+The API supports the following methods to receive Burning Man data.
+
+<h3>Streets:</h3>
+Annular streets for 2009<br/>
+http://earth.burningman.com/api/0.1/2009/cstreet/<br/>
+Time streets for 2009<br/>
+http://earth.burningman.com/api/0.1/2009/tstreet/<br/>
+
+<h3>Theme Camps</h3>
+http://earth.burningman.com/api/0.1/2009/camp/<br/>
+
+<h3>Art Installations</h3>
+http://earth.burningman.com/api/0.1/2009/art/<br/>
+Art with ID 540<br/>
+http://earth.burningman.com/api/0.1/2009/art/540/<br/>
+
+<h3>Events</h3>
+http://earth.burningman.com/api/0.1/2009/event/<br/>
+Event with ID 1676<br/>
+http://earth.burningman.com/api/0.1/2009/event/1676/<br/>
+Events starting after Sept 1st<br/>
+http://earth.burningman.com/api/0.1/2009/event/?start_time=2009-09-01%2018:00<br/>
+Events before Sept 1st<br/>
+http://earth.burningman.com/api/0.1/2009/event/?end_time=2009-09-01%2018:00<br/>
+Events between Sept 1st and Sept 2nd<br/>
+http://earth.burningman.com/api/0.1/2009/event/?end_time=2009-09-02%2018:00&start_time=2009-09-01%2018:00<br/>
+You don't have to specify the time if you don't want to as well<br/>
+http://earth.burningman.com/api/0.1/2009/event/?end_time=2009-09-01&start_time=2009-09-02<br/>
+
 {% endblock %}
