@@ -27,6 +27,10 @@ def index(request, template_name="brc/index.html"):
 	years = Year.objects.all().order_by('-year')
 	return render_to_response(template_name, {"years": years,}, context_instance=RequestContext(request))
 
+def apidocs(request):
+	return render_to_response('brc/apidocs.html',context_instance=RequestContext(request))
+	
+
 #-------------------------------------------------------------------------------
 #---------- Map ----------
 #-------------------------------------------------------------------------------
