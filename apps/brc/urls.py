@@ -30,4 +30,16 @@ urlpatterns = patterns('',
      url(r'^(?P<year_year>\d{4})/(?P<hour>\d{1,2}):(?P<minute>\d{1,2})/(?P<street>[a-z-]{0,50})/$', 'brc.views.neighborhood', name="neighborhood"),
      url(r'^geocoder/(?P<year_year>\d{4})/(?P<hour>\d{1,2}):(?P<minute>\d{1,2})/(?P<street>[a-z-]{0,50})/$', 'brc.views.geocoder', name="geocoder"),
      url(r'^swingtime/', include('swingtime.urls')),
+     url(r'^search/', include('haystack.urls')),
+)
+
+from haystack.forms import ModelSearchForm
+from haystack.query import SearchQuerySet
+from haystack.views import SearchView
+
+urlpatterns += patterns('haystack.views',
+    url(r'^$', SearchView(
+        template='search/search.html',
+        form_class=ModelSearchForm
+    ), name='haystack_search'),
 )

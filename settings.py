@@ -36,7 +36,9 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_SEARCH_ENGINE = 'xapian'
+HAYSTACK_SITECONF = 'bme.search_sites'
+
 
 AVATAR_GRAVATAR_BACKUP=False
 AVATAR_DEFAULT_URL='/media/img/man-icon.png'
@@ -184,8 +186,8 @@ INSTALLED_APPS = (
     'regionals',
     'django.contrib.admin',
     'django.contrib.gis',
-	'django.contrib.databrowse',
-#	'haystack',
+    'django.contrib.databrowse',
+    'haystack',
 
     'olwidget',
     'points',
@@ -285,6 +287,6 @@ logging.basicConfig(
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 
-BME_PRODUCTION=False
+BME_PRODUCTION=True
 
 
