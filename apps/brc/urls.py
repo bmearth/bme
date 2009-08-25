@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
      url(r'^$', 'brc.views.index', name="index"),
      url(r'^(?P<year_year>\d{4})/$', 'brc.views.year_info', name="year_info"),
+     url(r'^(?P<year_year>\d{4})/sikrit_map/$', 'brc.views.sikrit_map', name="sikrit_map"),
      url(r'^(?P<year_year>\d{4})/map/$', 'brc.views.map', name="map"),
      url(r'^(?P<year_year>\d{4})/mobile_map/$', 'brc.views.mobile_map', name="mobile_map"),
      url(r'^(?P<year_year>\d{4})/globe/$', 'brc.views.globe', name="globe"),

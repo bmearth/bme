@@ -133,6 +133,14 @@ class ArtInstallation(models.Model):
     objects = models.GeoManager()
     class Meta:
         ordering = ('year','name',)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('brc.views.art_installation', (), {
+            'art_installation_id':self.id,
+            'year_year':self.year.year,
+        })
+
 
 class Vehicle(models.Model):
     VEHICLE_TYPE_CHOICES = (

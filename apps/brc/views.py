@@ -41,6 +41,9 @@ def map(request, year_year):
 def mobile_map(request, year_year):
 	return render_to_response('brc/mobile_map.html', context_instance=RequestContext(request))
 
+def sikrit_map(request, year_year):
+	return render_to_response('brc/sikrit_map.html', context_instance=RequestContext(request))
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #---------- Globe ----------

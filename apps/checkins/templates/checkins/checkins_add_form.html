@@ -1,14 +1,15 @@
 {% if c %}
 
 {% else %}
-<p>Tell everyone that you are here now:
+Tell everyone that you are here now
+<p>
     <form class="uniForm" id="add-checkin" method="POST" enctype="multipart/form-data" 
         action="{% url checkins_add app_label=app_label model_name=model_name id=model_instance.id %}">
             <div class="form_block">
                 <input type="submit" value="Checkin" />
             </div>
         </fieldset>
-    </form>
+    </form>&nbsp;&nbsp;
 </p>
 {% endif %}
 

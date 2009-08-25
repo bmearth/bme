@@ -1,0 +1,81 @@
+{% extends "brc/base.html" %}
+{% load i18n %}
+{% block extra_head_base %}
+<style type="text/css">
+  #body { width: 100%;  padding: 0px 0px 0px 0px;}
+  #map { width: 100%;}
+  #footer { margin: 0px; padding: 0px; height:0px; width:0px;}
+</style>
+<link rel="stylesheet" href="/media/css/scalebar.css" type="text/css" />
+    <script src="/media/js/openlayers/OpenLayers.js"></script>
+    <script src="/media/js/ScaleBar.js"></script>
+<script src="/media/js/openlayers/OpenStreetMap.js"></script>
+    <script type="text/javascript">
+        var markers, map, base_layer, kml, popup, feature;
+        function init(){
+	    map = new OpenLayers.Map ("map", {
+                controls:[
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.PanZoomBar(),
+                    new OpenLayers.Control.Permalink(),
+                    new OpenLayers.Control.ScaleBar({minWidth:75,maxWidth:150, displaySystem: "english"}),
+                    new OpenLayers.Control.Attribution()],
+                maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+                maxResolution: 156543.0399,
+                numZoomLevels: 20,
+                units: 'm',
+                projection: new OpenLayers.Projection("EPSG:900913"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326")
+            } );
+	   //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+            //map.addLayers([layerMapnik]);
+	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles3/${z}/${x}/${y}.png", {numZoomLevels: 20});
+	map.addLayer(newLayer);
+    
+	var newLayer2 = new OpenLayers.Layer.OSM("2009 Print", "http://earthdev.burningman.com/osm_tiles4/${z}/${x}/${y}.png", {numZoomLevels: 20});
+	map.addLayer(newLayer2);
+    
+	map.addControl(new OpenLayers.Control.LayerSwitcher());
+	    	var lat=40.769288;
+		var lon=-119.220037;
+		var zoom=14;
+		var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+            map.setCenter (lonLat, zoom);
+}
+function resizeMap() {
+	var center = map.getCenter();
+	var zoom = map.getZoom();
+	var header_height = $("#tabhead").height()
+	var nav_height = $("#subnav").height();
+
+	map_height = ($(window).height() - (header_height + nav_height + 10));
+	
+	$("body").height(map_height + "px"); 
+	$("#map").height(map_height + "px"); 
+
+	map.setCenter(center, zoom);
+}
+
+function handleResize() {
+	resizeMap();
+}
+    </script>
+{% endblock %}
+{% block head_title %}{{ year.year }} - Map{% endblock %}
+{% block body %}
+<div id='map'>
+<div id="arrow" style="position: absolute; left:55px; bottom: 55px; z-index:1000;">
+    <img src="/media/img/north.png" />
+  </div>
+</div>
+{% endblock %}
+{% block extra_body %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+		init();
+            });
+	window.onload = handleResize;
+  	window.onresize = handleResize;
+    </script>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -5,9 +5,7 @@
 {% block head_title %} {{ year.year }} - {{ theme_camp.name }} {% endblock %}
 {% block extra_head_base %}
 {{ map.media }}
-{% comment %}
 {% include 'checkins/jqueryui_show_list.html' %}
-{% endcomment %}
 {% endblock %}
 {% block body %}
 <a href='/brc/{{ theme_camp.year.year }}'>{{ theme_camp.year.year }}</a><br />
@@ -21,11 +19,9 @@
 <br/>
 {% if theme_camp.description %}{{ theme_camp.description }} <br />{% endif %}
 
-{% comment %}
 <h3>Location</h3>
 {% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>{% endif %}
 {{ map }}
-{% endcomment %}
 
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->

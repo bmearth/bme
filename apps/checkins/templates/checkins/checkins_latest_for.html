@@ -6,8 +6,8 @@
 <table border=0><tr><td>
 <div class="avatar">{% avatar o.owner 40 %}</div>
 </td><td>
-<a href="{{o.owner.get_absolute_url}}">{{o.owner}}</a> checked into {{o.content_object}}
-on {{o.datetime|date:'l \a\t P'}}
+<a href="{{o.owner.get_absolute_url}}">{{o.owner}}</a> checked in @ {{o.content_object.name}}
+on {{o.datetime|date:'l M d \a\t P'}}
 </div>
 </td></tr></table>
 {% endfor %}
