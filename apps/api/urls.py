@@ -12,6 +12,7 @@ event_handler = Resource(PlayaEventHandler, authentication=auth)
 user_handler = Resource(UserHandler, authentication=auth)
 cstreet_handler = Resource(CircularStreetHandler, authentication=auth)
 tstreet_handler = Resource(TimeStreetHandler, authentication=auth)
+infrastructure_handler = Resource(InfrastructureHandler, authentication=auth)
 
 urlpatterns = patterns('',
    url(r'^user/', user_handler),
@@ -24,4 +25,5 @@ urlpatterns = patterns('',
    url(r'^(?P<year_year>\d{4})/event/', event_handler),
    url(r'^(?P<year_year>\d{4})/cstreet/', cstreet_handler),
    url(r'^(?P<year_year>\d{4})/tstreet/', tstreet_handler),
+   url(r'^(?P<year_year>\d{4})/infrastructure/', infrastructure_handler),
 )
