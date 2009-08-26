@@ -18,13 +18,13 @@
             {% for result in page.object_list %}
                 <p>
                   {% ifequal result.model_name "playaevent"  %}
-                    <b>Playa Event: <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
+                    <img src="/media/img/events.png" align="left" style="padding: 5px; border: 0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
                   {% endifequal %}
                   {% ifequal result.model_name "themecamp" %}
-                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                    <img src="/media/img/camps.png" align="left" style="padding: 5px; border: 0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
                   {% endifequal %}
                   {% ifequal result.model_name "artinstallation" %}
-                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                    <img src="/media/img/art.png" align="left" style="padding: 5px; border:0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
                   {% endifequal %}
 		{% if result.object.description %}
 			{{ result.object.description }}
