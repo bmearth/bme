@@ -14,8 +14,10 @@ event_fields = ('id', 'title','description', 'print_description', ('year', ('id'
 camp_fields = ('id', ('year', ('id','year')), 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'url', 'contact_email') 
 cstreet_fields = ('id', ('year', ('id','year')), 'name', 'order', 'width', 'distance_from_center', 'street_line')
 tstreet_fields = ('id', ('year', ('id','year')), 'hour', 'minute', 'name', 'width', 'street_line')
+infrastructure_fields = ('id', ('year', ('id','year')), 'name', 'location_point', 'location_line', 'location_poly', 'location_multigeom', 'tags')
 year_fields = ('id', 'location', 'location_point', 'participants', 'theme')
 user_fields = ('id', 'username', 'first_name', 'last_name', 'active')
+
 
 class AnonymousArtInstallationHandler(BaseHandler):
 	allow_methods = ('GET',)
@@ -137,6 +139,26 @@ class TimeStreetHandler(BaseHandler):
 	model = TimeStreet
 	fields = tstreet_fields
 	anonymous = AnonymousTimeStreetHandler
+
+class AnonymousInfrastructureHandler(AnonymousBaseHandler):
+	allow_methods = ('GET',)
+	model = Infrastructure
+	fields = infrastructure_fields
+	def read(self, request, year_year=None):
+		base = Infrastructure.objects.filter()
+		if(year_year):
+		        year = Year.objects.get(year=year_year)
+			infrastructure = Infrastructure.objects.filter(year=year)
+			return infrastructure
+		else:
+			return base.all()
+		
+
+class InfrastructureHandler(BaseHandler):
+	allow_methods = ('GET',)
+	model = Infrastructure
+	fields = infrastructure_fields
+	anonymous = AnonymousInfrastructureHandler
 
 class AnonymousYearHandler(AnonymousBaseHandler):
 	allow_methods = ('GET',)
