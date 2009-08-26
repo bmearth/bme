@@ -17,12 +17,15 @@
         {% if page.object_list %}
             {% for result in page.object_list %}
                 <p>
-                  {% if result.object.name %}
-                    <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
-                  {% endif %}
-                  {% if result.object.title %}
-                    <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
-                  {% endif %}
+                  {% ifequal result.model_name "playaevent"  %}
+                    <b>Playa Event: <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
+                  {% endifequal %}
+                  {% ifequal result.model_name "themecamp" %}
+                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                  {% endifequal %}
+                  {% ifequal result.model_name "artinstallation" %}
+                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                  {% endifequal %}
 		{% if result.object.description %}
 			{{ result.object.description }}
 		{% endif %}
