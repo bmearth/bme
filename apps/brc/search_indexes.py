@@ -5,8 +5,8 @@ from brc.models import *
 
 
 class PlayaEventIndex(indexes.SearchIndex):
-  title = indexes.CharField(use_template=True)
-  description = indexes.CharField(document=True, use_template=True)
+  title = indexes.CharField(model_attr='title')
+  description = indexes.CharField(document=True)
   
   def get_queryset(self):
       "Used when the entire index for model is updated."
