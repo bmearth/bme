@@ -673,7 +673,7 @@ def geocode(year_year, hour, minute, street):
 
 def geocoder(request, year_year, hour, minute, street):
 	pnt = geocode(year_year, hour, minute, street)
-	return HttpResponse(pnt)
+	return HttpResponse(str(pnt.x) + "," + str(pnt.y))
 
 def centercamp(year):
 	dist_to_center_centercamp = 2450
