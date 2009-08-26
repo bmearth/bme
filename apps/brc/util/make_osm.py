@@ -28,11 +28,11 @@ gate = Infrastructure.objects.filter(year=xyear[0],tags='gate')
 airport = Infrastructure.objects.filter(year=xyear[0],tags='airport')
 runway = Infrastructure.objects.filter(year=xyear[0],tags='runway')
 roads = Infrastructure.objects.filter(year=xyear[0],tags='road')
-walkin_camp = Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
+walkin_camp = [] #Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
 plazas = Infrastructure.objects.filter(year=xyear[0],tags='plaza')
 fires = Infrastructure.objects.filter(year=xyear[0],tags='firebarrell')
-art =  ArtInstallation.objects.filter(year=xyear[0])
-camps = ThemeCamp.objects.filter(year=xyear[0])
+art =  []# ArtInstallation.objects.filter(year=xyear[0])
+camps = []#ThemeCamp.objects.filter(year=xyear[0])
 
 cc_outer_ring = Infrastructure.objects.filter(year=xyear[0],name='Evolution')[0].location_line.convex_hull
 double_wide = Infrastructure.objects.filter(year=xyear[0],tags='camp_null')[0].location_multigeom
