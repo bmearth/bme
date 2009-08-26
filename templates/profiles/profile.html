@@ -117,9 +117,9 @@
                 
             {% endif %} {# is me #}
 
+            {% plugin_point "profiles.profile" user=other_user owner=other_user viewer=user %}
             
         {% else %} {# not user.is_authenticated #}
-            {% plugin_point "profiles.profile" user=other_user owner=other_user viewer=user %}
             {% url acct_signup as signup_url %}
             {% url acct_login as login_url %}
             <p>{% blocktrans %}<a href="{{ signup_url }}">Sign up</a> and <a href="{{ login_url }}">log in </a> to add this person as a friend and see their tweets and blog posts.{% endblocktrans %}</p>
