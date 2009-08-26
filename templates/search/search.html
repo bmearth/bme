@@ -17,7 +17,12 @@
         {% if page.object_list %}
             {% for result in page.object_list %}
                 <p>
+                  {% if result.object.name %}
+                    <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                  {% endif %}
+                  {% if result.object.title %}
                     <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
+                  {% endif %}
 		{% if result.object.description %}
 			{{ result.object.description }}
 		{% endif %}

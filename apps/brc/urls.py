@@ -39,7 +39,7 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 
 urlpatterns += patterns('haystack.views',
-    url(r'^$', SearchView(
+    url(r'^brcsearch/', SearchView(
         template='search/search.html',
         form_class=ModelSearchForm
     ), name='haystack_search'),
