@@ -1,10 +1,7 @@
 {% extends "brc/base.html" %}
 {% load comments_tag %}
-{% load checkins_tags %}
-
 {% block extra_head_base %}
 {{ map.media }}
-{% include 'checkins/jqueryui_show_list.html' %}
 {% endblock %}
 {% block head_title %} {{ year.year }} - {{ art_installation.name }} {% endblock %}
 {% block body %}
@@ -14,50 +11,27 @@
 {% if art_installation.image %} <img src='/media/{{ art_installation.image }}'><br />{% endif %}
 {% if art_installation.artist %}<h3>by {{ art_installation.artist }}</h3>{% endif %}
 {% if art_installation.url %}<b>URL:</b> <a href='{{ art_installation.url }}' target='_blank'>{{ art_installation.url }}</a> <br />{% endif %}
-{% if art_installation.contact_email %}<b>Contact Email:</b> {{ art_installation.contact_email }} <br /><br />{% endif %}
-{% if art_installation.description %}{{ art_installation.description }} <br /><br />{% endif %}
+{% if art_installation.contact_email %}<b>Contact Email:</b> {{ art_installation.contact_email }} <p>{% endif %}
+{% if art_installation.description %}{{ art_installation.description }} </p>{% endif %}
 {% if art_installation.location_point %}
 {{ map }}
 {% endif %}
 
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->
-<style type="text/css">
-#flickr_badge_source_txt {padding:0; font: 11px Arial, Helvetica, Sans serif; color:#666666;}
-#flickr_badge_icon {display:block !important; margin:0 !important; border: 1px solid rgb(0, 0, 0) !important;}
-#flickr_icon_td {padding:0 5px 0 0 !important;}
-.flickr_badge_image {text-align:center !important;}
-.flickr_badge_image img {border: 1px solid black !important;}
-#flickr_www {display:block; text-align:left; padding:0 10px 0 10px !important; font: 11px Arial, Helvetica, Sans serif !important; color:#3993ff !important;}
-#flickr_badge_uber_wrapper a:hover,
-#flickr_badge_uber_wrapper a:link,
-#flickr_badge_uber_wrapper a:active,
-#flickr_badge_uber_wrapper a:visited {text-decoration:none !important; background:inherit !important;color:#3993ff;}
-#flickr_badge_wrapper {background-color:#ffffff;border: solid 1px #000000}
-#flickr_badge_source {padding:0 !important; font: 11px Arial, Helvetica, Sans serif !important; color:#666666 !important;}
-</style>
+
 <table id="flickr_badge_uber_wrapper" cellpadding="0" cellspacing="10" border="0"><table cellpadding="0" cellspacing="10" border="0" id="flickr_badge_wrapper">
 <tr>
 <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?show_name=1&count=10&display=latest&size=s&layout=h&source=all_tag&tag=burningman%3Aart%3D{{ art_installation.id }}&user=15662856%40N00"></script>
 <td id="flickr_badge_source" valign="center" align="center">
 <table cellpadding="0" cellspacing="0" border="0"><tr>
-<td id="flickr_badge_source_txt">More <a href="http://www.flickr.com/photos/tags/burningman:art={{ art_installation.id }}/">photos or video tagged with burningman:art={{ art_installation.id }}</a> on Flickr</td>
+<td id="flickr_badge_source_txt">More <a href="http://www.flickr.com/photos/tags/burningman:art={{ art_installation.id }}/">photos or video tagged with burningman:art={{ art_installation.id }}</a> on Flickr. <a href="http://code.flickr.com/blog/2009/07/06/extraextraextra/">what are machine tags?</a></td>
 </tr></table>
 </td>
 </tr>
 </table>
 </td></tr></table>
 <!-- End of Flickr Badge -->
-
-<h3>Checkins</h3>
-<div id="art-checkins">
-{% if request.user.is_authenticated and ALLOW_CHECKINS %}
-{% add_checkin_for_instance art_installation request.user %}
-{% latest_checkins_for_instance art_installation %}
-{% endif %}
-</div>
-
-
 
 {% if events %}
 <br/><b>Events At this Art Installation:</b><br/>

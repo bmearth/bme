@@ -6,8 +6,8 @@
 <a href='/brc/{{ art_car.year.year }}/art_cars/'>Back to {{ art_car.year.year }} Mutant Vehicles</a><br />
 <h1>{{ art_car.name }}</h1>
 {% if art_car.image %} <img src='/media/{{ art_car.image }}'><br />{% endif %}
-{{ art_car.artist }} <br /><br />
-{{ art_car.description }} <br /><br />
-<h3>Comments on This Mutant Vehicle:</h3>
-{% comments art_car %}
+{{ art_car.artist }}
+<p>{{ art_car.description }}</p>
+<!-- <h3>Comments on This Mutant Vehicle:</h3>
+{% comments art_car %} -->
 {% endblock %}
