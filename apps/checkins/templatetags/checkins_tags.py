@@ -71,13 +71,7 @@ def latest_checkins_for_instance(model_instance, num=5):
 
     return locals()
 
-
-
-
-
-
-
-
+#TODO: Add last checkin for user
 
 @register.inclusion_tag('points/add_change_link.html')
 def add_change_link(model_instance, css_class="add-point"):

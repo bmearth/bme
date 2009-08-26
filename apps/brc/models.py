@@ -136,7 +136,7 @@ class ArtInstallation(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('brc.views.art_installation', (), {
+        return ('brc.views.art_installation_id', (), {
             'art_installation_id':self.id,
             'year_year':self.year.year,
         })
