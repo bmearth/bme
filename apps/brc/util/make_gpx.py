@@ -9,7 +9,7 @@ from brc.models import *
 
 xyear = Year.objects.filter(year='2009')
 
-gpx_type = "Camp"
+gpx_type = "Art"
 if gpx_type == "Art":
 	filename = "2009_art.gpx"
 	name_field = "name"

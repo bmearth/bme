@@ -1,4 +1,5 @@
 import sys,os
+from django.contrib.gis.geos import *
 
 sys.path.append('/home/bme/src/pinax/apps')
 sys.path.append('/home/bme/src')
@@ -17,6 +18,11 @@ include_camps_polys = True
 nodeid = -1
 wayid = -1
 nodes = {}
+
+def ret_street_point(year, hour, minute, street):
+	pnt = geocode(year.year, hour, minute, street)
+	return str(pnt.x) + ' ' + str(pnt.y)
+
 
 print("<?xml version='1.0' encoding='UTF-8'?>")
 print("<osm version='0.6'>")
@@ -52,8 +58,11 @@ def add_node(lat,lon):
 def add_street(t):
 	global wayid
 	u = t.street_line.difference(cc_outer_ring)
-	if (t.name[0] == 'E') or (t.name[0] == 'B'):
+	if (t.name[0] == 'E'):
 		u = u.difference(double_wide)
+	if (t.name[0] == 'B'):
+		null_poly_wkt = "POLYGON((" + ret_street_point(xyear[0],5,30,'Adapt') + "," + ret_street_point(xyear[0],6,30,'Adapt') + "," + ret_street_point(xyear[0],6,30,'Lineage') + "," + ret_street_point(xyear[0],5,30,'Lineage') + "," + ret_street_point(xyear[0],5,30,'Adapt') + "))"
+		u = u.difference(GEOSGeometry(null_poly_wkt))
 	if (t.name == "06:30" or t.name == 
 "05:30"):
 		u = u[1]		
