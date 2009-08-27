@@ -11,6 +11,9 @@ from brc.views import *
 
 from time import strftime
 
+include_camps = True
+include_camps_polys = True
+
 nodeid = -1
 wayid = -1
 nodes = {}
@@ -28,11 +31,11 @@ gate = Infrastructure.objects.filter(year=xyear[0],tags='gate')
 airport = Infrastructure.objects.filter(year=xyear[0],tags='airport')
 runway = Infrastructure.objects.filter(year=xyear[0],tags='runway')
 roads = Infrastructure.objects.filter(year=xyear[0],tags='road')
-walkin_camp = [] #Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
+walkin_camp = Infrastructure.objects.filter(year=xyear[0],tags='walkin_camp')
 plazas = Infrastructure.objects.filter(year=xyear[0],tags='plaza')
 fires = Infrastructure.objects.filter(year=xyear[0],tags='firebarrell')
-art =  []# ArtInstallation.objects.filter(year=xyear[0])
-camps = []#ThemeCamp.objects.filter(year=xyear[0])
+art =  ArtInstallation.objects.filter(year=xyear[0])
+camps = ThemeCamp.objects.filter(year=xyear[0])
 
 cc_outer_ring = Infrastructure.objects.filter(year=xyear[0],name='Evolution')[0].location_line.convex_hull
 double_wide = Infrastructure.objects.filter(year=xyear[0],tags='camp_null')[0].location_multigeom
@@ -159,7 +162,7 @@ for t in roads:
 		wayid = wayid - 1
 
 for t in walkin_camp:
-	if (t.location_poly and 1==0):
+	if (include_camps and t.location_poly):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -175,7 +178,7 @@ for t in walkin_camp:
 
 for t in camps:
 	name = t.name.replace("&","&amp;").replace("'","&apos;")
-	if (t.location_poly and 1==0):
+	if (include_camps and include_camps_polys and t.location_poly):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -189,7 +192,7 @@ for t in camps:
 
 		wayid = wayid - 1			
 
-	if (t.location_point):
+	if (include_camps and t.location_point):
 		print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
 		print("<tag k='tourism' v='camp_site'/>")
 		print("<tag k='name' v='" + name + "'/>")
