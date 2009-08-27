@@ -7,6 +7,12 @@
 {% block body %}
 <a href='/brc/{{art_installation.year.year }}'>{{ art_installation.year.year }}</a><br />
 <a href='/brc/{{ art_installation.year.year }}/art_installations/'>Back to {{ art_installation.year.year }} Art Installations</a><br />
+<div id="backToSearch"></div>
+<script type="text/javascript">
+if (document.referrer.search("/brc/search/") != -1) {
+$("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Results</a>"); }
+</script>
+
 <h1>{{ art_installation.name }}</h1>
 {% if art_installation.image %} <img src='/media/{{ art_installation.image }}'><br />{% endif %}
 {% if art_installation.artist %}<h3>by {{ art_installation.artist }}</h3>{% endif %}
@@ -32,6 +38,16 @@
 </table>
 </td></tr></table>
 <!-- End of Flickr Badge -->
+
+{% comment %}
+<h3>Checkins</h3>
+<div id="art-checkins">
+{% if request.user.is_authenticated and ALLOW_CHECKINS %}
+{% add_checkin_for_instance art_installation request.user %}
+{% latest_checkins_for_instance art_installation %}
+{% endif %}
+</div>
+{% endcomment %}
 
 {% if events %}
 <br/><b>Events At this Art Installation:</b><br/>

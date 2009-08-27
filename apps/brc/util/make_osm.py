@@ -159,7 +159,7 @@ for t in roads:
 		wayid = wayid - 1
 
 for t in walkin_camp:
-	if (t.location_poly):
+	if (t.location_poly and 1==0):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -175,7 +175,7 @@ for t in walkin_camp:
 
 for t in camps:
 	name = t.name.replace("&","&amp;").replace("'","&apos;")
-	if (t.location_poly):
+	if (t.location_poly and 1==0):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -189,12 +189,12 @@ for t in camps:
 
 		wayid = wayid - 1			
 
-		if (t.location_point):
-			print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
-			print("<tag k='tourism' v='camp_site'/>")
-			print("<tag k='name' v='" + name + "'/>")
-			print("</node>")
-			nodeid = nodeid - 1
+	if (t.location_point):
+		print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+		print("<tag k='tourism' v='camp_site'/>")
+		print("<tag k='name' v='" + name + "'/>")
+		print("</node>")
+		nodeid = nodeid - 1
 
 for t in plazas:
 	if (t.location_poly):

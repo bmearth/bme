@@ -19,9 +19,11 @@
 
 {% if theme_camp.description %}<p>{{ theme_camp.description }}</p>{% endif %}
 
+{% comment %}
 <h3>Location</h3>
 {% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>{% endif %}
 {{ map }}
+{% endcomment %}
 
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->
@@ -47,6 +49,7 @@
 {% endfor %}
 {% endif %}
 
+{% comment %}
 <h3>Checkins</h3>
 <div id="themecamp-checkins">
 {% if request.user.is_authenticated and ALLOW_CHECKINS %}
@@ -54,10 +57,11 @@
 {% latest_checkins_for_instance theme_camp %}
 {% endif %}
 </div>
+{% endcomment %}
 
 {% comment %}
 <br/>
 <h3>Comments on This Camp:</h3>
 {% comments theme_camp %}
-{% endblock %}
 {% endcomment %}
+{% endblock %}
