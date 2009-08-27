@@ -10,7 +10,14 @@
 {% block body %}
 <a href='/brc/{{ theme_camp.year.year }}'>{{ theme_camp.year.year }}</a><br />
 <a href='/brc/{{ theme_camp.year.year }}/themecamps/'>Back to {{ theme_camp.year.year }} Theme Camps</a><br />
+<div id="backToSearch"></div>
+<script type="text/javascript">
+if (document.referrer.search("/brc/search/") != -1) {
+$("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Results</a>"); }
+</script>
+
 <br/>
+
 <h1>{{ theme_camp.name }}</h1>
 {% comment %}{% if theme_camp.image %} <img src='/media/{{ theme_camp.image }}'><br />{% endif %}{% endcomment %}
 {% if theme_camp.url %} <b>URL: </b><a href='{{ theme_camp.url }}' target="_top">{{ theme_camp.url }}</a><br/>{% endif %}
