@@ -92,6 +92,17 @@ def art_installation_id(request, year_year, art_installation_id):
 	return render_to_response('brc/art_installation.html', {'year': xyear[0],
 							'art_installation': xArtInstallation,'events': events,'map':map}, context_instance=RequestContext(request))
 
+def art_installation_uuid(request, art_installation_id):
+	xArtInstallation = ArtInstallation.objects.get(id=art_installation_id)
+	xyear = xArtInstallation.year
+	events = PlayaEvent.objects.filter(located_at_art=xArtInstallation, moderation='A')
+	if xArtInstallation.location_point:
+		map = MapDisplay(map_options={'default_lat': xArtInstallation.location_point.y, 'default_lon': xArtInstallation.location_point.x, 'default_zoom': 17, 'layers': ['osm.bme'], 'map_style':{'width':'400px','height':'400px'}})
+	else:
+		map = ''
+	return render_to_response('brc/art_installation.html', {'year': xyear,
+							'art_installation': xArtInstallation,'events': events,'map':map}, context_instance=RequestContext(request))
+
 def art_installation_name(request, year_year, art_installation_name):
 	xyear = Year.objects.filter(year=year_year)
 	xArtInstallation = ArtInstallation.objects.filter(year=xyear[0],slug=art_installation_name)
@@ -125,6 +136,17 @@ def themecamps(request, year_year):
 def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
 	camp = ThemeCamp.objects.get(id=theme_camp_id)
+	events = PlayaEvent.objects.filter(hosted_by_camp=camp, moderation='A')
+	if camp.location_point:
+		map = MapDisplay(map_options={'default_lat': camp.location_point.y, 'default_lon': camp.location_point.x, 'default_zoom': 17, 'layers': ['osm.bme'], 'map_style':{'width':'400px','height':'400px'}})
+	else:
+		map = ''
+	return render_to_response('brc/themecamp.html', {'year': year,
+							'theme_camp': camp, 'events': events, 'map':map}, context_instance=RequestContext(request))
+
+def themecampuuid(request, theme_camp_id):
+	camp = ThemeCamp.objects.get(id=theme_camp_id)
+	year = camp.year 
 	events = PlayaEvent.objects.filter(hosted_by_camp=camp, moderation='A')
 	if camp.location_point:
 		map = MapDisplay(map_options={'default_lat': camp.location_point.y, 'default_lon': camp.location_point.x, 'default_zoom': 17, 'layers': ['osm.bme'], 'map_style':{'width':'400px','height':'400px'}})
@@ -302,6 +324,49 @@ def playa_event_view(request,
 	'''
 
 	event = get_object_or_404(PlayaEvent, pk=playa_event_id)
+	'''
+	event_form = recurrence_form = None
+	if request.method == 'POST':
+		if '_update' in request.POST:
+			event_form = event_form_class(request.POST, instance=event)
+			if event_form.is_valid():
+				event_form.save(event)
+				return http.HttpResponseRedirect(request.path)
+	elif '_add' in request.POST:
+		recurrence_form = recurrence_form_class(request.POST)
+		if recurrence_form.is_valid():
+			recurrence_form.save(event)
+			return http.HttpResponseRedirect(request.path)
+		else:
+			return http.HttpResponseBadRequest('Bad Request')
+
+	event_form = event_form or event_form_class(instance=event)
+	if not recurrence_form:
+		recurrence_form = recurrence_form_class(initial=dict(year=Year.objects.get(year=year_year)))
+	'''
+
+	return render_to_response(template, dict(playa_event=event, event_form=event_form_class, recurrence_form=recurrence_form_class),context_instance=RequestContext(request))
+
+
+def playa_event_view_uuid(request,
+	playa_event_id,
+	template='brc/playa_event_view.html',
+	event_form_class=brcforms.PlayaEventForm,
+	recurrence_form_class=brcforms.PlayaEventOccurrenceForm,
+):
+	'''
+	View an ``PlayaEvent`` instance and optionally update either the event or its
+	occurrences.
+
+	Context parameters:
+
+	event: the event keyed by ``pk``
+	event_form: a form object for updating the event
+    	recurrence_form: a form object for adding occurrences
+	'''
+
+	event = get_object_or_404(PlayaEvent, pk=playa_event_id)
+	year_year = event.year.year
 	'''
 	event_form = recurrence_form = None
 	if request.method == 'POST':
