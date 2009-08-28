@@ -5,23 +5,12 @@
 {% block rtab_id %}id="brc_tab"{% endblock %}
 
 {% block subnav %}
-    {% if user.is_authenticated %}
-      {% if not BME_PRODUCTION %}
         <ul>
 
             <li><a href="{% url map 2009 %} ">{% trans "Map" %}</a></li>
-            <li><a href="{% url globe 2009 %} ">{% trans "Globe" %}</a></li>
             <li><a href="{% url themecamps 2009 %} ">{% trans "Theme Camps" %}</a></li>
             <li><a href="{% url art_installations 2009 %}">{% trans "Art Installations" %}</a></li>
             <li><a href="{% url playa_events 2009 %}">{% trans "Playa Events" %}</a></li>
             <li><a href="{% url art_cars 2009 %}">{% trans "Mutant Vehicles" %}</a></li>
         </ul>
-      {% else %}
-        <ul>
-          <li><a href="{% url playa_events_view_mine 2009 %} ">{% trans "My Event Submissions" %}</a></li>
-        </ul>
-      {% endif %}
-    {% else %}
-        &nbsp;
-    {% endif %}
 {% endblock %}
