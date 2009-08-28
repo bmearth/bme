@@ -6,7 +6,7 @@
 
 {% block subnav %}
     <ul>
-	{% if is_authenticated %}
+	 {% if user.is_authenticated %}
         <li><a href="{% url tweets_you_follow %}">{% trans "Tweets You Follow" %}</a></li>
         <li><a href="{% url friends_tweets %}">{% trans "Friends' Tweets" %}</a></li>
         <li><a href="{% url all_tweets %}">{% trans "All Tweets" %}</a></li>
