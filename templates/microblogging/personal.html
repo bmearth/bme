@@ -21,6 +21,8 @@
 	<img src='/media/img/twitter.jpg'><br/>
         <input name="pub2twitter" type="checkbox" id="pub2twitter" value="yes" />
         <label for="pub2twitter">{% trans "Publish to Twitter?" %}</label>
+	{% else %}
+	<h3><a href="/account/other_services"/>Link your Twitter account</a></h3><br>
         {% endif %}
         
         <p>

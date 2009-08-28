@@ -111,6 +111,9 @@
     var campsLayer = new OpenLayers.Layer.WMS("2009 Camps", "http://strabo.pictearth.com/cgi-bin/mapserv?map=/data/projects/burningman09/brc2009.map", {layers: "BRC_2009"});
     {{ module }}.map.addLayer(campsLayer);
 
+    var releaseLayer = new OpenLayers.Layer.OSM("2009 Map (Embargoed)", "http://earthdev.burningman.com/osm_tiles3/${z}/${x}/${y}.png", {numZoomLevels: 19});
+    {{ module }}.map.addLayer(releaseLayer);
+
     {% block extra_layers %}{% endblock %}
     {% if is_linestring %}OpenLayers.Feature.Vector.style["default"]["strokeWidth"] = 3; // Default too thin for linestrings. {% endif %}
     {{ module }}.layers.vector = new OpenLayers.Layer.Vector(" {{ field_name }}");

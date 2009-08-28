@@ -1,4 +1,5 @@
 import sys,os
+from django.contrib.gis.geos import *
 
 sys.path.append('/home/bme/src/pinax/apps')
 sys.path.append('/home/bme/src')
@@ -11,9 +12,17 @@ from brc.views import *
 
 from time import strftime
 
+include_camps = True
+include_camps_polys = True
+
 nodeid = -1
 wayid = -1
 nodes = {}
+
+def ret_street_point(year, hour, minute, street):
+	pnt = geocode(year.year, hour, minute, street)
+	return str(pnt.x) + ' ' + str(pnt.y)
+
 
 print("<?xml version='1.0' encoding='UTF-8'?>")
 print("<osm version='0.6'>")
@@ -49,8 +58,11 @@ def add_node(lat,lon):
 def add_street(t):
 	global wayid
 	u = t.street_line.difference(cc_outer_ring)
-	if (t.name[0] == 'E') or (t.name[0] == 'B'):
+	if (t.name[0] == 'E'):
 		u = u.difference(double_wide)
+	if (t.name[0] == 'B'):
+		null_poly_wkt = "POLYGON((" + ret_street_point(xyear[0],5,30,'Adapt') + "," + ret_street_point(xyear[0],6,30,'Adapt') + "," + ret_street_point(xyear[0],6,30,'Lineage') + "," + ret_street_point(xyear[0],5,30,'Lineage') + "," + ret_street_point(xyear[0],5,30,'Adapt') + "))"
+		u = u.difference(GEOSGeometry(null_poly_wkt))
 	if (t.name == "06:30" or t.name == 
 "05:30"):
 		u = u[1]		
@@ -159,7 +171,7 @@ for t in roads:
 		wayid = wayid - 1
 
 for t in walkin_camp:
-	if (t.location_poly):
+	if (include_camps and t.location_poly):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -175,7 +187,7 @@ for t in walkin_camp:
 
 for t in camps:
 	name = t.name.replace("&","&amp;").replace("'","&apos;")
-	if (t.location_poly):
+	if (include_camps and include_camps_polys and t.location_poly):
 		waynodes = []
 		for p in t.location_poly[0]:
 			waynodes.append( add_node(p[1], p[0]) )
@@ -189,12 +201,12 @@ for t in camps:
 
 		wayid = wayid - 1			
 
-		if (t.location_point):
-			print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
-			print("<tag k='tourism' v='camp_site'/>")
-			print("<tag k='name' v='" + name + "'/>")
-			print("</node>")
-			nodeid = nodeid - 1
+	if (include_camps and t.location_point):
+		print("<node id='" + str(nodeid) + "' visible='true' lat='" + str(t.location_point.y) + "' lon='" + str(t.location_point.x) + "' >")
+		print("<tag k='tourism' v='camp_site'/>")
+		print("<tag k='name' v='" + name + "'/>")
+		print("</node>")
+		nodeid = nodeid - 1
 
 for t in plazas:
 	if (t.location_poly):

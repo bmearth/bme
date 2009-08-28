@@ -7,7 +7,6 @@ current_year=Year.objects.get(year='2009')
 class PlayaEventIndex(indexes.SearchIndex):
   title = indexes.CharField(model_attr='title', use_template=True)
   description = indexes.CharField(document=True, use_template=True)
-  
   def get_queryset(self):
       "Used when the entire index for model is updated."
       return PlayaEvent.objects.filter(year=current_year, moderation='A', list_online=True)

@@ -164,6 +164,14 @@ def art_car_id(request, year_year, art_car_id):
 #---------- PlayaEvents ----------
 #-------------------------------------------------------------------------------
 
+def playa_events_home(request, 
+	year_year, 
+	template='brc/playa_events_home.html', 
+	queryset=None
+):
+	year = Year.objects.get(year=year_year)
+	return render_to_response(template, context_instance=RequestContext(request))
+
 def all_playa_events(request, 
 	year_year, 
 	template='brc/all_playa_events.html', 

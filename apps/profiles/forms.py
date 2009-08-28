@@ -8,4 +8,4 @@ class ProfileForm(forms.ModelForm):
             'twitter_user', 'twitter_password')
 
 class SearchForm(forms.Form):
-    terms = forms.CharField(max_length=255)
+    terms = forms.CharField(max_length=255, label='Search Terms', help_text='Search for users by Name, Description, Location, Email')

@@ -1,12 +1,20 @@
 {% extends 'site_base.html' %}
+{% block logo_link_image %}<a href="{% url home %}"><img src="/media/img/bman-earth-search.gif" alt="Burning Man Earth"/></a>{% endblock %}
 {% block head_title %} Search {% endblock %}
 {% block body %}
     <h2>Search</h2>
-
     <form method="get" action=".">
         <table>
-            {{ form.as_p }}
-            <tr>
+             {% for field in form %}
+	     	{% ifequal field.label "Q" %}
+	      	<p><label for="id_q">What are you looking for? Enter your search terms here:</label><br/>{{ field }}</p>
+	      {% endifequal %}
+	     	{% ifequal field.label "Models" %}
+	      	<p><label for="id_models_0">Select where you would like to search:</label> 
+		{{ field }}
+	      	{% endifequal %}
+	      {% endfor %}
+	    <tr>
                 <td>&nbsp;</td>
                 <td>
                     <input type="submit" value="Search">
@@ -18,18 +26,19 @@
             {% for result in page.object_list %}
                 <p>
                   {% ifequal result.model_name "playaevent"  %}
-                    <b>Playa Event: <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
+                    <img src="/media/img/events.png" align="left" style="padding: 5px; border: 0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a></b><br/>
                   {% endifequal %}
                   {% ifequal result.model_name "themecamp" %}
-                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                    <img src="/media/img/camps.png" align="left" style="padding: 5px; border: 0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
                   {% endifequal %}
                   {% ifequal result.model_name "artinstallation" %}
-                    <b>Theme Camp: <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                    <img src="/media/img/art.png" align="left" style="padding: 5px; border:0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
                   {% endifequal %}
 		{% if result.object.description %}
 			{{ result.object.description }}
 		{% endif %}
                 </p>
+		<br/>
             {% endfor %}
         {% else %}
             <p>No results found.</p>
