@@ -26,12 +26,10 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 
 {% if theme_camp.description %}<p>{{ theme_camp.description }}</p>{% endif %}
 
-{% comment %}
 <h3>Location</h3>
 {% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>{% endif %}
 {{ map }}
-{% endcomment %}
-
+{% comment %}
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->
 
@@ -46,6 +44,7 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 <td id="flickr_badge_source_txt">To add photos, tag your photo with <b>burningman:camp={{ theme_camp.id }}</b> on <a href="http://www.flickr.com/photos/tags/burningman:camp={{ theme_camp.id }}/">on Flickr</a>. <a href="http://code.flickr.com/blog/2009/07/06/extraextraextra/">what are machine tags?</a></td>
 </td></tr></table>
 <!-- End of Flickr Badge -->
+{% endcomment %}
 
 {% if events %}
 <h3>Events At this Camp:</h3>
@@ -56,7 +55,6 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 {% endfor %}
 {% endif %}
 
-{% comment %}
 <h3>Checkins</h3>
 <div id="themecamp-checkins">
 {% if request.user.is_authenticated and ALLOW_CHECKINS %}
@@ -64,7 +62,6 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 {% latest_checkins_for_instance theme_camp %}
 {% endif %}
 </div>
-{% endcomment %}
 
 {% comment %}
 <br/>

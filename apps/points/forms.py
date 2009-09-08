@@ -45,7 +45,7 @@ class PointForm(forms.ModelForm):
             # the following parameters do not affect the jq-ui forms
             # they must be set directly in jqueryui_add_form.html
             map_options = {
-                    'default_zoom':1,
+                    'default_zoom':17,
                     #'layers': ['google.hybrid',],
                     'map_style': {
                         'width':'100%',

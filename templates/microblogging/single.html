@@ -12,7 +12,7 @@
     
         <div class="tweet" id="t{{ tweet.id }}">
         <a href="{% url profile_detail tweet.sender %}"><b>{{ tweet.sender }}</b></a>
-        {{ tweet.html|safe|oembed|urlize }}
+        {{ tweet|safe|oembed|urlize }}
         <span class="timesince">{{ tweet.sent|timesince }} ago</span>
         <a class="reply" href="{% url tweets_you_follow %}?reply={{ tweet.sender }}">reply</a>
     </div>

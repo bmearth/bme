@@ -9,10 +9,12 @@
 	     	{% ifequal field.label "Q" %}
 	      	<p><label for="id_q">What are you looking for? Enter your search terms here:</label><br/>{{ field }}</p>
 	      {% endifequal %}
+		<div style="visible: false">
 	     	{% ifequal field.label "Models" %}
 	      	<p><label for="id_models_0">Select where you would like to search:</label> 
 		{{ field }}
 	      	{% endifequal %}
+		</div>
 	      {% endfor %}
 	    <tr>
                 <td>&nbsp;</td>
@@ -33,6 +35,10 @@
                   {% endifequal %}
                   {% ifequal result.model_name "artinstallation" %}
                     <img src="/media/img/art.png" align="left" style="padding: 5px; border:0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                  {% endifequal %}
+                  {% ifequal result.model_name "profile" %}
+                    <img src="/media/img/man-icon.png" align="left" style="padding: 5px; border:0px solid #000000;"> <b><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></b><br/>
+                  <b><a href = "{{ result.object.get_absolute_url }}">{{ result.object.user }} {% if result.object.name %}({{ result.object.name }})</a></b><br/>{{result.object.location}}<br/>{{result.object.about}}{% endif %}<br/>
                   {% endifequal %}
 		{% if result.object.description %}
 			{{ result.object.description }}

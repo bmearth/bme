@@ -11,7 +11,7 @@ Emitter.register('json', GeoJSONEmitter, content_type='text/javascript; charset=
 
 art_fields = ('id', 'name', ('year', ('id','year')), 'slug', 'artist', 'description', 'url', 'contact_email', 'location_point', 'location_poly', 'circular_street', 'time_address')
 event_fields = ('id', 'title','description', 'print_description', ('year', ('id','year')), 'slug', 'event_type', ('hosted_by_camp', ('id','name')), ('located_at_art', ('id','name')), 'other_location', 'check_location', 'url', 'location_point', 'location_track', 'all_day', ('occurrence_set', ('start_time', 'end_time')))
-camp_fields = ('id', ('year', ('id','year')), 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'url', 'contact_email') 
+camp_fields = ('id', ('year', ('id','year')), 'name', 'description', 'type', 'start_date_time', 'end_date_time', 'duration', 'repeats', 'hosted_by_camp', 'located_at_art', 'url', 'location_point', 'location_poly', 'contact_email') 
 cstreet_fields = ('id', ('year', ('id','year')), 'name', 'order', 'width', 'distance_from_center', 'street_line')
 tstreet_fields = ('id', ('year', ('id','year')), 'hour', 'minute', 'name', 'width', 'street_line')
 infrastructure_fields = ('id', ('year', ('id','year')), 'name', 'location_point', 'location_line', 'location_poly', 'location_multigeom', 'tags')

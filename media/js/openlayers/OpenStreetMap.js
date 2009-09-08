@@ -7,7 +7,10 @@ OpenLayers.Util.OSM = {};
  * Constant: MISSING_TILE_URL
  * {String} URL of image to display for missing tiles
  */
+/*
 OpenLayers.Util.OSM.MISSING_TILE_URL = "http://openstreetmap.org/openlayers/img/404.png";
+*/
+OpenLayers.Util.OSM.MISSING_TILE_URL = "/openlayers/img/404.png";
 
 /**
  * Property: originalOnImageLoadError
@@ -44,10 +47,16 @@ OpenLayers.Layer.OSM.Mapnik = OpenLayers.Class(OpenLayers.Layer.OSM, {
      */
     initialize: function(name, options) {
         var url = [
+            "/${z}/${x}/${y}.png",
+            "/${z}/${x}/${y}.png",
+            "/${z}/${x}/${y}.png"
+        ];
+/*
             "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
             "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
             "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
         ];
+*/
         options = OpenLayers.Util.extend({ numZoomLevels: 19 }, options);
         var newArguments = [name, url, options];
         OpenLayers.Layer.OSM.prototype.initialize.apply(this, newArguments);

@@ -12,7 +12,7 @@
             {% if prefix_sender %}<a href="{% url profile_detail tweet.sender %}">{% avatar tweet.sender 40 %}</a>{% endif %}
 	</td><td valign='top'>
             {% if prefix_sender %}<a href="{% url profile_detail tweet.sender %}"><b>{{ tweet.sender }}</b></a>{% endif %}
-            {{ tweet.html|safe|oembed|urlize }}
+              {{ tweet.text|safe|oembed|urlize }}
             <span class="timesince">{% blocktrans with tweet.sent|timesince as tweet_age %}{{ tweet_age }} ago{% endblocktrans %}</span>
             <a class="reply" href="{% url tweets_you_follow %}?reply={{ tweet.sender }}">{% trans "reply" %}</a>
 	</td></tr></table>
