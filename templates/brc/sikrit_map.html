@@ -29,10 +29,10 @@
             } );
 	   //layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
             //map.addLayers([layerMapnik]);
-	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "/osm_tiles3/${z}/${x}/${y}.png", {numZoomLevels: 20});
+	var newLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles3/${z}/${x}/${y}.png", {numZoomLevels: 20});
 	map.addLayer(newLayer);
     
-	var newLayer2 = new OpenLayers.Layer.OSM("2009 Print", "/osm_tiles4/${z}/${x}/${y}.png", {numZoomLevels: 20});
+	var newLayer2 = new OpenLayers.Layer.OSM("2009 Print", "http://earthdev.burningman.com/osm_tiles4/${z}/${x}/${y}.png", {numZoomLevels: 20});
 	map.addLayer(newLayer2);
     
 	map.addControl(new OpenLayers.Control.LayerSwitcher());

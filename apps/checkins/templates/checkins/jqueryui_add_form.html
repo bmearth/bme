@@ -37,7 +37,7 @@
                         
                         var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), mapW.map.getProjectionObject());
                         mapW.map.setCenter (lonLat, zoom);
-                        var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
+                        var playaLayer = new OpenLayers.Layer.OSM("2009 Map", "http://earthdev.burningman.com/osm_tiles2/${z}/${x}/${y}.png", {numZoomLevels: 19});
                         mapW.map.addLayer(playaLayer);
                         mapW.map.layers[0].destroy();
                         mapW.map.removeControl(mapW.map.controls[12])

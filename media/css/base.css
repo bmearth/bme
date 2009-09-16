@@ -163,7 +163,7 @@ table #flickr_badge_wrapper {
 }
 
 #date-nav {
-    margin: 0 0 0 130px;
+    margin: 0 0 0 236px;
     width: 541px;
     padding: 0 0 10px 0;
 }
@@ -735,15 +735,15 @@ table.topics .comment_stats {
 .pagination .current {
     padding: 3px;
     color: #FFF;
-    border: 1px solid #9BC;
-    background: #9BC;
+    border: 1px solid #ba4409;
+    background: #f7c324;
 }
 .pagination a {
     padding: 3px;
     text-decoration: none;
-    border: 1px solid #9BC;
+    border: 1px solid #ba4409;
     color: #444;
-    background: #DEF;
+    background: #fbfc8e;
 }
 
 /* reference:

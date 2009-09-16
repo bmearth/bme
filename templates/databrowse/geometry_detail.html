@@ -22,7 +22,7 @@
        //"http://labs.metacarta.com/wms/vmap0",
        //{layers: 'basic'} );
        //layer = new OpenLayers.Layer.OSM.Mapnik("OpenStreetMap (Mapnik)");
-       layer = new OpenLayers.Layer.OSM("New Layer", "osm_tiles2/", {numZoomLevels: 19});
+       layer = new OpenLayers.Layer.OSM("New Layer", "http://earthdev.burningman.com/osm_tiles2/", {numZoomLevels: 19});
 
        map.addLayer(layer);
        map.addControl(new OpenLayers.Control.MousePosition());
