@@ -6,6 +6,7 @@
 </style>
     <script src="/media/js/openlayers/OpenLayers.js"></script>
 <script src="/media/js/openlayers/OpenStreetMap.js"></script>
+<!--
     <script type="text/javascript">
         var markers, map, base_layer, kml, popup, feature;
         function init(){
@@ -34,6 +35,7 @@
 	    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
             map.setCenter (lonLat, zoom);
 }
+-->
     </script>
 {% endblock %}
 {% block head_title %}{{ year.year }} {% endblock %}
