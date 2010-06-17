@@ -188,11 +188,14 @@ def art_car_id(request, year_year, art_car_id):
 
 def playa_events_home(request, 
 	year_year, 
-	template='brc/playa_events_home.html', 
+	template='brc/playa_events_home.html',	
 	queryset=None
-):
+):	
 	year = Year.objects.get(year=year_year)
-	return render_to_response(template, context_instance=RequestContext(request))
+	print 'here', year
+	data = {'year':year}
+	#return render_to_response(template, {}, context_instance=RequestContext(request))
+	return render_to_response(template, data,context_instance=RequestContext(request))
 
 def all_playa_events(request, 
 	year_year, 
@@ -458,8 +461,9 @@ def create_or_edit_event(request,
 	playa_event_id=None, 
 	template_name='brc/add_event.html'
 ):
-	user = request.user
-	
+	user = request.user	
+  	year = get_object_or_404(Year, year=year_year)
+
 	instance = None
 	if playa_event_id is not None:
         	instance = get_object_or_404(PlayaEvent, id=playa_event_id)
@@ -476,7 +480,9 @@ def create_or_edit_event(request,
 			return HttpResponseRedirect(next)
 	else:
 		form=brcforms.PlayaEventForm(initial=dict(year=Year.objects.get(year=year_year)), instance=instance)
-	return render_to_response(template_name, {"form": form,}, context_instance=RequestContext(request))
+		
+	data = {"form": form, "year": year}
+	return render_to_response(template_name, data, context_instance=RequestContext(request))
  
 @login_required
 def delete_event(request, 

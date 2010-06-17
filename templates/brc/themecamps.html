@@ -10,7 +10,7 @@
 <a href='/brc/{{ next }}/themecamps/'> {{ next }}>></a>
 {% endifnotequal %}
 {% endcomment %}
-<h2>2009 Theme Camps</h2>
+<h2>{{ year.year }} Theme Camps</h2>
 <ul>
 {% for theme_camp in theme_camps %}
 <li><a href='/brc/{{ year.year }}/themecamp/{{theme_camp.id }}/'>{{ theme_camp.name }}</a></li>
