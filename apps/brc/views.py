@@ -193,7 +193,9 @@ def playa_events_home(request,
 ):	
 	year = Year.objects.get(year=year_year)
 	print 'here', year
-	data = {'year':year}
+	
+
+  	data = {'year':year, 'user':request.user}
 	#return render_to_response(template, {}, context_instance=RequestContext(request))
 	return render_to_response(template, data,context_instance=RequestContext(request))
 

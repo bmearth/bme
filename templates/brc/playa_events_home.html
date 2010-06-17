@@ -8,12 +8,19 @@
 
 {% block body %}
 <h2>Welcome to the {{ year.year }} Playa Events Calendar</h2>
+
+{% if not user.is_authenticated %}
 <p>To submit an event, please <a href="{% url acct_login %}">login</a> or <a href="{% url acct_signup %}">sign up</a> for an account.</p>
+{% else %}
+<p>
+<div id="create-new" style="margin: 0">{% ifequal year.year '2010' %}<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>{% endifequal %}</div>
+</p>
+{% endif %}
 <p>You do not need to have an account if you want to <a href="{% url playa_events_by_day year.year 1 %}">browse events</a> that are being planned by Black Rock City citizens for 2009.</p>
 <h3>Moderation Information</h3>
 <p>All events will be moderated before posting them online. It may take 24-48 hours for your event to be moderated, so please don't panic if you don't see it in the calendar immediately.</p>
 <h3>Inclusion in the What Where When</h3>
-<p><strong>Capacity has been reached for the 2009 print edition of the What Where When. It is now closed.</strong> You can still register your event for viewing online until Burning Man begins on August 31st, 2009. On playa, you can register new events and browse existing events at Playa Info.</p>
+
 <p>See you on playa!</p>
 
 </div>
