@@ -35,8 +35,8 @@
 	    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
             map.setCenter (lonLat, zoom);
 }
--->
     </script>
+-->
 {% endblock %}
 {% block head_title %}{{ year.year }} {% endblock %}
 {% block body %}
@@ -63,13 +63,17 @@
 <a href='/brc/{{ year.year }}/playa_events/'>Playa Events</a>&nbsp;-&nbsp;
 <a href='/brc/{{ year.year }}/art_cars/'>Mutant Vehicles</a></h2>
 <div id='map'></div>
+
+<!--
 <h2>Streets</h2>
+-->
 <ul>
 {% for street in streets %}
 <li>{{ street.name }}</li>
 {% endfor %}
 </ul>
 {% endblock %}
+
 {% block extra_body %}
     <script type="text/javascript">
         $(document).ready(function() {
