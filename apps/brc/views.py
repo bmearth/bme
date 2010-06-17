@@ -349,8 +349,14 @@ def playa_event_view(request,
 	if not recurrence_form:
 		recurrence_form = recurrence_form_class(initial=dict(year=Year.objects.get(year=year_year)))
 	'''
-
-	return render_to_response(template, dict(playa_event=event, event_form=event_form_class, recurrence_form=recurrence_form_class),context_instance=RequestContext(request))
+	data = dict(
+		playa_event=event, 
+		event_form=event_form_class, 
+		recurrence_form=recurrence_form_class,
+		year = get_object_or_404(Year, year=year_year)
+	)
+	return render_to_response(template, data,
+		context_instance=RequestContext(request))
 
 
 def playa_event_view_uuid(request,

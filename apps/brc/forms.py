@@ -119,7 +119,7 @@ class PlayaEventForm(forms.ModelForm):
 	A simple form for adding and updating Event attributes
 	'''
 	
-	curr_year='2009'
+	curr_year='2010'
 	year = get_object_or_404(Year, year=curr_year)
 	playa_day_choices=[(d, d.strftime('%A, %B %d')) for d in year.daterange()]
 	playa_day_choices_short=[(d, d.strftime('%A %d')) for d in year.daterange()]
