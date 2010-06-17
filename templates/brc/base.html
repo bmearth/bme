@@ -7,10 +7,10 @@
 {% block subnav %}
         <ul>
 
-            <li><a href="{% url map 2010 %} ">{% trans "Map" %}</a></li>
-            <li><a href="{% url themecamps 2010 %} ">{% trans "Theme Camps" %}</a></li>
-            <li><a href="{% url art_installations 2010 %}">{% trans "Art Installations" %}</a></li>
-            <li><a href="{% url playa_events 2010 %}">{% trans "Playa Events" %}</a></li>
-            <li><a href="{% url art_cars 2010 %}">{% trans "Mutant Vehicles" %}</a></li>
+            <li><a href="{% url map year.year %} ">{% trans "Map" %}</a></li>
+            <li><a href="{% url themecamps year.year %} ">{% trans "Theme Camps" %}</a></li>
+            <li><a href="{% url art_installations year.year %}">{% trans "Art Installations" %}</a></li>
+            <li><a href="{% url playa_events year.year %}">{% trans "Playa Events" %}</a></li>
+            <li><a href="{% url art_cars year.year %}">{% trans "Mutant Vehicles" %}</a></li>
         </ul>
 {% endblock %}
