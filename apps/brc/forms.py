@@ -137,7 +137,7 @@ class PlayaEventForm(forms.ModelForm):
 	check_location=forms.BooleanField(required=False, label='Check Playa Info for camp location', initial=False)
 	end_time=forms.DateTimeField(label='End', required=True, widget=PlayaSplitDateTimeWidget(choices=playa_day_choices))
 	all_day=forms.BooleanField(required=False, label='All Day Event')
-	repeats=forms.BooleanField(required=False, label='Repeats', help_text='If your event repeats at different times on different days, check the days on which it repeats, and edit the times on the following page.')
+	repeats=forms.BooleanField(required=False, label='Repeats', help_text='If your event repeats at different times over several days or multiple times in a day you will need to create separate events for the different times.')
 	repeat_days = MultipleIntegerField(playa_day_choices_short, label='Repeat Days',widget=forms.CheckboxSelectMultiple)
 	list_online=forms.BooleanField(required=False, label='List Event Online', initial=True)
 	list_contact_online=forms.BooleanField(required=False, label='List Contact Info Online', initial=True)
@@ -145,22 +145,20 @@ class PlayaEventForm(forms.ModelForm):
 	def __init__(self, *args, **kws):
 		super(PlayaEventForm, self).__init__(*args, **kws)
 
-		# This is irrelevant now because we dont allow editing of the occurrences when editing event metadata, but kept here for now
-		if(kws['instance'] is not None):
+		# if this is an edit, load the occurrences associated with this event
+		if kws['instance']:
+			occurrences = Occurrence.objects.filter(event=self.instance).all()
+			# set the start and end time based on the first occurrence (all
+			# should be the same date time).  If they aren't, they will be 
+			# after we're done editing
+			self.initial.setdefault('start_time', occurrences[0].start_time)
+			self.initial.setdefault('end_time', occurrences[0].end_time)
 			# Set the initial form values properly for recurring events
-			if(Occurrence.objects.filter(event=self.instance).count()>1):
+			if len(occurrences) > 1:
 				self.initial.setdefault('repeats', True)
-				repeat_days = []
-				for day in self.year.daterange():
-					if(Occurrence.objects.filter(event=self.instance, start_time__day=day.day).count()>0):	
-						repeat_days.append(day)
-				self.initial.setdefault('repeat_days', repeat_days)
-			else:
-				# Single Event
-				occurrence = Occurrence.objects.get(event=self.instance)
-				logging.debug(str(occurrence))
-				self.initial.setdefault('start_time', occurrence.start_time)
-				self.initial.setdefault('end_time', occurrence.end_time)
+				self.initial.setdefault('repeat_days', 
+					[o.start_time.date() for o in occurrences])
+
 
 	def clean(self):
 		start=self.cleaned_data['start_time']
@@ -214,40 +212,38 @@ class PlayaEventForm(forms.ModelForm):
 
 		playa_event.save()
 
-		# TODO ... Handle for All Day Events
-
-		if(existing_event):
-			# Existing Event, update occurrence(s)
-			# TODO
-			# Not sure what to do if the time is changed for a recurring event?
-			pass
-		else:
-			# New Event, add occurrence
-			if(self.cleaned_data['repeats']):
-				if(self.cleaned_data['all_day']):
-					start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
-					end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
-				else:
-					start_time = self.cleaned_data['start_time'].time()
-					end_time = self.cleaned_data['end_time'].time()
-				for day in self.cleaned_data['repeat_days'] :
-					event_start = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), start_time) 
-					event_end = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), end_time) 
-					playa_event.add_occurrences(event_start,event_end)
-			elif(self.cleaned_data['all_day']):
+		if existing_event:
+			# delete the existing occurrences, they will be replaced
+			for occurrence in Occurrence.objects.filter(event=self.instance).all():
+				occurrence.delete()
+		
+		# add occurrences
+		if self.cleaned_data['repeats']:
+			if(self.cleaned_data['all_day']):
 				start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
 				end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
-				event_start = datetime.combine(self.cleaned_data['start_time'].date(), start_time) 
-				event_end = datetime.combine(self.cleaned_data['end_time'].date(), end_time) 
-				playa_event.add_occurrences(event_start, event_end)
-			else:	
-				playa_event.add_occurrences(self.cleaned_data['start_time'], self.cleaned_data['end_time'])
+			else:
+				start_time = self.cleaned_data['start_time'].time()
+				end_time = self.cleaned_data['end_time'].time()
+			for day in self.cleaned_data['repeat_days'] :
+				event_start = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), start_time) 
+				event_end = datetime.combine(datetime.strptime(day, "%Y-%m-%d"), end_time) 
+				playa_event.add_occurrences(event_start,event_end)
+		elif(self.cleaned_data['all_day']):
+			start_time = datetime.strptime("1/1/01 00:00", "%d/%m/%y %H:%M").time()
+			end_time = datetime.strptime("1/1/01 23:59", "%d/%m/%y %H:%M").time()
+			event_start = datetime.combine(self.cleaned_data['start_time'].date(), start_time) 
+			event_end = datetime.combine(self.cleaned_data['end_time'].date(), end_time) 
+			playa_event.add_occurrences(event_start, event_end)
+		else:	
+			playa_event.add_occurrences(self.cleaned_data['start_time'], self.cleaned_data['end_time'])
 
 		return playa_event
+		
 	class Meta:
 		model = PlayaEvent
 		exclude = ('year', 'slug', 'location_point', 'location_track', 'creator')
-		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','check_location','all_day', 'repeats', 'repeat_days', 'start_time','end_time', 'list_online', 'list_contact_online']
+		fields = ['title', 'print_description', 'description','event_type','url','contact_email','hosted_by_camp','located_at_art','other_location','check_location','all_day', 'start_time','end_time', 'repeats', 'repeat_days', 'list_online', 'list_contact_online']
 
 class PlayaEventOccurrenceForm(forms.ModelForm):
 	'''

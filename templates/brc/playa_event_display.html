@@ -27,13 +27,6 @@
  {% if playa_event.occurrence_set.count %}
      <tr>
        <td valign="top" width="170"><b>Date/Time(s):</b>
-{% if user.is_authenticated %}
-{% ifequal user playa_event.creator %}
-  	<a href="{% url playa_occurrence_add playa_event.year.year playa_event.id %}">
-    	<img border="0" src="{{ MEDIA_URL }}img/add.png" alt="{% trans "Add" %}"/>
-  	</a>
-{% endifequal %}
-{% endif %}
 	</td>
        <td  width="330">
      	{% for o in playa_event.occurrence_set.all %}
@@ -43,16 +36,6 @@
 	             {{ o.start_time|date:"l, F jS, Y P" }} &ndash; 
         	     {{ o.end_time|date:"P" }}
 		{% endif %}
-         {% if user.is_authenticated %}
-         {% ifequal user playa_event.creator %}
-         <a href="{% url playa_occurrence_edit playa_event.year playa_event.id o.id %}">
-        <img border="0" src="{{ MEDIA_URL }}img/pencil.png" alt="{% trans "Change" %}"/> 
-	</a>
- 	<a href="{% url occurrence_delete playa_event.year.year o.id %}">
-    	<img border="0" src="{{ MEDIA_URL }}img/delete.png" alt="{% trans "Delete" %}"/>
-  	</a>
-         {% endifequal %}
-         {% endif %}
 	<br/>
      	{% endfor %}
        </td>
