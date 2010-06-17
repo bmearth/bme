@@ -39,7 +39,8 @@
                 <td class="tab rtab_brc"><div><a href="{% url year_info 2010 %}">{% trans "BRC" %}</a></div></td>
 {% if user.is_authenticated %}
                 <td class="tab rtab_profile"><div><a href="{% url profile_detail user %}">{% trans "People" %}</a></div></td>
-                <td class="tab rtab_tweets"><div><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></div></td>
+
+                <!--<td class="tab rtab_tweets"><div><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></div></td>-->
                 <!--<td class="tab rtab_checkins"><div><a href="{% url checkins_all %}">{% trans "Check In" %}</a></div></td> -->
 {% else %}
                 <td class="tab rtab_profile"><div><a href="{% url profile_list %}">{% trans "People" %}</a></div></td>
@@ -51,10 +52,13 @@
                 <!--<td class="tab rtab_bookmarks"><div><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></div></td>--> 
                 <!--<td class="tab rtab_photos"><div><a href="{% url photos %}">{% trans "Photos" %}</a></div></td>-->
                 <!--<td class="tab rtab_regionals"><div><a href="{% url regional_list %}">{% trans "Regionals" %}</a></div></td>-->
-	       <td class="tab rtab_search"><div><a href="/brc/search">{% trans "Search" %}</a></div></td>
-	       <td class="tab rtab_listings"><div><a href="/listings/">{% trans "Rides" %}</a></div></td>
-{% if user.is_authenticated %}
-		<td class="tab rtab_inbox"><div><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></div></td>
+				
+	       		<!--<td class="tab rtab_search"><div><a href="/brc/search">{% trans "Search" %}</a></div></td>-->
+	       
+				<!--><td class="tab rtab_listings"><div><a href="/listings/">{% trans "Rides" %}</a></div></td>
+{% if user.is_authenticated %}-->
+			
+				<!--<td class="tab rtab_inbox"><div><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></div></td>-->
 {% endif %}
               </tr>
         </table>
