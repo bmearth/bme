@@ -292,6 +292,7 @@ def playa_events_by_day(request, year_year, playa_day=1, template='brc/playa_eve
 	
 	data= dict(
 		year = year,
+		playa_day = playa_day,
 		day = playa_day_dt,
 		next = next,
 		previous = previous,
@@ -466,6 +467,7 @@ def playa_occurrence_view(request,
 @login_required
 def create_or_edit_event(request, 
 	year_year, 
+	playa_day=1,
 	playa_event_id=None, 
 	template_name='brc/add_event.html'
 ):
@@ -487,7 +489,16 @@ def create_or_edit_event(request,
 				request.user.message_set.create(message="Your Event was Added successfully. Please wait for it to be moderated")
 			return HttpResponseRedirect(next)
 	else:
-		form=brcforms.PlayaEventForm(initial=dict(year=Year.objects.get(year=year_year)), instance=instance)
+		initial = dict(year=year_year)
+		if not instance:
+			event_date_list = year.daterange()
+			playa_day = int(playa_day)
+			if playa_day > len(event_date_list): 
+				return http.HttpResponseBadRequest('Bad Request')
+			playa_day_dt = event_date_list[playa_day-1]
+			initial['day'] = datetime.combine(playa_day_dt, time(9))
+			
+		form=brcforms.PlayaEventForm(initial=initial, instance=instance)
 		
 	data = {"form": form, "year": year}
 	return render_to_response(template_name, data, context_instance=RequestContext(request))

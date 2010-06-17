@@ -142,11 +142,12 @@ class PlayaEventForm(forms.ModelForm):
 	list_online=forms.BooleanField(required=False, label='List Event Online', initial=True)
 	list_contact_online=forms.BooleanField(required=False, label='List Contact Info Online', initial=True)
 
-	def __init__(self, *args, **kws):
-		super(PlayaEventForm, self).__init__(*args, **kws)
+	def __init__(self, *args, **kwargs):
+		print "HERE", args, kwargs
+		super(PlayaEventForm, self).__init__(*args, **kwargs)
 
 		# if this is an edit, load the occurrences associated with this event
-		if kws['instance']:
+		if kwargs.get('instance'):
 			occurrences = Occurrence.objects.filter(event=self.instance).all()
 			# set the start and end time based on the first occurrence (all
 			# should be the same date time).  If they aren't, they will be 
@@ -158,6 +159,9 @@ class PlayaEventForm(forms.ModelForm):
 				self.initial.setdefault('repeats', True)
 				self.initial.setdefault('repeat_days', 
 					[o.start_time.date() for o in occurrences])
+		elif 'initial' in kwargs and 'day' in kwargs['initial']:
+			self.initial.setdefault('start_time', kwargs['initial']['day'])
+			self.initial.setdefault('end_time', kwargs['initial']['day'])
 
 
 	def clean(self):
