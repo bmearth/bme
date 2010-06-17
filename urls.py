@@ -48,7 +48,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', direct_to_template, {"template": "homepage.html"}, name="home"),
-    
+    url(r'^playaevents/create$', 'brc.views.create_or_edit_event', 
+		{'year_year':"2010"}, name="playa_event_edit"),
     (r'^databrowse/(.*)', databrowse.site.root),
     (r'^about/', include('about.urls')),
     (r'^account/', include('account.urls')),
