@@ -40,9 +40,6 @@ Adding or editing events is closed for {{ year.year }}.   Did you want to add an
 	</td></tr>
     {% endfor %}
 </table>
-{% if form.instance.id %}
-	<p><b>If you would like to edit the individual times/dates for each occurrence of your event, visit your <a href='{% url playa_event_view year.year form.instance.id %}'>single event view</a> page.</b></p>
-{% endif %}
 <br/>
 	<p><b>All events are moderated before being posted to the events calendar. Do not panic if you do not see your event immediately after submitting it. It may take 24 to 48 hours to be posted. </b></p>
 
