@@ -143,7 +143,6 @@ class PlayaEventForm(forms.ModelForm):
 	list_contact_online=forms.BooleanField(required=False, label='List Contact Info Online', initial=True)
 
 	def __init__(self, *args, **kwargs):
-		print "HERE", args, kwargs
 		super(PlayaEventForm, self).__init__(*args, **kwargs)
 
 		# if this is an edit, load the occurrences associated with this event
