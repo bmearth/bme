@@ -20,6 +20,14 @@
     {% endifequal %}
 </p>
 {% endif %}
+
+{% if my_events %}
+<p>
+<a href="/brc/{{year.year}}/playa_events/my_events">View/edit the events you have created.</a>
+</p>
+
+{% endif %}
+
 <p>You do not need to have an account if you want to <a href="{% url playa_events_by_day year.year 1 %}">browse events</a> that are being planned by Black Rock City citizens for {{ year.year }}.</p>
 <h3>Moderation Information</h3>
 <p>All events will be moderated before posting them online. It may take 24-48 hours for your event to be moderated, so please don't panic if you don't see it in the calendar immediately.</p>

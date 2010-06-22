@@ -192,10 +192,10 @@ def playa_events_home(request,
 	queryset=None
 ):	
 	year = Year.objects.get(year=year_year)
-	print 'here', year
-	
-
-  	data = {'year':year, 'user':request.user}
+	user=request.user
+	my_events = PlayaEvent.objects.filter(year=year, creator=user)
+	my_events = True if my_events else False
+	data = {'year':year, 'user':request.user, 'my_events':my_events}
 	#return render_to_response(template, {}, context_instance=RequestContext(request))
 	return render_to_response(template, data,context_instance=RequestContext(request))
 
