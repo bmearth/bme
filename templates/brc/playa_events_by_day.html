@@ -29,7 +29,12 @@
     </h4>
 </div>
 <div id="daily_events">
-  <span class="day_top_sub_header">Events for  {{ day|date:"l, N j, Y"}}</span><div id="create-new">{% ifequal year.year '2010' %}<a href='/brc/{{year.year}}/playa_event/create/{{playa_day}}'>Create New Event</a>{% endifequal %}</div>
+  <span class="day_top_sub_header">Events for  {{ day|date:"l, N j, Y"}}</span>
+    {% ifequal year.year '2010' %}
+    <div id="create-new">
+        <a href='/brc/{{year.year}}/playa_event/create/{{playa_day}}'>Create New Event</a>
+    </div>  
+    {% endifequal %}
 
   {% if all_day_occ %}
   <h4 class='day_sub_header'>All Day Events</h4>

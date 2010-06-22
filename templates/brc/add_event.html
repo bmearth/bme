@@ -5,6 +5,15 @@
  <script src="{{ MEDIA_URL }}js/event_form.js" type="text/javascript"></script>
 {% endblock %}
 {% block body %}
+
+{% ifnotequal year.year '2010' %}
+
+Adding or editing events is closed for {{ year.year }}.   Did you want to add an event for 
+<a href="/brc/2010/playa_event/create">2010</a>?
+<a href="">
+
+{% else %}
+
 {% if form.instance.id %}
 	<h2>{% trans "Edit Your Playa Event" %}</h2>
 {% else %}
@@ -32,7 +41,7 @@
     {% endfor %}
 </table>
 {% if form.instance.id %}
-	<p><b>If you would like to edit the individual times/dates for each occurrence of your event, visit your <a href='{% url playa_event_view 2009 form.instance.id %}'>single event view</a> page.</b></p>
+	<p><b>If you would like to edit the individual times/dates for each occurrence of your event, visit your <a href='{% url playa_event_view year.year form.instance.id %}'>single event view</a> page.</b></p>
 {% endif %}
 <br/>
 	<p><b>All events are moderated before being posted to the events calendar. Do not panic if you do not see your event immediately after submitting it. It may take 24 to 48 hours to be posted. </b></p>
@@ -41,4 +50,6 @@
 <input type="button" value="{% trans "Cancel" %}" onclick="window.location='{{next}}'"/>
 <input type="hidden" name="next" value="{{next|default:""}}"/>
 </form>
+{% endifnotequal %}
 {% endblock %}
+
