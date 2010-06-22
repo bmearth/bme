@@ -13,7 +13,11 @@
 <p>To submit an event, please <a href="{% url acct_login %}">login</a> or <a href="{% url acct_signup %}">sign up</a> for an account.</p>
 {% else %}
 <p>
-<div id="create-new" style="margin: 0">{% ifequal year.year '2010' %}<a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>{% endifequal %}</div>
+    {% ifequal year.year '2010' %}
+    <div id="create-new" style="margin: 0">
+        <a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>
+    </div>
+    {% endifequal %}
 </p>
 {% endif %}
 <p>You do not need to have an account if you want to <a href="{% url playa_events_by_day year.year 1 %}">browse events</a> that are being planned by Black Rock City citizens for {{ year.year }}.</p>
