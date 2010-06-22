@@ -11,7 +11,7 @@ function textCounter(textarea, countdown, maxlimit)
 
 // given the all_day checkbox, appropriately hide or show related rows
 function allDayState(all_day_box) {
-	if($(all_day_box).val()) {
+	if($(all_day_box).is(':checked')) {
 		$('#id_start_time_1').hide();
 		$('#id_end_time_1').hide();
 		$("label[for='id_start_time_0']").text('Day'); 
@@ -41,9 +41,9 @@ function allDayState(all_day_box) {
 $(document).ready(function() {
 	
 	if($("#existing").val() == "true") {
-		if($("#id_repeats").val()) {
+		if($("#id_repeats").is(':checked')) {
 			$('#repeat-days-row').show();
-		} else {
+		} else {	
 			$('#repeat-days-row').hide();
 		}
 		allDayState($("#id_all_day"));
