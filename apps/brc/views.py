@@ -196,7 +196,7 @@ def playa_events_home(request,
 	user=request.user
 	if user and type(user) != AnonymousUser:
 		my_events = PlayaEvent.objects.filter(year=year, creator=user)[0]
-		my_events = True if len(my_events) else False
+		my_events = True if my_events else False
 	else:
 		my_events = False
 	data = {'year':year, 'user':request.user, 'my_events':my_events}
