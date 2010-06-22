@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(
     level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/tmp/bme.log',
+    filename = '/home/cdolan/tmp/bme.log',
     filemode = 'w'
 )
 
@@ -187,7 +187,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
     'django.contrib.databrowse',
-    'haystack',
+    #'haystack',
     'lost_found',
     'olwidget',
     'points',
