@@ -10,6 +10,7 @@ from django.contrib.gis.geos import *
 from django.contrib.auth.decorators import login_required
 from django.views.generic.create_update import delete_object
 from django.db.models import Count
+from django.contrib.auth.models import AnonymousUser
 
 from swingtime.models import Event, Occurrence
 from swingtime import utils, forms
@@ -193,7 +194,7 @@ def playa_events_home(request,
 ):	
 	year = Year.objects.get(year=year_year)
 	user=request.user
-	if user:
+	if user and type(user) != AnonymousUser:
 		my_events = PlayaEvent.objects.filter(year=year, creator=user)[0]
 		my_events = True if len(my_events) else False
 	else:
