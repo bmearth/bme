@@ -4,7 +4,7 @@ from haystack import site
 from brc.models import * 
 from profiles.models import * 
 
-current_year=Year.objects.get(year='2009')
+current_year=Year.objects.get(year='2010')
 class PlayaEventIndex(indexes.SearchIndex):
   title = indexes.CharField(model_attr='title', use_template=True)
   description = indexes.CharField(document=True, use_template=True)
