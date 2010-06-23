@@ -513,14 +513,16 @@ def delete_event(request,
 	playa_event_id, 
 	next=None, 
 ):
+	print "made it this far"
 	event = get_object_or_404(PlayaEvent, id=playa_event_id)
 	next = "/brc/" + event.year.year + "/playa_events/"
+	print 'and here', login_required
 	return delete_object(
 		request,model = PlayaEvent,
 		object_id = playa_event_id,
 		post_delete_redirect = next,
 		template_name = "brc/delete_event.html",
-		extra_context = dict(next=next),
+		extra_context = dict(next=next, year=event.year),
 		login_required = login_required
 	)
 
@@ -538,7 +540,8 @@ def delete_occurrence(request,
 			object_id = occurrence.event.id,
 			post_delete_redirect = next,
 			template_name = "brc/delete_event.html",
-			extra_context = dict(next=next, msg="This is the only occurrence of this event. By deleting it, you will delete the entire event. Are you sure you want to do this??"),
+			extra_context = dict(next=next, year=event.year,
+				msg="This is the only occurrence of this event. By deleting it, you will delete the entire event. Are you sure you want to do this??"),
 			login_required = login_required
 		)
 	else:
