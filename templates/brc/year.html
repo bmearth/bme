@@ -10,8 +10,6 @@
     <script type="text/javascript">
         var markers, map, base_layer, kml, popup, feature;
         function init(){
-        /**
-        // temporarily disabled since map shows last year
 	    map = new OpenLayers.Map ("map", {
                 controls:[
                     new OpenLayers.Control.Navigation(),
@@ -36,7 +34,6 @@
 
 	    var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
             map.setCenter (lonLat, zoom);
-        **/
 }
     </script>
 
@@ -63,9 +60,18 @@
 </ul>
 <h2><a href='/brc/{{ year.year }}/themecamps/'>Theme Camps</a>&nbsp;-&nbsp;
 <a href='/brc/{{ year.year }}/art_installations/'>Art Installations</a>&nbsp;-&nbsp;
-<a href='/brc/{{ year.year }}/playa_events/'>Playa Events</a>&nbsp;-&nbsp;
+<a href='/brc/{{ year.year }}/playa_events/'>Playa Events</a>
+{% ifnotequal year.year "2010" %}
+&nbsp;-&nbsp;
 <a href='/brc/{{ year.year }}/art_cars/'>Mutant Vehicles</a></h2>
+{% endifnotequal %}
+
+<h3>Map</h3>
+{% ifnotequal year.year "2010" %}
 <div id='map'></div>
+{% else %}
+The map for 2010 hasn't been made yet. Check back soon!
+{% endifnotequal %}
 
 {% if streets %}
 <h2>Streets</h2>

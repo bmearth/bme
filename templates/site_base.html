@@ -36,15 +36,15 @@
 {% block right_tab %}
         <table>
             <tr>
-                <td class="tab rtab_brc"><div><a href="{% url year_info 2010 %}">{% trans "BRC" %}</a></div></td>
+                <td class="tab rtab_brc"><div><a href="{% url year_info 2009 %}">2009</a></div></td>
+		<td class="tab rtab_brc"><div><a href="{% url year_info 2010 %}">2010</a></div></td>
 {% if user.is_authenticated %}
                 <td class="tab rtab_profile"><div><a href="{% url profile_detail user %}">{% trans "People" %}</a></div></td>
-
                 <!--<td class="tab rtab_tweets"><div><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></div></td>-->
                 <!--<td class="tab rtab_checkins"><div><a href="{% url checkins_all %}">{% trans "Check In" %}</a></div></td> -->
 {% else %}
                 <td class="tab rtab_profile"><div><a href="{% url profile_list %}">{% trans "People" %}</a></div></td>
-                <!--><td class="tab rtab_tweets"><div><a href="{% url all_tweets %}">{% trans "Tweets" %}</a></div></td>-->
+                <!--<td class="tab rtab_tweets"><div><a href="{% url all_tweets %}">{% trans "Tweets" %}</a></div></td>-->
 {% endif %}
                 <!--<td class="tab rtab_blogs"><div><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></div></td> -->
                 <!--<td class="tab rtab_projects"><div><a href="{% url project_list %}">{% trans "Projects" %}</a></div></td> -->
@@ -52,13 +52,10 @@
                 <!--<td class="tab rtab_bookmarks"><div><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></div></td>--> 
                 <!--<td class="tab rtab_photos"><div><a href="{% url photos %}">{% trans "Photos" %}</a></div></td>-->
                 <!--<td class="tab rtab_regionals"><div><a href="{% url regional_list %}">{% trans "Regionals" %}</a></div></td>-->
-				
-	       		<!--<td class="tab rtab_search"><div><a href="/brc/search">{% trans "Search" %}</a></div></td>-->
-	       
-				<!--><td class="tab rtab_listings"><div><a href="/listings/">{% trans "Rides" %}</a></div></td>-->
+	       <td class="tab rtab_search"><div><a href="/brc/search">{% trans "Search" %}</a></div></td>
+	       <!--<td class="tab rtab_listings"><div><a href="/listings/">{% trans "Rides" %}</a></div></td>-->
 {% if user.is_authenticated %}
-			
-				<!--<td class="tab rtab_inbox"><div><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></div></td>-->
+		<td class="tab rtab_inbox"><div><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></div></td>
 {% endif %}
               </tr>
         </table>
@@ -71,7 +68,7 @@
     <a href="http://www.burningman.com/index/privacy_policy.html">privacy policy</a>&nbsp;::&nbsp;
     <a href="http://www.burningman.com/whatisburningman/people/web_bio.html">credits</a><br /> 
     dust in your eye? something not working?<br />
-    let us know: <a href="mailto:ortelius@burningman.com">ortelius@burningman.com</a><br /> &copy; 1989-2010 black rock city, llc
+    let us know: <a href="mailto:playacal-admin@burningman.com">playacal-admin@burningman.com</a><br /> &copy; 1989-2009 black rock city, llc
 </div>
 {% endblock %}
 
@@ -79,4 +76,13 @@
     {% urchin %}
     <script src="{{ MEDIA_URL }}js/base.js" type="text/javascript"></script>
     {% block extra_body %}{% endblock %}
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-10418553-23");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 {% endblock %}
