@@ -5,6 +5,7 @@
 {% block rtab_id %}id="brc_tab"{% endblock %}
 
 {% block subnav %}
+{% if year %}
         <ul>
 
             <!--<li><a href="{% url map year.year %} ">{% trans "Map" %}</a></li>-->
@@ -13,4 +14,5 @@
             <li><a href="{% url playa_events year.year %}">{% trans "Playa Events" %}</a></li>
             <!--<li><a href="{% url art_cars year.year %}">{% trans "Mutant Vehicles" %}</a></li>-->
         </ul>
+{% endif %}
 {% endblock %}
