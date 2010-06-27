@@ -8,7 +8,17 @@
 {% block body %}
 <h1>API Documentation</h1>
 
+<div style="float:right;">
+<strong>Example of the 2009 Burning Man map with Larry Harvey's head.</strong>
+<br/>
+<iframe src="http://jsbin.com/abuci3/" style="width: 500px; height: 500px;">Your browser is lame.</iframe>
+<br/>
+<a href="http://jsbin.com/abuci3/">Click here for the source.</a> You can embed this map for free on your website.
+</div>
+
 <h2>API Overview</h2>
+The Burning Man API is free for you to use and build with. Most of the examples here are for 2009, but as we get data for 2010 it will be published to these APIs. Right now, you can access the Theme Camp names, Art names, and Events for 2010. 
+<br/><br/>
 The API currently supports two formats, XML and JSON. By default it
 will return JSON. If you wish to consume XML, pass the API the keypair
 format=xml. If you want JSONP, provide the keypair callback=myclbk.
@@ -42,7 +52,7 @@ The API supports the following methods to receive Burning Man data.<br/><br/>
 <ul>
 <li>
   All Events
-  <pre>http://earth.burningman.com/api/0.1/2009/event/</pre>
+  <pre>http://earth.burningman.com/api/0.1/2010/event/</pre>
   <a href="http://jsbin.com/ilulu4">jQuery Events example</a> [<a href="http://jsbin.com/ilulu4/edit">source</a>]
 </li>
 
