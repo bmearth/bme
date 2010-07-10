@@ -129,10 +129,11 @@ def themecamps(request, year_year):
 	previous = int(year_year) -1
 	next = int(year_year) + 1
 	ThemeCamps = ThemeCamp.objects.filter(year=year).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name')
+
 	return render_to_response('brc/themecamps.html', {'year': year,
-							'theme_camps': ThemeCamps,
-							'previous' : previous,
-							'next' : next,}, context_instance=RequestContext(request))
+                                                          'theme_camps': ThemeCamps,
+                                                          'previous' : previous,
+                                                          'next' : next,}, context_instance=RequestContext(request))
 	
 def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
@@ -565,6 +566,7 @@ def _map_to_ascii(t):
 @login_required
 def csv_onetime(request, year_year):
   year= Year.objects.filter(year=year_year)
+  
   events = PlayaEvent.objects.filter(year=year, moderation='A').order_by('id').annotate(num_occurrences=Count('occurrence'))[:980]
   timed_events= itertools.ifilter(lambda e: e.all_day==False, events)
   
@@ -573,7 +575,6 @@ def csv_onetime(request, year_year):
   # Create the HttpResponse object with the appropriate CSV header.
   response = HttpResponse(mimetype='text/csv')
   response['Content-Disposition'] = 'attachment; filename=onetime_events.csv'
-
   writer = csv.writer(response)
   writer.writerow(['Title', 'Description', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Location', 'Placement', 'Event Type'])
   for e in onetime_events:
@@ -646,7 +647,7 @@ def csv_repeating(request, year_year):
         end_date = 'Lastday'
       end_time = o.end_time.strftime('%H:%M')
 
-      writer.writerow([title, print_description, start_date, start_time, end_date, end_time, location, placement_location, event_type])[:980]
+      writer.writerow([title, print_description, start_date, start_time, end_date, end_time, location, placement_location, event_type])
       # Blank out the descriptive items of the event so we only have data data for the repeat occurrences
       title=''
       print_description = ''

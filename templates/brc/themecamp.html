@@ -26,9 +26,16 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 
 {% if theme_camp.description %}<p>{{ theme_camp.description }}</p>{% endif %}
 
-<h3>Location</h3>
-{% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>{% endif %}
+<h3>Location</h3> 
+{% ifequal year.year "2010" %}
+Will be available when gate opens.
+{% else %}
+{% if theme_camp.location_string %} {{ theme_camp.location_string }}<br/>
+{% else %} 
+No location specified.<br/>
+{% endif %}
 {{ map }}
+{% endifequal %}
 
 <h3>Photos</h3>
 <!-- Start of Flickr Badge -->
@@ -44,6 +51,14 @@ $("#backToSearch").html("<a href='javascript:history.back();'>Back to Search Res
 <td id="flickr_badge_source_txt">To add photos, tag your photo with <b>burningman:camp={{ theme_camp.id }}</b> on <a href="http://www.flickr.com/photos/tags/burningman:camp={{ theme_camp.id }}/">on Flickr</a>. <a href="http://code.flickr.com/blog/2009/07/06/extraextraextra/">what are machine tags?</a></td>
 </td></tr></table>
 <!-- End of Flickr Badge -->
+<br/><br/><br/>
+<iframe src="http://www.facebook.com/plugins/like.php?href=http://earth.burningman.com/brc/{{ year.year }}/themecamp/{{theme_camp.id}}&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+<br/>
+<script type="text/javascript">
+tweetmeme_style = 'compact';
+</script>
+<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+
 
 {% if events %}
 <h3>Events At this Camp:</h3>
