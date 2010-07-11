@@ -74,6 +74,12 @@ class TimeStreet(models.Model):
     class Meta:
         ordering = ('year','name',)
 
+
+class CampManager(models.GeoManager):
+    def get_query_set(self):
+        return super(CampManager, self).get_query_set().filter(list_online=True)
+
+
 class ThemeCamp(models.Model):
     def __unicode__(self):
         return self.year.year + ":" + self.name
@@ -88,11 +94,14 @@ class ThemeCamp(models.Model):
     location_string = models.CharField(max_length=50, null=True, blank=True)
     location_point = models.PointField(null=True, blank=True)
     location_poly = models.PolygonField(null=True, blank=True)
+    list_online = models.NullBooleanField(null=False, blank=False, default=True)
     circular_street = models.ForeignKey(CircularStreet, null=True, blank=True)
     time_address = models.TimeField(null=True, blank=True)
     participants = models.ManyToManyField(User, null=True, blank=True)
     bm_fm_id = models.IntegerField(null=True,blank=True)
-    objects = models.GeoManager()
+    # make the default "objects" return just public results
+    all_objects = models.GeoManager()
+    objects = CampManager()
 
     checkins = generic.GenericRelation(CheckIn)
 

@@ -35,6 +35,9 @@ class ThemeCampAdmin(BME_OSMAdmin):
     ordering = ('name',)
     search_fields = ('name','description','bm_fm_id')
     list_per_page = 50
+    
+    def queryset(self, request):
+        return ThemeCamp.all_objects
 
 class ArtInstallationAdmin(BME_OSMAdmin):
     list_display = ('name','year', 'bm_fm_id', 'location_string', 'artist', 'url', 'contact_email')
