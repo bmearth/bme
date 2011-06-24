@@ -6,20 +6,20 @@
 
 {% block body %}
     <h1>{% trans "What Next?" %}</h1>
-    
+
     {% if user.is_authenticated %}
         <p>Now that you are logged in, you can:</p>
-        
+
         <dl class="what_next">
             <dt><a href="{% url acct_email %}">verify an email address</a></dt>
             <dd>so you can receive notifications, reset your password and so people can find you more easily.</dd>
-            
+
 	    <dt><a href="{% url profile_detail user %}">fill out your profile</a></dt>
             <dd>let us know where you are camping, tell the world a little about yourself.</dd>
-            
+
 	    <dt><a href="{% url profile_list %}">look for your friends </a></dt>
             <dd>in our participant directory.</dd>
-            
+
 	    <dt><a href="/brc/2010/art_installations/">browse art installations</a></dt>
             <dd>for Burning Man 2010.</dd>
 
@@ -28,10 +28,12 @@
 
             <dt><a href="{% url playa_events_by_day 2010 1 %}">browse events</a></dt>
             <dd>for Burning Man 2010.</dd>
-            
+
+            {% comment %}
 	    <dt><a href="{% url playa_event_add 2010 %}">submit an event </a></dt>
             <dd>to the playa calendar.</dd>
-            
+            {% endcomment %}
+
 	    <dt><a href="{% url playa_events_view_mine 2010 %}">view events</a></dt>
             <dd>that you have submitted.</dd>
 
@@ -39,7 +41,7 @@
         {% else %}
             {% url acct_signup as signup_url %}
             {% url acct_login as login_url %}
-            
+
             <p class="what_next">{% blocktrans %}Start by <a href="{{ signup_url }}">signing up</a> and <a href="{{ login_url }}">logging in</a>.{% endblocktrans %}</p>
         {% endif %}
 {% endblock %}

@@ -13,11 +13,13 @@
 <p>To submit an event, please <a href="{% url acct_login %}">login</a> or <a href="{% url acct_signup %}">sign up</a> for an account.</p>
 {% else %}
 <p>
+  {% comment %}
     {% ifequal year.year '2010' %}
     <div id="create-new" style="margin: 0">
         <a href='/brc/{{year.year}}/playa_event/create'>Create New Event</a>
     </div>
     {% endifequal %}
+  {% endcomment %}
 </p>
 {% endif %}
 
