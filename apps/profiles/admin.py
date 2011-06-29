@@ -1,4 +1,9 @@
 from django.contrib import admin
 from profiles.models import Profile
 
-admin.site.register(Profile)
+
+class ProfileAdmin(admin.ModelAdmin):
+	search_fields = ['user__username', 'name', 'about', 'location']
+
+admin.site.register(Profile, ProfileAdmin)
+

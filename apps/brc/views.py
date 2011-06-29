@@ -10,6 +10,7 @@ from django.contrib.gis.geos import *
 from django.contrib.auth.decorators import login_required
 from django.views.generic.create_update import delete_object
 from django.db.models import Count
+from django.contrib.auth.models import AnonymousUser
 
 from swingtime.models import Event, Occurrence
 from swingtime import utils, forms
@@ -128,10 +129,11 @@ def themecamps(request, year_year):
 	previous = int(year_year) -1
 	next = int(year_year) + 1
 	ThemeCamps = ThemeCamp.objects.filter(year=year).extra(select={'lower_name': 'lower(name)'}).order_by('lower_name')
+
 	return render_to_response('brc/themecamps.html', {'year': year,
-							'theme_camps': ThemeCamps,
-							'previous' : previous,
-							'next' : next,}, context_instance=RequestContext(request))
+                                                          'theme_camps': ThemeCamps,
+                                                          'previous' : previous,
+                                                          'next' : next,}, context_instance=RequestContext(request))
 	
 def themecampid(request, year_year, theme_camp_id):
 	year = Year.objects.get(year=year_year)
@@ -188,11 +190,19 @@ def art_car_id(request, year_year, art_car_id):
 
 def playa_events_home(request, 
 	year_year, 
-	template='brc/playa_events_home.html', 
+	template='brc/playa_events_home.html',	
 	queryset=None
-):
+):	
 	year = Year.objects.get(year=year_year)
-	return render_to_response(template, context_instance=RequestContext(request))
+	user=request.user
+	if user and type(user) != AnonymousUser:
+		my_events = PlayaEvent.objects.filter(year=year, creator=user)
+		my_events = True if len(my_events)>0 else False
+	else:
+		my_events = False
+	data = {'year':year, 'user':request.user, 'my_events':my_events}
+	#return render_to_response(template, {}, context_instance=RequestContext(request))
+	return render_to_response(template, data,context_instance=RequestContext(request))
 
 def all_playa_events(request, 
 	year_year, 
@@ -287,6 +297,7 @@ def playa_events_by_day(request, year_year, playa_day=1, template='brc/playa_eve
 	
 	data= dict(
 		year = year,
+		playa_day = playa_day,
 		day = playa_day_dt,
 		next = next,
 		previous = previous,
@@ -344,8 +355,14 @@ def playa_event_view(request,
 	if not recurrence_form:
 		recurrence_form = recurrence_form_class(initial=dict(year=Year.objects.get(year=year_year)))
 	'''
-
-	return render_to_response(template, dict(playa_event=event, event_form=event_form_class, recurrence_form=recurrence_form_class),context_instance=RequestContext(request))
+	data = dict(
+		playa_event=event, 
+		event_form=event_form_class, 
+		recurrence_form=recurrence_form_class,
+		year = get_object_or_404(Year, year=year_year)
+	)
+	return render_to_response(template, data,
+		context_instance=RequestContext(request))
 
 
 def playa_event_view_uuid(request,
@@ -455,11 +472,13 @@ def playa_occurrence_view(request,
 @login_required
 def create_or_edit_event(request, 
 	year_year, 
+	playa_day=1,
 	playa_event_id=None, 
 	template_name='brc/add_event.html'
 ):
-	user = request.user
-	
+	user = request.user	
+  	year = get_object_or_404(Year, year=year_year)
+
 	instance = None
 	if playa_event_id is not None:
         	instance = get_object_or_404(PlayaEvent, id=playa_event_id)
@@ -475,8 +494,19 @@ def create_or_edit_event(request,
 				request.user.message_set.create(message="Your Event was Added successfully. Please wait for it to be moderated")
 			return HttpResponseRedirect(next)
 	else:
-		form=brcforms.PlayaEventForm(initial=dict(year=Year.objects.get(year=year_year)), instance=instance)
-	return render_to_response(template_name, {"form": form,}, context_instance=RequestContext(request))
+		initial = dict(year=year_year)
+		if not instance:
+			event_date_list = year.daterange()
+			playa_day = int(playa_day)
+			if playa_day > len(event_date_list): 
+				return http.HttpResponseBadRequest('Bad Request')
+			playa_day_dt = event_date_list[playa_day-1]
+			initial['day'] = datetime.combine(playa_day_dt, time(9))
+			
+		form=brcforms.PlayaEventForm(initial=initial, instance=instance)
+		
+	data = {"form": form, "year": year}
+	return render_to_response(template_name, data, context_instance=RequestContext(request))
  
 @login_required
 def delete_event(request, 
@@ -484,14 +514,16 @@ def delete_event(request,
 	playa_event_id, 
 	next=None, 
 ):
+	print "made it this far"
 	event = get_object_or_404(PlayaEvent, id=playa_event_id)
 	next = "/brc/" + event.year.year + "/playa_events/"
+	print 'and here', login_required
 	return delete_object(
 		request,model = PlayaEvent,
 		object_id = playa_event_id,
 		post_delete_redirect = next,
 		template_name = "brc/delete_event.html",
-		extra_context = dict(next=next),
+		extra_context = dict(next=next, year=event.year),
 		login_required = login_required
 	)
 
@@ -509,7 +541,8 @@ def delete_occurrence(request,
 			object_id = occurrence.event.id,
 			post_delete_redirect = next,
 			template_name = "brc/delete_event.html",
-			extra_context = dict(next=next, msg="This is the only occurrence of this event. By deleting it, you will delete the entire event. Are you sure you want to do this??"),
+			extra_context = dict(next=next, year=event.year,
+				msg="This is the only occurrence of this event. By deleting it, you will delete the entire event. Are you sure you want to do this??"),
 			login_required = login_required
 		)
 	else:
@@ -533,6 +566,7 @@ def _map_to_ascii(t):
 @login_required
 def csv_onetime(request, year_year):
   year= Year.objects.filter(year=year_year)
+  
   events = PlayaEvent.objects.filter(year=year, moderation='A').order_by('id').annotate(num_occurrences=Count('occurrence'))[:980]
   timed_events= itertools.ifilter(lambda e: e.all_day==False, events)
   
@@ -541,7 +575,6 @@ def csv_onetime(request, year_year):
   # Create the HttpResponse object with the appropriate CSV header.
   response = HttpResponse(mimetype='text/csv')
   response['Content-Disposition'] = 'attachment; filename=onetime_events.csv'
-
   writer = csv.writer(response)
   writer.writerow(['Title', 'Description', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Location', 'Placement', 'Event Type'])
   for e in onetime_events:
@@ -614,7 +647,7 @@ def csv_repeating(request, year_year):
         end_date = 'Lastday'
       end_time = o.end_time.strftime('%H:%M')
 
-      writer.writerow([title, print_description, start_date, start_time, end_date, end_time, location, placement_location, event_type])[:980]
+      writer.writerow([title, print_description, start_date, start_time, end_date, end_time, location, placement_location, event_type])
       # Blank out the descriptive items of the event so we only have data data for the repeat occurrences
       title=''
       print_description = ''

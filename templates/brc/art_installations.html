@@ -10,7 +10,7 @@
 <a href='/brc/{{ next }}/art_installations/'> {{ next }}>></a>
 {% endifnotequal %}
 {% endcomment %}
-<h2>2009 Art Installations</h2>
+<h2>{{ year.year }} Art Installations</h2>
 <ul>
 {% for art_installation in art_installations %}
 <li><a href='/brc/{{ year.year }}/art_installation/{{art_installation.id }}/'>{{ art_installation.name }}</a></li>

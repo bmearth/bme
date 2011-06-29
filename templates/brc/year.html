@@ -6,6 +6,7 @@
 </style>
     <script src="/media/js/openlayers/OpenLayers.js"></script>
 <script src="/media/js/openlayers/OpenStreetMap.js"></script>
+
     <script type="text/javascript">
         var markers, map, base_layer, kml, popup, feature;
         function init(){
@@ -35,6 +36,7 @@
             map.setCenter (lonLat, zoom);
 }
     </script>
+
 {% endblock %}
 {% block head_title %}{{ year.year }} {% endblock %}
 {% block body %}
@@ -58,16 +60,31 @@
 </ul>
 <h2><a href='/brc/{{ year.year }}/themecamps/'>Theme Camps</a>&nbsp;-&nbsp;
 <a href='/brc/{{ year.year }}/art_installations/'>Art Installations</a>&nbsp;-&nbsp;
-<a href='/brc/{{ year.year }}/playa_events/'>Playa Events</a>&nbsp;-&nbsp;
+<a href='/brc/{{ year.year }}/playa_events/'>Playa Events</a>
+{% ifnotequal year.year "2010" %}
+&nbsp;-&nbsp;
 <a href='/brc/{{ year.year }}/art_cars/'>Mutant Vehicles</a></h2>
+{% endifnotequal %}
+
+<h3>Map</h3>
+{% ifnotequal year.year "2010" %}
 <div id='map'></div>
+{% else %}
+The map for 2010 hasn't been made yet. Check back soon!
+{% endifnotequal %}
+
+{% if streets %}
 <h2>Streets</h2>
+
 <ul>
 {% for street in streets %}
 <li>{{ street.name }}</li>
 {% endfor %}
 </ul>
+{% endif %}
+
 {% endblock %}
+
 {% block extra_body %}
     <script type="text/javascript">
         $(document).ready(function() {

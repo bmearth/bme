@@ -27,13 +27,6 @@
  {% if playa_event.occurrence_set.count %}
      <tr>
        <td valign="top" width="170"><b>Date/Time(s):</b>
-{% if user.is_authenticated %}
-{% ifequal user playa_event.creator %}
-  	<a href="{% url playa_occurrence_add playa_event.year.year playa_event.id %}">
-    	<img border="0" src="{{ MEDIA_URL }}img/add.png" alt="{% trans "Add" %}"/>
-  	</a>
-{% endifequal %}
-{% endif %}
 	</td>
        <td  width="330">
      	{% for o in playa_event.occurrence_set.all %}
@@ -43,16 +36,6 @@
 	             {{ o.start_time|date:"l, F jS, Y P" }} &ndash; 
         	     {{ o.end_time|date:"P" }}
 		{% endif %}
-         {% if user.is_authenticated %}
-         {% ifequal user playa_event.creator %}
-         <a href="{% url playa_occurrence_edit playa_event.year playa_event.id o.id %}">
-        <img border="0" src="{{ MEDIA_URL }}img/pencil.png" alt="{% trans "Change" %}"/> 
-	</a>
- 	<a href="{% url occurrence_delete playa_event.year.year o.id %}">
-    	<img border="0" src="{{ MEDIA_URL }}img/delete.png" alt="{% trans "Delete" %}"/>
-  	</a>
-         {% endifequal %}
-         {% endif %}
 	<br/>
      	{% endfor %}
        </td>
@@ -132,9 +115,18 @@
 </td></tr></table>
 <!-- End of Flickr Badge -->
 
+<br/><br/><br/>
+<iframe src="http://www.facebook.com/plugins/like.php?href=http://earth.burningman.com{% url playa_event_view year.year playa_event.id %}&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+
+<script type="text/javascript">
+tweetmeme_style = 'compact';
+</script>
+<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+
 </div>
 
 {% comment %}
 <h3>Comments on This Event:</h3>
 {% comments playa_event %}
 {% endcomment %}
+
